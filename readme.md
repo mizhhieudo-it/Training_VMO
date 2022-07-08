@@ -1,0 +1,1 @@
+# This is the training process with Duy Tran memtor :fire: 

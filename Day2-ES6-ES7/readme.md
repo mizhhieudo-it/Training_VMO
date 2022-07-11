@@ -404,6 +404,42 @@ setTimeout(() => {
     console.log('3 giây đã trôi qua');
 }, 3000);
 ```
+##### 7.4 Sự khác biệt của this trong arrow function và function
+This là một từ khoá khá quen thuộc trong khá nhiều ngôn ngữ, nó dùng để trỏ tới chính object gọi hàm đó và javasrcipt cũng thế.
+```js
+const person = {
+  name_person:'hue',
+  getNamePerson: function() {
+    console.log(this.name_person);
+  }
+};
+
+//Ở đây this sẽ là object person
+person.getNamePerson();
+
+$('button').click(person.getNamePerson); //getNamePerson truyền vào như callback
+```
+Ở đây suốt hiện một vấn đề this ở trong function getNamePerson không chỏ tới person mà chỏ tới button . Để fix việc mập mờ ngữ cảnh thì ta phải sử dụng từ khóa `bind`
+
+	$('button').click(person.getNamePerson.bind(person)); 
+
+Khá rườm già và rắc rối 
+ta có thể sử dụng arrow function bởi vì Khác với function thông thường,  **arrow function không có bind**  vì vậy, không định nghĩa lại this. Do đó, this sẽ tương ứng với ngữ cảnh gần nhất của nó.
+
+Và cũng chính bởi nó không định nghĩa this, nên  _**arrow function không phù hợp làm method của object**_, vì vậy nếu định nghĩa method của object, function vẫn là sự lựa chọn đúng đắn
+```js
+const person = {
+  name_person:'hue',
+  getNamePerson = () =>{
+    console.log(this.name_person);
+  }
+};
+
+//Ở đây this sẽ là object person
+person.getNamePerson();
+
+$('button').click(person.getNamePerson); //getNamePerson truyền vào như callback
+```
 #### 8. const,let,var và ES6/7 
 ##### 8.1 Đặc điểm của var
 

@@ -14,6 +14,7 @@ Mục lục :mag:
 9. Classs
 ### 1. ES6/ES7 trong JS là gì ? 
 ![enter image description here](images/js-j4f.png)
+
 ES6, ES7 **là hai trong số những phiên bản của chuẩn ECMAScript**. Rõ ràng hơn thì ECMAScript là tiêu chuẩn còn Javascript là ngôn ngữ lập trình. ES6 được ra đời vào năm 2015 nên nó có thêm cái tên là ES2015. Tương tự như vậy ES7 hay còn gọi là ES2016.
 ### 2. Strict mode 
 #### 2.1 Lịch sử ra đời

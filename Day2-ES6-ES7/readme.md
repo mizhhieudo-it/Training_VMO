@@ -1,7 +1,9 @@
 
 # Tìm hiểu về ES6 - ES7 trong JS:chart_with_upwards_trend:
-:mag: Mục lục :
-1 . ES6/ES7 là gì ?
+
+
+Mục lục :mag: 
+1. ES6/ES7 là gì ?
 2. Strict mode
 3. Default Parameters
 4. Destructuring

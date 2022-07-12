@@ -392,19 +392,12 @@ Khi đã implememt một interface nghĩa là bạn phải triển khai hết kh
 #### 2.3 built-in Type primitives
 
 | Tên | Mô tả |Ví dụ |
-
 |--|--|-------|-----|
-
 | string | đại diện cho kiểu dữ liệu văn bản |let name:string='Nguyễn Văn A'|
-
 |number|đại diện cho kiểu số|let number1:number=1 // số nguyên <br  /> let number2:number=0b100 // số nhị phân etc...|
-
 |boolean|giá trị trả về `true` hoặc `false`|let isContainInString:boolean=true|
-
 |null|trả về giá trị `null`|let objectA = null|
-
 |undifined|trả về một đối tượng,thuộc tính chưa được gán giá trị|const objectA = {hairColor:'black'} <br  /> objectA.skinColor => undefined|
-
 |symbol|đại diện cho giá trị hằng số|let sym2 = Symbol("key");|
 
 ### 2.4 các common built-in JS Object

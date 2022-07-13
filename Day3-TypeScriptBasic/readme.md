@@ -35,8 +35,6 @@
 
 3.Type
 
-- Primitives type
-
 - Object literal type
 
 - Tuple type
@@ -1386,3 +1384,430 @@ class Employee {
 
 let emp = new Employee(100,"Steve");
 ```
+### 3.Type in TS
+#### 3.1 **Object literal type là gì ?**
+```json
+{
+"name":"Traing TS",
+"startDate":"10/7/2022",
+"nameTrainer":"Duy Tran"
+}
+```
+Đây là chuỗi JSON . Danh sách các cặp key - value ngăn cách nhau bởi dấu phẩy thì được gọi là một Object Literal
+#### 3.1.2 Một vài cách để định nghĩa một Object literal . 
+##### 3.1.2.1 Định nghĩa một Object literal với `No type`
+```ts
+let person = {
+name:"Johnny Deep",
+age:32,
+}
+console.log(person.name) // => Johnny Deep 
+console.log(person.age) // => 32  
+person.codeBank = 1231243123423; //  => error because codeBank dose not contain object...
+console.log(person.codeBank) //
+```
+- Với cách định nghĩa này sẽ có ưu điểm là rất nhanh nhưng khuyết điểm là điều này cũng có nghĩa là bạn không sử dụng TypeScript vì nó được cho là được sử dụng.
+
+- Khi cố gắng lấy value của property codeBank sẽ bị lỗi vì nó chưa được định nghĩa 
+##### 3.1.2.2 Định nghĩa một Object literal với `any`
+```ts
+let person:any = {
+name:"Johnny Deep",
+age:32,
+}
+console.log(person.name) // => Johnny Deep 
+console.log(person.age) // => 32  
+person.codeBank = 1231243123423; //  => passed case
+console.log(person.codeBank) // => 1231243123423
+```
+Ở cách định nghĩa một Object literal với kiểu any như thế này ta đã hoàn toàn fix được sử hạn chế của `no type` . Ta hoàn toàn truy cập được một thuộc tính không tồn tại nhưng đổi lại nếu sử dụng thế này thì chẳng có một quy chuẩn nào cả . Các kiểu dữ liệu đều không còn ý nghĩa gì nữa .
+#### 3.1.2.3  Định nghĩa một Object literal với `type Record<string, any>`
+```ts
+{
+let user:Record<any,string> = {
+idUser:"12312qdeqwet23e1",
+name:"Nguyễn Văn A"
+}
+console.log(user.name) // => Nguyễn Văn A 
+console.log(user.numberPhone) // => underfined 
+user.address = "Hà Nội ,VN"
+console.log(user.address) // => Hà Nội , VN 
+```
+cũng như ví dụ trước , khi đã dùng kiểu any thì sẽ không có quy chuẩn nào ở đây cả . Tuy nhiên cái gì quá cũng không tốt :) Hãy thử giới hạn kiểu dữ liệu đầu vào nhé 
+```ts
+{
+let user:Record<string,string> = {
+idUser:"12312qdeqwet23e1",
+name:"Nguyễn Văn A"
+}
+console.log(user.name) // => Nguyễn Văn A 
+console.log(user.numberPhone) // => underfined 
+user.IDPostCard = 3214234412342 // false because type 'Number' not assign type 'string'
+console.log(user.address) // => Hà Nội , VN 
+```
+Điều này sẽ làm nên đoạn code của bạn chặt chẽ hơn .
+#### 3.1.2.4 Customize type trong declaration
+```ts
+let order : {productName:string,productPrice:number,amount:number} = {
+productName : "T shirt Zara ",
+productPrice : 333333,
+amount:3
+}
+// console.log(order.productName) // => T shirt Zara 
+order.createAt = new Date('20-1-2020') ; // false because dosen't exist property 'createAt'
+```
+Nếu bạn đã xác định được structure rồi thì bạn có thể sử dụng customize type như thế này để kiểm soát đầu vào 
+#### 3.1.2.5 Customize with Interfaces
+```ts
+interface orderDetail{
+name : string , 
+price : number , 
+amount : number , 
+createAt ? : string 
+}
+const Order1 : orderDetail = {
+name : "sản phẩm 1",
+price : 1234 , 
+amount : 3 
+}
+const Order2 : orderDetail = {
+name : "sản phẩm ",
+price : 1234 , 
+amount : 3 ,
+createAt : '12/12/2020'
+}
+``` 
+Cá nhân tôi thích kiểu customize này nhất , nó giúp người dùng xác định được structure , tái sử dụng được . 
+#### 3.1.2.6 Tuple type
+##### 3.1.2.6.1 Tuple type là gì ? 
+Tuple là một kiểu TypeScript hoạt động giống như một mảng với một số cân nhắc đặc biệt:
+-	Số phần tử của mảng là cố định
+-	Loại của các phần tử đã biết
+-	Kiểu của các phần tử của mảng không được giống nhau
+##### 3.1.2.6.2 Tuple type kết hợp với một số kiểu dữ liệu 
+1. Tuple type basic 
+```ts
+var employee: [number, string] = [1, "Steve"];
+var person: [number, string, boolean] = [1, "Steve", true];
+
+var user: [number, string, boolean, number, string];// declare tuple variable
+user = [1, "Steve", true, 20, "Admin"];// initialize tuple variable
+```
+chúng ta áp dụng đúng 3 nguyên tắc trên sẽ tạo ra một tuple type cơ bản .
+2.kết hợp Tuple và array 
+```ts
+var employee: [number, string][];
+employee = [[1, "Steve"], [2, "Bill"], [3, "Jeff"]];
+```
+TypeScript tạo một mảng trong JavaScript cho biến tuple
+3.truy cập phần tử trong Tuple 
+```ts
+var employee: [number, string] = [1, "Steve"];
+employee[0]; // returns 1
+employee[1]; // returns "Steve"
+```
+Ta truy cập các phần tử trong tuple bình thường như Arrray
+2. Thêm một phần tử vào tuple 
+```ts
+var employee: [number, string] = [1, "Steve"];
+employee.push(2, "Bill"); 
+console.log(employee); //Output: [1, 'Steve', 2, 'Bill']
+```
+3. Sử dụng Arrray method
+```ts
+var employee: [number, string] = [1, "Steve"];
+
+// retrieving value by index and performing an operation 
+employee[1] = employee[1].concat(" Jobs"); 
+console.log(employee); //Output: [1, 'Steve Jobs']
+
+```
+#### 3.1.4 Union Types
+##### 3.1.4.1 Union là gì ?
+Union là một kiểu dữ liệu mà TypeScript cho phép chúng ta sử dụng nhiều hơn một kiểu dữ liệu cho một biến hoặc một tham số hàm.
+#### 3.1.4.2 Tại sao phải sử dụng Union ? 
+```ts
+function  padLeft(value: string, padding: any) {
+
+if (typeof  padding === "number") {
+
+return  Array(padding + 1).join(" ") + value;
+
+}
+
+if (typeof  padding === "string") {
+
+return  padding + value;
+
+}
+
+throw  new  Error(`Expected string or number, got '${typeof  padding}'.`);
+
+}
+
+padLeft("Hello world", 4);
+```
+Đôi khi, bạn sẽ gặp phải một thư viện yêu cầu một tham số là một số hoặc một chuỗi. Việc phải check kiểu đầu vào như này rất tốn thời gian gian vì vậy union ra đời để giải quyết việc này . 
+Chúng ta có thể viết lại như thế này . 
+```ts
+function padLeft(value: string, padding: string | number) {
+		console.log(value + padding)
+}
+
+padLeft(1,2)
+```
+Mọi thứ có vẻ sẽ nhẹ nhàng hơn 
+
+Lưu ý : giải sử trong thuộc type có property riêng thì sẽ không thể gọi được 
+```ts
+interface  Bird {
+
+fly(): void;
+
+layEggs(): void;
+
+}
+
+interface  Fish {
+
+swim(): void;
+
+layEggs(): void;
+
+}
+
+declare  function  getSmallPet(): Fish | Bird;
+
+let  pet = getSmallPet();
+
+pet.layEggs();
+
+// Only available in one of the two possible types
+
+pet.swim();
+```
+Nếu muốn sử dụng thì ta phải check type chính xác trước
+#### 3.1.5 Intersection types trong TS
+##### 3.1.5.1 Intersection type là gì ?
+intersection là kiểu dữ liệu giúp chúng ta tạo một type bao gồm các type mà chúng ta đã tạo trước đó.
+##### 3.1.5.2 Cách sử dụng Intersection Type
+```ts
+interface BusinessPartner {
+    name: string;
+    credit: number;
+}
+
+interface Identity {
+    id: number;
+    name: string;
+}
+
+interface Contact {
+    email: string;
+    phone: string;
+}
+type Employee = Identity & Contact;
+
+let e: Employee = {
+    id: 100,
+    name: 'John Doe',
+    email: 'john.doe@example.com',
+    phone: '(408)-897-5684'
+};
+
+```
+Sử dụng Intersection type khá đơn giản , ta chỉ việc gộp các type hoặc interface bằng & 
+Tóm lại : 
+- Intersection type kết hợp hai hoặc nhiều loại để tạo ra một loại mới có tất cả các thuộc tính của các loại hiện có.
+- Thứ tự type không quan trọng khi bạn kết hợp type
+#### 3.1.6 index types in TypeScript
+##### 3.1.6.1 index types là gì ? 
+Trong TypeScript, bạn có thể tham chiếu kiểu thuộc tính đối tượng bằng cách sử dụng ký hiệu dấu ngoặc vuông.
+#### 3.1.6.2 sử dụng index types 
+##### 3.1.6.2.1 index types với object
+```js
+type Foo = {
+   a: string;
+   b: number;
+   1: null;
+}
+
+type A = Foo["a"]; //string 
+type B = Foo["b"]; //number
+type ObjOne = Foo[1]; //null;
+```
+##### 3.1.6.2.2 index types và Mảng
+```ts
+type MyArray = [string, number, string];
+
+type Zero = MyArray[0]; //string 
+type One = MyArray[1]; //number
+```
+`keyof`từ khóa trả về kiểu liên hợp của tất cả các khóa có thể đó, cũng bao gồm các phương thức Array.prototype, chẳng hạn như `reduce`, `map`v.v.
+
+```ts
+type Reduce = MyArray["reduce"]; //type Reduce = {    (callbackfn: (previousValue: 0 | "one" | ..... 
+type Length = MyArray["length"] //3
+```
+Điều này cũng hoạt động cho các đối tượng thông thường, nhưng không có nhiều phương thức gốc hữu ích tồn tại trên nguyên mẫu của đối tượng
+```ts
+type ToString = Foo["toString"]; //() => string
+type Values = Foo["values"]; //Property 'values' does not exist on type 'Foo'.(2339)
+```
+#### 3.1.7  Mapped Types 
+##### 3.1.6.1 Mapped Types là gì ? 
+Mapped Types là kiểu  sử dụng liên hợp các PropertyKey (thường được tạo thông qua keyof) để lặp qua các khóa nhằm tạo kiểu . 
+ví dụ : 
+```ts
+type  OnlyBoolsAndHorses = {
+
+[key: string]: boolean | Horse;
+
+};
+
+const  conforms: OnlyBoolsAndHorses = {
+
+del:  true,
+
+rodney:  false,
+
+};
+```
+
+##### 3.1.6.2 Mappper Type kết hợp với Generic 
+```ts
+type  OptionsFlags<Type> = {
+
+[Property  in  keyof  Type]: boolean;
+
+};type  OptionsFlags<Type> = {
+
+[Property  in  keyof  Type]: boolean;
+
+};
+```
+`OptionsFlags` sẽ lấy tất cả các thuộc tính từ kiểu` Type` và thay đổi giá trị của chúng thành boolean.
+```ts
+
+type  FeatureFlags = {
+
+darkMode: () =>  void;
+
+newUserProfile: () =>  void;
+
+};
+
+type  FeatureOptions = OptionsFlags<FeatureFlags>;
+
+
+type FeatureOptions = { darkMode: boolean; newUserProfile: boolean; }
+```
+##### 3.1.6.3 Mapping Modifiers
+Có hai công cụ sửa đổi bổ sung có thể được áp dụng trong quá trình ánh xạ: chỉ đọc và? ảnh hưởng đến tính đột biến và tính tùy chọn tương ứng. 
+Bạn có thể xóa hoặc thêm các bổ ngữ này bằng cách thêm tiền tố - hoặc +. Nếu bạn không thêm tiền tố, thì + được giả định.
+```ts
+// Removes 'readonly' attributes from a type's properties
+
+type  CreateMutable<Type> = {
+
+-readonly [Property  in  keyof  Type]: Type[Property];
+
+};
+
+type  LockedAccount = {
+
+readonly  id: string;
+
+readonly  name: string;
+
+};
+type  UnlockedAccount = CreateMutable<LockedAccount>;
+
+type UnlockedAccount = { id: string; name: string; }
+// Removes 'optional' attributes from a type's properties
+type  Concrete<Type> = {
+
+[Property  in  keyof  Type]-?: Type[Property];
+
+};
+
+type  MaybeUser = {
+
+id: string;
+
+name?: string;
+
+age?: number;
+
+};
+
+type  User = Concrete<MaybeUser>;
+
+type User = { id: string; name: string; age: number; }
+```
+#### 3.1.8 Conditional type 
+Trọng tâm của hầu hết các chương trình ,chúng ta phải đưa ra quyết định dựa trên đầu vào. Các chương trình JavaScript không có gì khác biệt, nhưng với thực tế là các giá trị có thể dễ dàng xem xét bên trong, những quyết định đó cũng dựa trên các loại đầu vào. Các loại điều kiện giúp mô tả mối quan hệ giữa các loại đầu vào và đầu ra.
+```ts
+interface  Animal {
+
+live(): void;
+
+}
+
+interface  Dog  extends  Animal {
+
+woof(): void;
+
+}
+
+type  Example1 = Dog  extends  Animal ? number : string;
+
+type Example1 = number
+
+type  Example2 = RegExp  extends  Animal ? number : string;
+
+type Example2 = string
+```
+#### 3.1.8.1 Error handling example
+Giả sử chúng ta có hai loại lỗi trong ứng dụng.
+ 1) Lỗi ứng dụng - Lỗi dành riêng cho ứng dụng 
+ 2) Lỗi - lỗi javascript thông thường.
+ ```ts
+abstract class ApplicationError {
+    abstract status: number;
+    abstract message: string;
+}
+```
+```ts
+class ServerError extends ApplicationError {
+    status = 500;
+    constructor(public message: string) {
+        super();
+    }
+}
+```
+tạo một loại có điều kiện để xác định loại lỗi
+```ts
+type ErrorType<T extends {error: ApplicationError | Error}> = T['error'] extends ApplicationError ? ApplicationError : Error;
+
+```
+Bây giờ nếu bạn cố gắng chuyển một đối tượng có lỗi mở rộng ApplicationError, chúng tôi sẽ nhận được loại ApplicationError, nếu không chúng tôi sẽ nhận được loại lỗi
+#### 3.1.8 Callback?
+##### 3.1.8.1 Call back là gì ? 
+Callback function có thể được hiểu nôm na như sau: callback tức là ta truyền một đoạn code **(Hàm A)** này vào một đoạn code khác **(Hàm B)**. Tới một thời điểm nào đó, Hàm A sẽ được hàm B gọi lại (**callback**)**.**
+##### 3.1.8.2 Callback function hoạt động như thế nào?
+Ta có thể truyền function như là một biến và return nó trong một function khác. Khi ta truyền callback function như là một tham số tới một function khác, ta chỉ truyền định nghĩa. Nó sẽ được thực thi khi ta truyền cả function dưới dạng tham số.
+
+Và chúng ta đã có định nghĩa của function callback dưới dang tham số, ta có thể thực thi bất kì lúc nào trong function chứa nó.
+
+**Chú ý:**  Function Callback không được thi thức thi. Nó có tên là “Callback” mà nhỉ nên chỉ được thực thi khi function chứa nó gọi đến callback function.
+##### 3.1.8.3 Callback function là Closure
+Khi ta truyền Callback function dưới dạng tham số tới một function khác, callback được thực thi trong body của function chứa nó với cái tên ta đặt ở nơi nhận tham số truyền vào. Như chúng ta đã biết, Closure có thể truy cập đến scope của function, cho nên Callback function có thể sử dụng các biến của function chứa nó hay thậm chí global scope.
+##### 3.1.9.4 Giải thích về CallBack
+Chi tiết triển khai về callback sẽ được giải thích trong bài viết [Này](https://github.com/mizhhieudo-it/LearnJavascript/tree/theory/JS018_CallBack)
+##### 3.1.9.5 Giải thích vể Promise
+Chi tiết triển khai về callback sẽ được giải thích trong bài viết [này](https://github.com/mizhhieudo-it/LearnJavascript/tree/theory/JS019_Promise)
+##### 3.1.9.5 Giải thích về Async/Await 
+Chi tiết triển khai về callback sẽ được giải thích trong bài viết [này](https://github.com/mizhhieudo-it/LearnJavascript/tree/theory/JS020_Async_Await)
+:rotating_light: Cần đọc đúng theo trình tự theo Callback=>Promise=>Async/Await để hiểu rõ vấn đề mối quan hệ của 3 tính năng này . 
+Updating Event-loop ...............

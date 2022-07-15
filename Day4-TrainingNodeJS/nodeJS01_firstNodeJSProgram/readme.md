@@ -66,6 +66,5 @@ TOP 5 IDE phổ biến để code :
 - #### **5. IntelliJ**
 #### 5. Hướng dẫn cài nodeJS
 Cài nodeJS theo hướng dẫn sau [Click to here!!](https://phoenixnap.com/kb/install-node-js-npm-on-windows)
-#### 6.Demo first app nodeJS and Debugs
-
-xem chi tiết tại đây
+#### 6.Demo first app nodeJS
+Xem chi tiết tại [đây](https://github.com/mizhhieudo-it/Training_VMO/tree/theory/Day4-TrainingNodeJS/nodeJS01_firstNodeJSProgram/src)

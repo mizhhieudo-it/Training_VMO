@@ -1,0 +1,26 @@
+{
+  "name": "src-typescript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "nodemon ./dist/app.js localhost 8080"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/cryptr": "^4.0.1",
+    "@types/formidable": "^2.0.5",
+    "@types/node": "^18.0.4",
+    "@types/nodemailer": "^6.4.4",
+    "cryptr": "^6.0.3",
+    "formidable": "^2.0.1",
+    "nodemailer": "^6.7.7"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.0.0"
+  }
+}

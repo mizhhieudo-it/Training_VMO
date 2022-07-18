@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VMO-Chatting</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/fontawesome.min.js"
+        integrity="sha512-5qbIAL4qJ/FSsWfIq5Pd0qbqoZpk5NcUVeAAREV2Li4EKzyJDEGlADHhHOSSCw0tHP7z3Q4hNHJXa81P92borQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+
+
+</head>
+
+<body>
+
+    <div id="head">
+        Video Call
+    </div>
+    <div id="body">
+        <div id="videoContainer">
+            <div id="screenVideo">
+                <video autoplay="true" id="videoElement" style="margin:0px 0px 30px 10vw ;">
+
+                </video>
+            </div>
+            <div id="screenOptions">
+                <button id="btn-mic" isMicMuted="false"><i class="fa-solid fa-microphone"></i></button>
+                <button id="btn-video" isMuted="false"><i class="fa-solid fa-video"></i></button>
+                <button><i class="fa-solid fa-right-from-bracket"></i></button>
+            </div>
+        </div>
+        <div id="chatContainer">
+            <div id="screenChat"></div>
+            <div id="swapchat">
+                <input type="text">
+                <button><i class="fa-solid fa-plus"></i></button>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+<script src="script.js"></script>
+
+</html>

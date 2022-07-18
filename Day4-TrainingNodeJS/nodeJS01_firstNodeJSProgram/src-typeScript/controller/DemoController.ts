@@ -5,6 +5,7 @@ import ServiceMail from "../services/mailServies";
 import * as formidable from "formidable";
 import AutoGenId from "../services/randomService";
 import typeMail from "../shared/mail";
+import ServicesUploadFile from "../services/uploadFileServies";
 class Demo {
   index = async (req: http.IncomingMessage, res: http.ServerResponse) => {
     try {
@@ -34,6 +35,7 @@ class Demo {
   WriteFileProfiles = (req: http.IncomingMessage, res: http.ServerResponse) => {
     let body = "";
     req.on("data", (chunk) => {
+      console.log(chunk);
       body += chunk.toString(); // convert Buffer to string
     });
     req.on("end", () => {
@@ -71,6 +73,9 @@ class Demo {
     let resultSend = ServiceMail(mailOption);
     res.write(resultSend);
     res.end();
+  };
+  UploadFile = (req: http.IncomingMessage, res: http.ServerResponse) => {
+    let resultUpload = ServicesUploadFile(req);
   };
 }
 export const DemoContoller = new Demo();

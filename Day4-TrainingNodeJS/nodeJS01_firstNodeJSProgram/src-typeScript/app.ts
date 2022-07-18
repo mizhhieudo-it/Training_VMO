@@ -1,14 +1,14 @@
 import * as http from "http";
 import * as fs from "fs";
-import * as url from "url";
+// import * as url from "url";
 import { json } from "stream/consumers";
 import { DemoContoller } from "./controller/DemoController";
 import Cryptr from "cryptr";
+import * as urls from "url";
 let i = 0;
 http
   .createServer(function (req: http.IncomingMessage, res: http.ServerResponse) {
     let url = req.url;
-
     if (url === "/") {
       DemoContoller.index(req, res);
     } else if (url === "/create-profile.html") {

@@ -20,9 +20,9 @@
 </head>
 
 <body>
-    <form action="/fileupload" method="post" enctype="multipart/form-data">
+    <form action="/fileupload" method="post">
         <label>Full name</label>
-        <input type="text" name="fname" /><br />
+        <input type="text" name="fname" id="123" /><br />
         <label for="">Tuổi</label>
         <input type="number" name="age" /><br />
         <label>avatar</label>
@@ -33,3 +33,8 @@
 </body>
 
 </html>
+
+<script>
+    const test = document.getElementById("123");
+    console.log(test)
+</script>

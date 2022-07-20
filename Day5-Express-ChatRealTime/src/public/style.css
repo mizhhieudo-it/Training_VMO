@@ -71,6 +71,20 @@ i{
 #screenChat{
     height: 78vh;
 }
-#videoElement{
-    height: 100%;
+video{
+    height: 50%;
+}
+    
+h4{
+    display: inline;
+}
+p{
+    display: inline;
+}
+#rowsChat{
+    overflow-x: scroll;
+}
+#screenChat{
+    overflow-y: scroll;
+
 }

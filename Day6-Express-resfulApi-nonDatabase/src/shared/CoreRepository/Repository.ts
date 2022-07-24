@@ -7,21 +7,45 @@ export class Repository<T> implements CoreRepo<T>  {
     pathDB = path.join(__dirname,"../../database/Database.json");
     objList:any = {}
     database:any = {}
-    CreateAsync(item: T): Promise<T> {
+    _modelName : string = "" ;
+    constructor(modelName:string){
+        this._modelName = modelName
+    }
+    CreateAsync = async (item: T): Promise<T> => {
         let idKeys = autoGenKeys(10) ;
         this.objList[idKeys] = item ;
-        let customizeObject = HandleJson(JSON.stringify(this.objList)) ;
-        this.database = customizeObject
-        fs.appendFileSync(this.pathDB,this.database);
+        let db = await fs.readFileSync(this.pathDB,'utf-8'); 
+        if(db ==''){
+            this.database[this._modelName] = this.objList;
+            fs.appendFileSync(this.pathDB,JSON.stringify(this.database));
+        }else{
+            let convertDBToJson = JSON.parse(db);
+            let readContentObj = convertDBToJson[this._modelName] ;     
+            this.database[this._modelName] = readContentObj ; 
+            this.database[this._modelName] = this.objList;          
+            await fs.writeFileSync(this.pathDB,JSON.stringify(this.database));   
+        }        
         return Promise.resolve(this.objList)
     }
-    UpdateAsync(item: T): Promise<T> {
-        throw new Error("Method not implemented.");
+    UpdateAsync= async (item: T,id:string): Promise<T> => {
+        let db = await fs.readFileSync(this.pathDB,'utf-8');
+        let resultWithModelName = JSON.parse(db)[this._modelName];
+        resultWithModelName[id] = item;
+        this.database[this._modelName] =resultWithModelName
+        await fs.writeFileSync(this.pathDB,JSON.stringify(this.database));  
+        return Promise.resolve(item);
     }
-    RemoveAsync(id: string): Promise<any> {
-        throw new Error("Method not implemented.");
+    RemoveAsync= async (id: string): Promise<any> =>{
+        let db = await fs.readFileSync(this.pathDB,'utf-8');
+        let resultWithModelName = JSON.parse(db)[this._modelName];
+        delete resultWithModelName[id];
+        this.database[this._modelName] =resultWithModelName
+        await fs.writeFileSync(this.pathDB,JSON.stringify(this.database));  
+        return Promise.resolve("item deleted !");
     }
-    GetAllAsync(): Promise<T[]> {
-        throw new Error("Method not implemented.");
+    GetAllAsync= async (): Promise<object> => {
+        let db = await fs.readFileSync(this.pathDB,'utf-8');
+        let result = JSON.parse(db)[this._modelName];
+        return Promise.resolve(result)
     }
 }

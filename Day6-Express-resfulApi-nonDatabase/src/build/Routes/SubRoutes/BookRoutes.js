@@ -4,4 +4,7 @@ const express_1 = require("express");
 const BookController_1 = require("../../Controllers/BookController");
 const routers = (0, express_1.Router)();
 routers.post("/create", BookController_1.Books.createAsync);
+routers.get("/get", BookController_1.Books.getAsync);
+routers.put("/update/:id", BookController_1.Books.updateAsync);
+routers.put("/delete/:id", BookController_1.Books.deleteAsync);
 exports.default = routers;

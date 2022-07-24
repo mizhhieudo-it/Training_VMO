@@ -18,7 +18,22 @@ class BookController {
             let resultCreate = yield this._bookRepo.CreateAsync(item);
             return res.status(200).send(resultCreate);
         });
-        this._bookRepo = new Repository_1.Repository();
+        this.getAsync = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            let resultCreate = yield this._bookRepo.GetAllAsync();
+            return res.status(200).send(resultCreate);
+        });
+        this.updateAsync = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            let id = req.params.id;
+            let item = req.body;
+            let resultUpdate = yield this._bookRepo.UpdateAsync(item, id);
+            return res.status(200).send(resultUpdate);
+        });
+        this.deleteAsync = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            let id = req.params.id;
+            let resultUpdate = yield this._bookRepo.RemoveAsync(id);
+            return res.status(200).send(resultUpdate);
+        });
+        this._bookRepo = new Repository_1.Repository("BookCollection");
     }
 }
 exports.Books = new BookController();

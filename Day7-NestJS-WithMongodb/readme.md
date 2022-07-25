@@ -12,7 +12,7 @@
     3. model Car
     4. the number of kilometers traveled
     5. Color Car
-   
+    6. Initial price
         * Return based on params's cars and frame prince => price Car 
 3. if the cars sold => save in db 
 

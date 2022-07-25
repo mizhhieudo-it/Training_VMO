@@ -1,0 +1,135 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a simple example NodeJS API project to demonstrate Swagger Documentation",
+        "version": "1.0.0",
+        "title": "Tasks API",
+        "contact": {
+            "email": "minhhieudo.it@gmail.com"
+        }
+    },
+    "schemes": ["http"],
+    "host": "localhost:8443",
+    "basePath": "/api/book",
+    "name":"Books-API-Schema",
+    "paths" : {
+        "/get" : {
+            "get" : {
+                "summary" : "Get all the books",
+                "description": "Get all the books",
+                "produces": ["application/json"],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+    
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/create" : {
+            "post" : {
+                "summary" : "Save the task",
+                "description": "Save the task",
+                "produces": ["application/json"],
+                "consumes": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "book name",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name" : {
+                                    "type": "string"
+                                } 
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+    
+                    }
+                }
+            }
+        },
+        "/update/{id}" : {
+            "put" : {
+                "summary" : "Update the book",
+                "description": "Update the book",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "book id that needs to be updated",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "book object",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "properties": {
+                                "name" : {
+                                    "type": "string" 
+                                 } 
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/delete/{id}" : {
+            "delete" : {
+                "summary" : "delete the book",
+                "description": "delete the book",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "book id that needs to be updated",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "delete successful",
+                        "schema": {
+                            "type": "array"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        }
+    }
+}

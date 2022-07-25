@@ -21,3 +21,8 @@
 - get : sent params cars 
 - post : sent result sold car
 - get : admin get all list car sold
+#### analysis : 
+business models => 1.report - 2.user
+#### asset : 
+Dblite3 
+nestJS

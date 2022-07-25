@@ -1,4 +1,4 @@
-# Demo NestJS framework with Mongodb :start2:
+# Demo NestJS framework with Mongodb :star2:
 
 ### Topic : Purchase old car auto valuation  :truck:
 

@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { DatabaseModule } from "./configs/database/database.module";
 
 @Module({
   // config path env
-  imports: [ConfigModule.forRoot()],
+  imports: [ConfigModule.forRoot(), DatabaseModule],
   controllers: [],
-  providers: [],
+  providers: [DatabaseModule],
 })
 export class AppModule { }

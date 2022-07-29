@@ -7,7 +7,7 @@ export default class Repository<T extends mongoose.Document> implements ICommand
     private _model: mongoose.Model<T>;
     private _pagination: Pagination<T>;
 
-    constructor(schemaModel: mongoose.Model<T>, paging: Pagination<T>) {
+    constructor(schemaModel: mongoose.Model<T>, paging?: Pagination<T>) {
         this._model = schemaModel;
         this._pagination = paging;
     }

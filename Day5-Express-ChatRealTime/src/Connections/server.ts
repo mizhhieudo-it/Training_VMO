@@ -1,9 +1,10 @@
 import { EventEmitter } from "events";
 import express from "express";
-import * as https from "https";
+import * as http from "http";
+import { } from "fs";
 const eventEmitter = new EventEmitter();
 const serverPort = express();
-const server = https.createServer(serverPort);
+const server = http.createServer(serverPort);
 eventEmitter.on("startServer", async () => {
   try {
     server.listen(3000, () => {

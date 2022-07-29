@@ -38,12 +38,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.serverPort = exports.eventEmitter = exports.server = void 0;
 const events_1 = require("events");
 const express_1 = __importDefault(require("express"));
-const https = __importStar(require("https"));
+const http = __importStar(require("http"));
 const eventEmitter = new events_1.EventEmitter();
 exports.eventEmitter = eventEmitter;
 const serverPort = (0, express_1.default)();
 exports.serverPort = serverPort;
-const server = https.createServer(serverPort);
+const server = http.createServer(serverPort);
 exports.server = server;
 eventEmitter.on("startServer", () => __awaiter(void 0, void 0, void 0, function* () {
     try {

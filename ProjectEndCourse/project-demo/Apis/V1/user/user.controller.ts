@@ -11,6 +11,7 @@ import { Request } from "express";
 import { Roles } from "Shared/Auth/Decorator/roles.decorator";
 import { Role } from "Shared/Auth/Roles/role.enum";
 import { RolesGuard } from "Shared/Auth/guards/checkRole.guards";
+import { Public } from "Shared/Auth/Decorator/checkOpenRoute.decorator";
 
 
 @Controller(USER_CONST.MODEL_NAME)
@@ -21,11 +22,11 @@ export class UserController {
 
     @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
     @Get()
-    @UseGuards(JwtAuthGuard)
     @UseGuards(RolesGuard)
-    @Roles(Role.Admin)
+    @Roles(Role.User)
+    // @Public() // true 
     async getListUser(@Req() request: Request) {
-        log(request.user)
+
         return this._userService.GetAllAsync();
     }
 

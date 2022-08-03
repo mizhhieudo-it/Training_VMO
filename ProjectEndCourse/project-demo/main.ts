@@ -4,6 +4,12 @@ import configApp from "./Configs/server.config";
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   configApp(app);
-  await app.listen(3000);
+  try {
+    await app.listen(3000);
+    console.log(`Port listening on 3000 ☕️☕️☕️...`);
+
+  } catch (error) {
+
+  }
 }
 bootstrap();

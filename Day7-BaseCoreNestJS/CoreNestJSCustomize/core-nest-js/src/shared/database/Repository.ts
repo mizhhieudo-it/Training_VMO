@@ -26,8 +26,7 @@ export default class Repository<T extends mongoose.Document> implements ICommand
     }
     AsyncGetAll = async (): Promise<T[]> => {
         try {
-            let result = await this._model.find();
-            this._pagination.Paging();
+            let result = await this._model.find({});
             return Promise.resolve(result);
         } catch (error) {
             return Promise.reject(error)

@@ -6,7 +6,6 @@ import * as bcrypt from 'bcrypt';
 import { UserDocument, User } from './user.schema';
 import mongoose, { Schema } from 'mongoose';
 import { UpdateUserDto } from './dto/UpdateUser.dto';
-import { log } from 'console';
 @Injectable()
 export class UserService {
     constructor(private _userRepo: UserRepository) {

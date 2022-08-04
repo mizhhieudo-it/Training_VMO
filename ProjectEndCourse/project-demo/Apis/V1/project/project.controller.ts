@@ -10,7 +10,7 @@ import { projectService } from './project.service';
 @Controller(PROJECT_CONST.MODEL_NAME)
 @ApiTags(PROJECT_CONST.MODEL_NAME)
 export class projectController {
-    constructor(private readonly _repositoryService: projectService) {
+    constructor(private readonly _projectService: projectService) {
 
     }
     @Public()
@@ -18,7 +18,7 @@ export class projectController {
     @Post()
     async CreateAsync(@Body() project: CreateProjectDto,) {
         try {
-            let result = await this._repositoryService.CreateAsync(project);
+            let result = await this._projectService.CreateAsync(project);
             return result;
         } catch (error) {
             throw new BadRequestException(error.message);
@@ -30,7 +30,7 @@ export class projectController {
     @Delete('/:projectId')
     async DeleteAsync(@Param('projectId') userId: string) {
         try {
-            let result = await this._repositoryService.RemoveAsync(userId);
+            let result = await this._projectService.RemoveAsync(userId);
             return result;
         } catch (error) {
             throw new BadRequestException(error.message);
@@ -42,7 +42,7 @@ export class projectController {
     @Patch('/:projectId')
     async UpdateAsync(@Param('projectId') projectId: string, @Body() project: UpdateProjectDto) {
         try {
-            let result = await this._repositoryService.UpdateAsync(projectId, project);
+            let result = await this._projectService.UpdateAsync(projectId, project);
             return result;
         } catch (error) {
             throw new BadRequestException(error.message);
@@ -54,7 +54,7 @@ export class projectController {
     @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
     async GetAllAsync() {
         try {
-            let result = await this._repositoryService.GetAllAsync();
+            let result = await this._projectService.GetAllAsync();
             return result;
         } catch (error) {
             throw new BadRequestException(error.message);
@@ -66,7 +66,7 @@ export class projectController {
     @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
     async GetByIdAsync(@Param('projectId') projectId: string) {
         try {
-            let result = await this._repositoryService.GetById(projectId);
+            let result = await this._projectService.GetById(projectId);
             return result
         } catch (error) {
             throw new BadRequestException(error.message);

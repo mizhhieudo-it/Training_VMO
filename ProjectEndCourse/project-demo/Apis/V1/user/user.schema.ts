@@ -16,8 +16,9 @@ export class User {
     @Prop({ type: String, length: 255, unique: true, required: true })
     email: string;
 
-    @Exclude()
+
     @Prop({ type: String, length: 255, required: true })
+    @Exclude()
     password: string;
 
     @Prop({ type: String, length: 255, default: '' })

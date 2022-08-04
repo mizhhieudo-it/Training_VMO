@@ -1,4 +1,5 @@
-import { INestApplication, Version, VersioningType } from '@nestjs/common';
+import { ClassSerializerInterceptor, INestApplication, Version, VersioningType } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 //=> attach some options
 export default function (app: INestApplication) {
@@ -15,14 +16,17 @@ export default function (app: INestApplication) {
     })
     /*
     config some middleware methods
-
+    
     */
+    // app.useGlobalInterceptors(
+    //     new ClassSerializerInterceptor(app.get(Reflector))
+    // );
     if (process.env.NODE_ENV !== 'production') {
         const config = new DocumentBuilder()
             .setTitle('Project-Demo')
             .setDescription('APIs documents for Project-Demo')
             .setVersion('1.0')
-            .addBasicAuth().build();
+            .addBearerAuth().build();
         const document = SwaggerModule.createDocument(app, config);
         SwaggerModule.setup('api', app, document);
     }

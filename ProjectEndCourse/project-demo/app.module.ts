@@ -7,10 +7,11 @@ import { UserModule } from 'Apis/V1/user/user.module';
 import { AuthModule } from 'Shared/Auth/auth.module';
 import { ProjectModule } from 'Apis/V1/project/project.module';
 import { StatusProjectModule } from 'Apis/V1/statusProject/stautsProject.module';
+import { technologyModule } from 'Apis/V1/technology/technology.module';
 
 
 @Module({
-  imports: [MongooseModule.forRoot('mongodb://localhost:27017/Project-Demo'), testModule, UserModule, AuthModule, ProjectModule, StatusProjectModule],
+  imports: [MongooseModule.forRoot('mongodb://localhost:27017/Project-Demo'), technologyModule, testModule, UserModule, AuthModule, ProjectModule, StatusProjectModule],
   controllers: [],
   providers: [{
     provide: APP_GUARD,

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } from "@nestjs/common";
+import { Body, ClassSerializerInterceptor, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards, UseInterceptors } from "@nestjs/common";
 import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { JwtAuthGuard } from "Shared/Auth/guards/jwt.guards";
 import { SWAGGER_RESPONSE } from "Shared/Common/swagger-respon/swaggerCheck";
@@ -22,14 +22,15 @@ export class UserController {
 
     @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
     @Get()
-    @UseGuards(RolesGuard)
-    @Roles(Role.User)
-    // @Public() // true 
+    // @UseGuards(RolesGuard)
+    // @Roles(Role.User)
+    @Public() // true 
     async getListUser(@Req() request: Request) {
 
         return this._userService.GetAllAsync();
     }
 
+    @Public()
     @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
     @Get('/:userId')
     public getUserById(@Param('userId') userId: string) {

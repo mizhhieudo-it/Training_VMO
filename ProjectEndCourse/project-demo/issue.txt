@@ -1,0 +1,7 @@
+// login with google,git-Oauth 2
+// phân quyền theo permission
+// logout => delete token 
+// xác thực 2 lớp - use redis =>  
+// upload files  
+// docker fix
+//  

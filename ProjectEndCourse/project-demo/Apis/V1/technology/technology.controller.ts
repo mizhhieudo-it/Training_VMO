@@ -51,7 +51,7 @@ export class TechController {
     }
 
     @Get()
-    @Public()
+    // @Public()
     @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
     async GetAllAsync() {
         try {

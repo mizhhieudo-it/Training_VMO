@@ -12,7 +12,8 @@ import { technologyService } from "./technology.service";
         name: TECH_CONST.MODEL_NAME,
         schema: technologySchema
     }])],
-    controllers: [TechController]
+    controllers: [TechController],
+    exports: [TechRepository]
 
 })
 export class technologyModule {

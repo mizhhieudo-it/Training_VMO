@@ -39,6 +39,7 @@ export class UserController {
 
     @ApiOkResponse(USER_SWAGGER_RESPONSE.CREATE_USER)
     @Post()
+    @Public()
     public createUser(@Body() createUserDto: CreateUserDto) {
         return this._userService.CreateAsync(createUserDto);
     }

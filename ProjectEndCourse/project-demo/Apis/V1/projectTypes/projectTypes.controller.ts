@@ -2,19 +2,19 @@ import { BadRequestException, Body, Controller, Delete, Get, Param, Patch, Post 
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { Public } from 'Shared/Auth/Decorator/checkOpenRoute.decorator';
 import { SWAGGER_RESPONSE } from 'Shared/Common/swagger-respon/swaggerCheck';
-import { CreateProjectDto } from './dto/CreateProject.dto';
-import { UpdateProjectDto } from './dto/UpdateProject.dto';
-import { PROJECT_CONST, PROJECT_SWAGGER_RESPONSE } from './project.const';
-import { projectService } from './project.service';
+import { CreateProjectDto } from './dto/createProjectTypes.dto';
+import { UpdateProjectDto } from './dto/updateProjectTypes.dto';
+import { PROJECT_TYPE_CONST, PROJECT_TYPE_SWAGGER_RESPONSE } from './projectTypes.const';
+import { projectTypesService } from './projectTypes.service';
 
-@Controller(PROJECT_CONST.MODEL_NAME)
-@ApiTags(PROJECT_CONST.MODEL_NAME)
-export class projectController {
-    constructor(private readonly _projectService: projectService) {
+@Controller(PROJECT_TYPE_CONST.MODEL_NAME)
+@ApiTags(PROJECT_TYPE_CONST.MODEL_NAME)
+export class projectTypesController {
+    constructor(private readonly _projectService: projectTypesService) {
 
     }
     @Public()
-    @ApiOkResponse(PROJECT_SWAGGER_RESPONSE.CREATE_PROJECT)
+    @ApiOkResponse(PROJECT_TYPE_SWAGGER_RESPONSE.CREATE_PROJECT)
     @Post()
     async CreateAsync(@Body() project: CreateProjectDto,) {
         try {

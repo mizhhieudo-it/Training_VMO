@@ -1,18 +1,18 @@
 import { Injectable } from "@nestjs/common";
-import { CreateProjectDto } from "./dto/CreateProject.dto";
-import { ProjectRepository } from "./project.repository";
-import { ProjectDocument } from "./project.schema";
+import { CreateProjectDto } from "./dto/createProjectTypes.dto";
 import mongoose from 'mongoose';
-import { UpdateProjectDto } from "./dto/UpdateProject.dto";
+import { UpdateProjectDto } from "./dto/updateProjectTypes.dto";
+import { ProjectTypesRepository } from "./projectTypes.repository";
+import { ProjectTypesDocument } from "./projectTypes.schema";
 
 @Injectable()
-export class projectService {
-    constructor(private readonly _projectRepository: ProjectRepository) { }
+export class projectTypesService {
+    constructor(private readonly _projectRepository: ProjectTypesRepository) { }
 
     async CreateAsync(project: CreateProjectDto) {
         const { name, status } = project;
         try {
-            let result = await this._projectRepository.store(<ProjectDocument>{ name, status });
+            let result = await this._projectRepository.store(<ProjectTypesDocument>{ name, status });
             return Promise.resolve(result);
         } catch (error) {
             return Promise.reject(error);
@@ -30,7 +30,7 @@ export class projectService {
         let convertId = new mongoose.Types.ObjectId(id);
         const { status } = item;
         try {
-            let result = await this._projectRepository.update(convertId, <ProjectDocument>{ status });
+            let result = await this._projectRepository.update(convertId, <ProjectTypesDocument>{ status });
             return Promise.resolve(result);
         } catch (error) {
             return Promise.reject(error);

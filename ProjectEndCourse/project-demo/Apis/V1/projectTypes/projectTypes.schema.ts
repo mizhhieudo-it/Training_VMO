@@ -1,12 +1,11 @@
 import { Prop, SchemaFactory, Schema } from '@nestjs/mongoose';
 import { Exclude } from 'class-transformer';
 import { Document } from 'mongoose';
-import { PROJECT_CONST } from './project.const';
 
-export type ProjectDocument = Project & Document;
+export type ProjectTypesDocument = ProjectTypes & Document;
 
-@Schema({ timestamps: true, collection: PROJECT_CONST.MODEL_NAME })
-export class Project {
+@Schema({ timestamps: true })
+export class ProjectTypes {
 
     @Prop({ type: String, length: 255, unique: true, required: true })
     name: string;
@@ -15,4 +14,4 @@ export class Project {
     status: boolean;
 }
 
-export const projectSchema = SchemaFactory.createForClass(Project);
+export const projectTypeSchema = SchemaFactory.createForClass(ProjectTypes);

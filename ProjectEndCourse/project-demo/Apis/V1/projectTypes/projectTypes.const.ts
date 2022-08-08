@@ -1,11 +1,11 @@
 import { swaggerSchemaExample } from "Shared/utils/swagger_schema";
 
-export const PROJECT_CONST = {
-    MODEL_NAME: 'PROJECT',
-    MODEL_PROVIDER: 'PROJECT_MODEL',
+export const PROJECT_TYPE_CONST = {
+    MODEL_NAME: 'PROJECT_TYPE',
+    MODEL_PROVIDER: 'PROJECT_TYPE_MODEL',
 };
 
-export const PROJECT_SWAGGER_RESPONSE = {
+export const PROJECT_TYPE_SWAGGER_RESPONSE = {
     CREATE_PROJECT: swaggerSchemaExample(
         {
             data: {

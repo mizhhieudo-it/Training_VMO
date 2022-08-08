@@ -35,6 +35,22 @@ export class User {
 
     @Prop({ default: ['user'] })
     public roles: string[];
+
+    @Prop({ type: String })
+    public refreshToken: string ;
+
+    // login with third party authentication
+
+    @Prop({ type: String })
+    public idGithub : string ;
+
+    @Prop({ type: String })
+    public idFacebook : string ;
+
+    @Prop({ type: String })
+    public idGoogle : string ;
+
+
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

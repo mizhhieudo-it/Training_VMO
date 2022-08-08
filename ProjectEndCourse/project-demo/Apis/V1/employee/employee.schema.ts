@@ -11,7 +11,7 @@ export class Employee {
     @Prop({ type: String, length: 255, required: true })
     name: string;
 
-    @Prop({ type: String, length: 255, default: null })
+    @Prop({ type: Date })
     dateOfBirth: Date;
 
     @Prop({ type: String, length: 255, unique: true, required: true })

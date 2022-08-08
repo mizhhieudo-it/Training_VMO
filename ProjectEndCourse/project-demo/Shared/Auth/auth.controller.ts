@@ -5,6 +5,7 @@ import { AuthService } from "./auth.service";
 import { Public } from "./Decorator/checkOpenRoute.decorator";
 import { LoginResponseDto } from "./dtos/login-respon.dto";
 import { LoginDto } from "./dtos/login.dto";
+import { refreshTokenDto } from "./dtos/refresh-token.dto";
 
 @ApiTags('Authentication')
 @Controller('accounts')
@@ -22,5 +23,17 @@ export class AuthController {
     @HttpCode(HttpStatus.OK)
     Login(@Body() account: LoginDto): Promise<LoginResponseDto> {
         return this._authService.LoginService(account);
+    }
+    @ApiOkResponse(AUTH_SWAGGER_RESPONSE.LOGIN_SUCCESS)
+    @ApiBadRequestResponse(AUTH_SWAGGER_RESPONSE.BAD_REQUEST_EXCEPTION)
+    @ApiNotFoundResponse(AUTH_SWAGGER_RESPONSE.LOGIN_FAIL)
+    @ApiInternalServerErrorResponse(AUTH_SWAGGER_RESPONSE.INTERNAL_SERVER_EXCEPTION)
+    @Post('refresh-token')
+    @Public()
+    @HttpCode(HttpStatus.OK)
+    RefreshToken(@Body() token: refreshTokenDto): Promise<LoginResponseDto>{
+        console.log(token);
+        
+        return this._authService.AutoGenerateToken(token);
     }
 }

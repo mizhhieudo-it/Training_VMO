@@ -6,6 +6,8 @@ export const AUTH_SWAGGER_RESPONSE = {
             data: {
                 accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9',
                 accessTokenExpire: 86400,
+                // refreshToken : 'eyJhbGciOiJIUzI',
+                // refreshTokenExpire: 186400,
             },
             statusCode: 200,
         },

@@ -4,6 +4,8 @@ export class UpdateUserDto {
     @ApiProperty({ example: 'Mizh Hieu Do' })
     name?: string;
 
+    refreshToken?: string ;
+
     issuedBy?: string;
 
     issuedDate?: string;

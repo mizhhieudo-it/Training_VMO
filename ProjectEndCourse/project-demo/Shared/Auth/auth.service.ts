@@ -1,3 +1,4 @@
+import { refreshTokenDto } from './dtos/refresh-token.dto';
 import { JwtPayload } from './payloads/JWTpayload';
 import { NotFoundException, BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { ERROR } from 'Shared/Common/err-code.const';
@@ -7,8 +8,9 @@ import { LoginDto } from './dtos/login.dto';
 import { ValidatorService } from './validators/check-expiration-time';
 import * as bcrypt from 'bcrypt';
 import { USER_CONST } from '../../Apis/V1/user/user.const';
-import { JWT_CONFIG } from 'Configs/constant.config';
+import { JWT_CONFIG, Refersh_JWT_CONFIG } from 'Configs/constant.config';
 import { JwtService } from '@nestjs/jwt';
+import { UpdateUserDto } from 'Apis/V1/user/dto/UpdateUser.dto';
 
 @Injectable()
 export class AuthService {
@@ -34,15 +36,39 @@ export class AuthService {
                     roles: isUserExits.roles
                 }
                 const jwtExpiresIn = parseInt(JWT_CONFIG.expiresIn);
+                const refreshTokenExpiresIn = parseInt(Refersh_JWT_CONFIG.expiresIn);
+                let refreshToken = await this.jwtService.signAsync(payload, { secret: Refersh_JWT_CONFIG.secret || 'hieuthunhat', expiresIn: refreshTokenExpiresIn || 12592000 }) ; 
+                 await this._UserService.UpdateAsync(isUserExits.userId,<UpdateUserDto>{refreshToken}) ; 
+                
                 return {
                     accessToken: await this.jwtService.signAsync(payload, { secret: JWT_CONFIG.secret || 'hieuthunhat', expiresIn: jwtExpiresIn || 2592000 }),
                     accessTokenExpire: jwtExpiresIn || 2592000,
+                    refreshToken: refreshToken,
+                    refreshTokenExpire: refreshTokenExpiresIn || 12592000
                 };
             }
         } catch (error) {
             return Promise.reject(error);
         }
+    }
 
+    async AutoGenerateToken(refreshToken: refreshTokenDto): Promise<LoginResponseDto>{
+        const {token} = refreshToken
+        const decode = await this.jwtService.verify(token, {secret: JWT_CONFIG.secret || 'hieuthunhat' });  
 
+        if (!decode) {
+            return Promise.reject('Invalid token');
+        }else{
+            let payload: JwtPayload = {
+                userId: decode.userId,
+                email: decode.email,
+                roles: decode.roles
+            }
+            const jwtExpiresIn = parseInt(JWT_CONFIG.expiresIn);
+            return {
+                accessToken: await this.jwtService.signAsync(payload, { secret: JWT_CONFIG.secret || 'hieuthunhat', expiresIn: jwtExpiresIn || 2592000 }),
+                accessTokenExpire: jwtExpiresIn || 2592000,
+            };
+        }
     }
 }

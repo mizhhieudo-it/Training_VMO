@@ -1,25 +1,24 @@
 import { BadRequestException, Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
 import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { Public } from "Shared/Auth/Decorator/checkOpenRoute.decorator";
-import { EMPLOYEE_CONST, PROJECT_SWAGGER_RESPONSE } from "./employee.const";
-import { EmployeeService } from "./employee.service";
-import { EmployeeDocument } from './employee.schema';
-import { CreateEmployeeDto } from "./dtos/CreateEmployee.dto";
 import { SWAGGER_RESPONSE } from "Shared/Common/swagger-respon/swaggerCheck";
-import { UpdateEmployeeDto } from "./dtos/UpdateEmployee.dto";
+import { CUSTOMER_CONST, CUSTOMER_CONST_SWAGGER_RESPONSE } from "./customer.const";
+import { customerService } from "./customer.service";
+import { createCustomerDto } from "./dtos/createCustomer.dto";
+import { updateCustomerDto } from "./dtos/updateCustomer.dto";
 
-@Controller(EMPLOYEE_CONST.MODEL_NAME)
-@ApiTags(EMPLOYEE_CONST.MODEL_NAME)
-export class employeeController {
-    constructor(private _employeeService: EmployeeService) {
+@Controller(CUSTOMER_CONST.MODEL_NAME)
+@ApiTags(CUSTOMER_CONST.MODEL_NAME)
+export class customerController {
+    constructor(private _customerService: customerService) {
 
     }
     @Public()
-    @ApiOkResponse(PROJECT_SWAGGER_RESPONSE.CREATE_PROJECT)
+    @ApiOkResponse(CUSTOMER_CONST_SWAGGER_RESPONSE.CREATE_CUSTOMER)
     @Post()
-    async CreateAsync(@Body() employee: CreateEmployeeDto) {
+    async CreateAsync(@Body() employee: createCustomerDto) {
         try {
-            let result = await this._employeeService.CreateAsync(employee);
+            let result = await this._customerService.CreateAsync(employee);
             return result;
         } catch (error) {
             throw new BadRequestException(error.message);
@@ -31,19 +30,7 @@ export class employeeController {
     @Get()
     async GetAllAsync() {
         try {
-            let result = await this._employeeService.GetAllAsync();
-            return result;
-        } catch (error) {
-            throw new BadRequestException(error.message);
-        }
-    }
-
-    @Public()
-    @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
-    @Get('ViewCreate')
-    async ViewCreateAsync() {
-        try {
-            let result = await this._employeeService.ViewCreate();
+            let result = await this._customerService.GetAllAsync();
             return result;
         } catch (error) {
             throw new BadRequestException(error.message);
@@ -54,7 +41,7 @@ export class employeeController {
     @Get('/:idEmployee')
     async FindByIdAsync(@Param('idEmployee') id: string) {
         try {
-            let result = await this._employeeService.GetByIdAsync(id);
+            let result = await this._customerService.GetById(id);
             return result;
         } catch (error) {
             throw new BadRequestException(error.message);
@@ -66,7 +53,7 @@ export class employeeController {
     @Delete('/:idEmployee')
     async RemoveAsync(@Param('idEmployee') id: string) {
         try {
-            let result = await this._employeeService.DeleteAsync(id);
+            let result = await this._customerService.RemoveAsync(id);
             return result;
         } catch (error) {
             throw new BadRequestException(error.message);
@@ -76,9 +63,9 @@ export class employeeController {
     @Public()
     @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
     @Patch('/:idEmployee')
-    async UpdateAsync(@Param('idEmployee') id: string, @Body() employee: UpdateEmployeeDto) {
+    async UpdateAsync(@Param('idEmployee') id: string, @Body() customer: updateCustomerDto) {
         try {
-            let result = await this._employeeService.UpdateAsync(id, employee);
+            let result = await this._customerService.UpdateAsync(id, customer);
             return result;
         } catch (error) {
             throw new BadRequestException(error.message);

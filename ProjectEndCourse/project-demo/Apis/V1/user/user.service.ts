@@ -70,7 +70,7 @@ export class UserService {
         }
     }
     async UpdateAsync(userId: string, updateUserDto: UpdateUserDto) {
-        const { name, issuedBy, issuedDate, daysInTrial } = updateUserDto;
+        const { name, issuedBy, issuedDate, daysInTrial , refreshToken } = updateUserDto;
         let isUserExits = await this._userRepo.findByCodition({ userId });
         if (!isUserExits) {
             throw new BadRequestException(ERROR.USER_NOT_FOUND.MESSAGE)
@@ -80,6 +80,7 @@ export class UserService {
         if (issuedBy) updateData['issuedBy'] = issuedBy;
         if (issuedDate) updateData['issuedDate'] = issuedDate;
         if (daysInTrial) updateData['daysInTrial'] = daysInTrial;
+        if (refreshToken) updateData['refreshToken'] = refreshToken;
         try {
             let result = await this._userRepo.update(isUserExits._id, updateData);
             return Promise.resolve(result);

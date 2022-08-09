@@ -1,4 +1,5 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req, UseGuards } from "@nestjs/common";
+import { AuthGuard } from "@nestjs/passport";
 import { ApiBadRequestResponse, ApiInternalServerErrorResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { AUTH_SWAGGER_RESPONSE } from "./auth.constant";
 import { AuthService } from "./auth.service";
@@ -6,11 +7,12 @@ import { Public } from "./Decorator/checkOpenRoute.decorator";
 import { LoginResponseDto } from "./dtos/login-respon.dto";
 import { LoginDto } from "./dtos/login.dto";
 import { refreshTokenDto } from "./dtos/refresh-token.dto";
+import { GoogleService } from "./LoginThirdParty/Google/google.service";
 
 @ApiTags('Authentication')
 @Controller('accounts')
 export class AuthController {
-    constructor(private _authService: AuthService) {
+    constructor(private _authService: AuthService,private _googleService: GoogleService) {
 
     }
 
@@ -36,4 +38,19 @@ export class AuthController {
         
         return this._authService.AutoGenerateToken(token);
     }
+
+    @Public()
+    @UseGuards(AuthGuard("google"))
+    @Get("google")
+    async signInWithGoogle() {}
+
+
+    @Public()
+    @UseGuards(AuthGuard("google"))
+    @Get("google/redirect")
+    async signInWithGoogleRedirect(@Req() req) {
+     return this._googleService.signInWithGoogle(req);
+    }
+
+    
 }

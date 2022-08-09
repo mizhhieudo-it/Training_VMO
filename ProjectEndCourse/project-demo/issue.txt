@@ -1,7 +1,7 @@
-// login with google,git-Oauth 2
-// phân quyền theo permission
+// login with google,git-Oauth 2 (done)
+// phân quyền theo permission 
 // logout => delete token 
 // xác thực 2 lớp - use redis =>  
 // upload files  
-// docker fix
-//  qweqweqw
+// docker config
+// fix password required for login with third-party

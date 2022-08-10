@@ -11,13 +11,24 @@ import { technologyModule } from 'Apis/V1/technology/technology.module';
 import { employeeModule } from 'Apis/V1/employee/employee.module';
 import { customerModule } from 'Apis/V1/customer/customer.module';
 
-
 @Module({
-  imports: [MongooseModule.forRoot('mongodb://localhost:27017/Project-Demo'), technologyModule, testModule, UserModule, AuthModule, ProjectModule, StatusProjectModule, employeeModule,customerModule],
+  imports: [
+    MongooseModule.forRoot('mongodb://localhost:27017/Project-Demo'),
+    technologyModule,
+    testModule,
+    UserModule,
+    AuthModule,
+    ProjectModule,
+    StatusProjectModule,
+    employeeModule,
+    customerModule,
+  ],
   controllers: [],
-  providers: [{
-    provide: APP_GUARD,
-    useClass: JwtAuthGuard,
-  },],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
-export class AppModule { }
+export class AppModule {}

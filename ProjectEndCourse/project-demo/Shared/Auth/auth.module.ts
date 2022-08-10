@@ -7,12 +7,13 @@ import { AuthService } from "./auth.service";
 import { GoogleService } from "./LoginThirdParty/Google/google.service";
 import { GoogleStrategy } from "./strategies/googleStrategy.strategy";
 import { JwtStrategy } from "./strategies/jwt.strategy";
+import { TwoFactorAuthenticationService } from "./Two-FactoryAuthentication/TwoFactoryAuthen.service";
 import { ValidatorService } from "./validators/check-expiration-time";
 
 
 @Module({
     imports: [UserModule],
-    providers: [ValidatorService, AuthService, JwtService, JwtStrategy,GoogleService,GoogleStrategy,GoogleService],
+    providers: [ValidatorService, AuthService, JwtService, JwtStrategy,GoogleService,GoogleStrategy,GoogleService,TwoFactorAuthenticationService],
     controllers: [AuthController],
 })
 export class AuthModule { }

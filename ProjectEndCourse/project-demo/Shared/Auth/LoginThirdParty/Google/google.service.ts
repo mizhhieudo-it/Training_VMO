@@ -40,12 +40,6 @@ export class GoogleService {
           return this._authService.LoginService(<LoginDto>{username:acccount.email});
         }
       }
-
-    }
-
-    return {
-      message: 'User information from google',
-      user: req.user
     }
   }
 }

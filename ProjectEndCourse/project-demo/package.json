@@ -23,6 +23,7 @@
   "dependencies": {
     "@nestjs-modules/mailer": "^1.8.1",
     "@nestjs/common": "^9.0.0",
+    "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/jwt": "^9.0.0",
     "@nestjs/mongoose": "^9.2.0",

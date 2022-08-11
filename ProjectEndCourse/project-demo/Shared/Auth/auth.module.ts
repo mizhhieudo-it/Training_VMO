@@ -12,7 +12,7 @@ import { TwoFactorAuthenticationService } from './Two-FactoryAuthentication/TwoF
 import { ValidatorService } from './validators/check-expiration-time';
 
 @Module({
-  imports: [UserModule],
+  imports: [UserModule, MailModule],
   providers: [
     MailModule,
     ValidatorService,

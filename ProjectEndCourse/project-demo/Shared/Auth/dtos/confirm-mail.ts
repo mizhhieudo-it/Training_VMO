@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class confirmMail {
   @ApiProperty({
@@ -8,4 +8,8 @@ export class confirmMail {
   @IsNotEmpty()
   @IsEmail()
   mail: string;
+}
+export class ActiveAccount {
+  @IsString()
+  token: string;
 }

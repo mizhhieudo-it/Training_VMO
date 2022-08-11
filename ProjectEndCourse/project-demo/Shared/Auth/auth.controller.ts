@@ -5,7 +5,9 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Param,
   Post,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -20,7 +22,7 @@ import {
 import { AUTH_SWAGGER_RESPONSE } from './auth.constant';
 import { AuthService } from './auth.service';
 import { Public } from './Decorator/checkOpenRoute.decorator';
-import { confirmMail } from './dtos/confirm-mail';
+import { ActiveAccount, confirmMail } from './dtos/confirm-mail';
 import { LoginResponseDto } from './dtos/login-respon.dto';
 import { LoginDto } from './dtos/login.dto';
 import { refreshTokenDto } from './dtos/refresh-token.dto';
@@ -80,7 +82,23 @@ export class AuthController {
   async confirmEmail(@Body() email: confirmMail) {
     const { mail } = email;
     try {
-      await this._twoFactorAuthenticationService.confirmAccount(mail);
+      let result = await this._twoFactorAuthenticationService.confirmAccount(
+        mail,
+      );
+      return result;
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
+  }
+
+  @Public()
+  @Get('active')
+  async UpdateActiveAccount(@Query('access_token') token: string) {
+    try {
+      let result = await this._twoFactorAuthenticationService.activeAccount(
+        token,
+      );
+      return result;
     } catch (error) {
       throw new BadRequestException(error);
     }

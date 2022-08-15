@@ -11,24 +11,21 @@ import {
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { Public } from 'Shared/Auth/Decorator/checkOpenRoute.decorator';
 import { SWAGGER_RESPONSE } from 'Shared/Common/swagger-respon/swaggerCheck';
-import { CreateStatusProjectDto } from './dto/CreateStatusProject.dto';
-import { UpdateUserDto } from './dto/UpdateProject.dto';
-import {
-  PROJECT_SWAGGER_RESPONSE,
-  STATUS_PROJECT_CONST,
-} from './statusProject.const';
-import { StautsProjectService } from './statusProject.service';
+import { CreateProjectDto } from './dto/CreateProject.dto';
+import { UpdateProjectDto } from './dto/UpdateProject.dto';
+import { PROJECT_CONST, PROJECT_SWAGGER_RESPONSE } from './project.const';
+import { ProjectService } from './project.service';
 
-@Controller(STATUS_PROJECT_CONST.MODEL_NAME)
-@ApiTags(STATUS_PROJECT_CONST.MODEL_NAME)
-export class statusProjectController {
-  constructor(private readonly _statusProjectService: StautsProjectService) {}
+@Controller(PROJECT_CONST.MODEL_NAME)
+@ApiTags(PROJECT_CONST.MODEL_NAME)
+export class ProjectController {
+  constructor(private readonly _projectService: ProjectService) {}
   @Public()
-  @ApiOkResponse(PROJECT_SWAGGER_RESPONSE.CREATE_STATUS_PROJECT)
+  @ApiOkResponse(PROJECT_SWAGGER_RESPONSE.CREATE_PROJECT)
   @Post()
-  async CreateAsync(@Body() project: CreateStatusProjectDto) {
+  async CreateAsync(@Body() project: CreateProjectDto) {
     try {
-      let result = await this._statusProjectService.CreateAsync(project);
+      let result = await this._projectService.CreateAsync(project);
       return result;
     } catch (error) {
       throw new BadRequestException(error.message);
@@ -38,9 +35,9 @@ export class statusProjectController {
   @Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Delete('/:status-projectId')
-  async DeleteAsync(@Param('projectId') userId: string) {
+  async DeleteAsync(@Param('status-projectId') userId: string) {
     try {
-      let result = await this._statusProjectService.RemoveAsync(userId);
+      let result = await this._projectService.DeleteAsync(userId);
       return result;
     } catch (error) {
       throw new BadRequestException(error.message);
@@ -52,13 +49,10 @@ export class statusProjectController {
   @Patch('/:status-projectId')
   async UpdateAsync(
     @Param('status-projectId') projectId: string,
-    @Body() project: CreateStatusProjectDto,
+    @Body() project: UpdateProjectDto,
   ) {
     try {
-      let result = await this._statusProjectService.UpdateAsync(
-        projectId,
-        project,
-      );
+      let result = await this._projectService.UpdateAsync(projectId, project);
       return result;
     } catch (error) {
       throw new BadRequestException(error.message);
@@ -70,7 +64,7 @@ export class statusProjectController {
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   async GetAllAsync() {
     try {
-      let result = await this._statusProjectService.GetAllAsync();
+      let result = await this._projectService.GetAllAsync();
       return result;
     } catch (error) {
       throw new BadRequestException(error.message);
@@ -78,11 +72,11 @@ export class statusProjectController {
   }
 
   @Public()
-  @Get('/:status-projectId')
+  @Get('/:projectId')
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   async GetByIdAsync(@Param('projectId') projectId: string) {
     try {
-      let result = await this._statusProjectService.GetById(projectId);
+      let result = await this._projectService.GetByIdAsync(projectId);
       return result;
     } catch (error) {
       throw new BadRequestException(error.message);

@@ -1,14 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
-export class CreateProjectDto {
-    @ApiProperty({ example: 'InProcess' })
-    @IsString()
-    @IsNotEmpty()
-    name: string;
+export class CreateStatusProjectDto {
+  @ApiProperty({ example: 'InProcess' })
+  @IsString()
+  @IsNotEmpty()
+  name: string;
 
-    @ApiProperty({ example: 'true' })
-    @IsBoolean()
-    @IsNotEmpty()
-    status: boolean;
+  @ApiProperty({ example: 'true' })
+  @IsBoolean()
+  @IsNotEmpty()
+  status: boolean;
 }

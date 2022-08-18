@@ -29,24 +29,6 @@ export class AuthService {
     const { username, password } = account;
     try {
       // isUserExits returns a UserDocument
-      /*
-      {
-    _id: '62f46d5060d156ed4485c471',
-    userId: '1de750c5-0214-4638-ab16-29fe2a4860a3',
-    name: 'HiếuĐỗ Minh',
-    email: 'minhhieudo.it@gmail.com',
-    password: '-',
-    issuedBy: '',
-    issuedDate: '',
-    daysInTrial: '',
-    isEmailConfirmed: true,
-    roles: ['user'],
-    idGoogle: '110615788478010332810',
-    __v: 0,
-  };
-      
-      */
-
       let isUserExits = await this._UserService.getByMail(username);
       if (
         isUserExits.idGoogle ||
@@ -59,25 +41,27 @@ export class AuthService {
           roles: isUserExits.roles,
         };
 
-        const jwtExpiresIn = parseInt(JWT_CONFIG.expiresIn);
-        const refreshTokenExpiresIn = parseInt(Refersh_JWT_CONFIG.expiresIn);
+        const jwtExpiresIn = parseInt(JWT_CONFIG.expiresIn) || 2592000;
+        const refreshTokenExpiresIn =
+          parseInt(Refersh_JWT_CONFIG.expiresIn) || 12592000;
         // sign token with UserDocument
         let refreshToken = await this.jwtService.signAsync(payload, {
           secret: Refersh_JWT_CONFIG.secret || 'hieuthunhat',
           expiresIn: refreshTokenExpiresIn || 12592000,
+        });
+        let accessToken = await this.jwtService.signAsync(payload, {
+          secret: JWT_CONFIG.secret || 'hieuthunhat',
+          expiresIn: jwtExpiresIn || 2592000,
         });
         await this._UserService.UpdateAsync(isUserExits.userId, <UpdateUserDto>{
           refreshToken,
         });
 
         return {
-          accessToken: await this.jwtService.signAsync(payload, {
-            secret: JWT_CONFIG.secret || 'hieuthunhat',
-            expiresIn: jwtExpiresIn || 2592000,
-          }),
-          accessTokenExpire: jwtExpiresIn || 2592000,
+          accessToken: accessToken,
+          accessTokenExpire: jwtExpiresIn,
           refreshToken: refreshToken,
-          refreshTokenExpire: refreshTokenExpiresIn || 12592000,
+          refreshTokenExpire: refreshTokenExpiresIn,
         };
       } else {
         if (
@@ -94,7 +78,10 @@ export class AuthService {
             throw new NotFoundException(ERROR.USER_NOT_FOUND.MESSAGE);
           }
         }
-        const checkPassword = bcrypt.compare(password, isUserExits.password);
+        const checkPassword = await bcrypt.compare(
+          password,
+          isUserExits.password,
+        );
         if (!checkPassword) {
           throw new BadRequestException(
             ERROR.USERNAME_OR_PASSWORD_INCORRECT.MESSAGE,
@@ -105,24 +92,26 @@ export class AuthService {
             email: isUserExits.email,
             roles: isUserExits.roles,
           };
-          const jwtExpiresIn = parseInt(JWT_CONFIG.expiresIn);
-          const refreshTokenExpiresIn = parseInt(Refersh_JWT_CONFIG.expiresIn);
+          const jwtExpiresIn = parseInt(JWT_CONFIG.expiresIn) || 2592000;
+          const refreshTokenExpiresIn =
+            parseInt(Refersh_JWT_CONFIG.expiresIn) || 12592000;
           let refreshToken = await this.jwtService.signAsync(payload, {
             secret: Refersh_JWT_CONFIG.secret || 'hieuthunhat',
             expiresIn: refreshTokenExpiresIn || 12592000,
+          });
+          let accessToken = await this.jwtService.signAsync(payload, {
+            secret: JWT_CONFIG.secret || 'hieuthunhat',
+            expiresIn: jwtExpiresIn || 2592000,
           });
           await this._UserService.UpdateAsync(isUserExits.userId, <
             UpdateUserDto
           >{ refreshToken });
 
           return {
-            accessToken: await this.jwtService.signAsync(payload, {
-              secret: JWT_CONFIG.secret || 'hieuthunhat',
-              expiresIn: jwtExpiresIn || 2592000,
-            }),
-            accessTokenExpire: jwtExpiresIn || 2592000,
+            accessToken: accessToken,
+            accessTokenExpire: jwtExpiresIn,
             refreshToken: refreshToken,
-            refreshTokenExpire: refreshTokenExpiresIn || 12592000,
+            refreshTokenExpire: refreshTokenExpiresIn,
           };
         }
       }
@@ -135,26 +124,31 @@ export class AuthService {
     refreshToken: refreshTokenDto,
   ): Promise<LoginResponseDto> {
     const { token } = refreshToken;
-    const decode = await this.jwtService.verify(token, {
-      secret: JWT_CONFIG.secret || 'hieuthunhat',
-    });
+    try {
+      const decode = await this.jwtService.verify(token, {
+        secret: JWT_CONFIG.secret || 'hieuthunhat',
+      });
 
-    if (!decode) {
-      return Promise.reject('Invalid token');
-    } else {
-      let payload: JwtPayload = {
-        userId: decode.userId,
-        email: decode.email,
-        roles: decode.roles,
-      };
-      const jwtExpiresIn = parseInt(JWT_CONFIG.expiresIn);
-      return {
-        accessToken: await this.jwtService.signAsync(payload, {
+      if (!decode) {
+        return Promise.reject('Invalid token');
+      } else {
+        let payload: JwtPayload = {
+          userId: decode.userId,
+          email: decode.email,
+          roles: decode.roles,
+        };
+        const jwtExpiresIn = parseInt(JWT_CONFIG.expiresIn) || 2592000;
+        let accessToken = await this.jwtService.signAsync(payload, {
           secret: JWT_CONFIG.secret || 'hieuthunhat',
-          expiresIn: jwtExpiresIn || 2592000,
-        }),
-        accessTokenExpire: jwtExpiresIn || 2592000,
-      };
+          expiresIn: jwtExpiresIn,
+        });
+        return {
+          accessToken,
+          accessTokenExpire: jwtExpiresIn,
+        };
+      }
+    } catch (error) {
+      return Promise.reject(error);
     }
   }
 }

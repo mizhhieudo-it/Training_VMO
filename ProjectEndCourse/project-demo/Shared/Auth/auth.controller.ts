@@ -59,10 +59,15 @@ export class AuthController {
   @Post('refresh-token')
   @Public()
   @HttpCode(HttpStatus.OK)
-  RefreshToken(@Body() token: refreshTokenDto): Promise<LoginResponseDto> {
-    console.log(token);
-
-    return this._authService.AutoGenerateToken(token);
+  async RefreshToken(
+    @Body() token: refreshTokenDto,
+  ): Promise<LoginResponseDto> {
+    try {
+      let tokenResult = await this._authService.AutoGenerateToken(token);
+      return tokenResult;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 
   @Public()

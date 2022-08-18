@@ -29,6 +29,24 @@ export class AuthService {
     const { username, password } = account;
     try {
       // isUserExits returns a UserDocument
+      /*
+      {
+    _id: '62f46d5060d156ed4485c471',
+    userId: '1de750c5-0214-4638-ab16-29fe2a4860a3',
+    name: 'HiếuĐỗ Minh',
+    email: 'minhhieudo.it@gmail.com',
+    password: '-',
+    issuedBy: '',
+    issuedDate: '',
+    daysInTrial: '',
+    isEmailConfirmed: true,
+    roles: ['user'],
+    idGoogle: '110615788478010332810',
+    __v: 0,
+  };
+      
+      */
+
       let isUserExits = await this._UserService.getByMail(username);
       if (
         isUserExits.idGoogle ||
@@ -40,6 +58,7 @@ export class AuthService {
           email: isUserExits.email,
           roles: isUserExits.roles,
         };
+
         const jwtExpiresIn = parseInt(JWT_CONFIG.expiresIn);
         const refreshTokenExpiresIn = parseInt(Refersh_JWT_CONFIG.expiresIn);
         // sign token with UserDocument

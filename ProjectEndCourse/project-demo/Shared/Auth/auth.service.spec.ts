@@ -82,7 +82,7 @@ describe('AuthService', () => {
       refreshToken: mockJWTtToken,
     });
   });
-  it('>> case login with local auth : Status:Failed - Incorrect Account', async () => {
+  it('>> case login with local auth : Status:Failure - Incorrect Account', async () => {
     serviceUserMock.getByMail.mockResolvedValue(
       Auth_CONST_SPEC.userWithLocalMock,
     );

@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import mongoose from 'mongoose';
-import { convertToObject } from 'Shared/Common/Mapper/convertToObjectId';
+import {
+  convertToObject,
+  convertToObjectWithArray,
+} from 'Shared/Common/Mapper/convertToObjectId';
 import { CustomerRepository } from '../customer/customer.repository';
 import { employeeRepository } from '../employee/employee.repository';
 import { StatusProjectRepository } from '../statusProject/stautsProject.repository';
@@ -48,10 +51,10 @@ export class ProjectService {
       startDate,
     } = project;
     try {
-      let convertTypeIdTech = convertToObject([...technology]);
-      let convertTypeIdStatus = convertToObject([...status]);
-      let convertTypeIdEmployee = convertToObject([...employee]);
-      let convertTypeIdCustomer = convertToObject([...customer]);
+      let convertTypeIdTech = convertToObjectWithArray([...technology]);
+      let convertTypeIdStatus = convertToObjectWithArray([...status]);
+      let convertTypeIdEmployee = convertToObjectWithArray([...employee]);
+      let convertTypeIdCustomer = convertToObjectWithArray([...customer]);
 
       let result = await this._projectRepo.store(<ProjectDocument>{
         name,
@@ -107,10 +110,10 @@ export class ProjectService {
       startDate,
     } = project;
     try {
-      let convertTypeIdTech = convertToObject([...technology]);
-      let convertTypeIdStatus = convertToObject([...status]);
-      let convertTypeIdEmployee = convertToObject([...employee]);
-      let convertTypeIdCustomer = convertToObject([...customer]);
+      let convertTypeIdTech = convertToObjectWithArray([...technology]);
+      let convertTypeIdStatus = convertToObjectWithArray([...status]);
+      let convertTypeIdEmployee = convertToObjectWithArray([...employee]);
+      let convertTypeIdCustomer = convertToObjectWithArray([...customer]);
 
       let result = await this._projectRepo.update(
         new mongoose.Types.ObjectId(id),

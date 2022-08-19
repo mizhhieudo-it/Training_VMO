@@ -4,7 +4,10 @@ import { CreateEmployeeDto } from './dtos/CreateEmployee.dto';
 import { employeeRepository } from './employee.repository';
 import { EmployeeDocument } from './employee.schema';
 import mongoose from 'mongoose';
-import { convertToObject } from 'Shared/Common/Mapper/convertToObjectId';
+import {
+  convertToObject,
+  convertToObjectWithArray,
+} from 'Shared/Common/Mapper/convertToObjectId';
 import { UpdateEmployeeDto } from './dtos/UpdateEmployee.dto';
 
 @Injectable()
@@ -35,7 +38,7 @@ export class EmployeeService {
       certificate,
     } = employee;
     try {
-      let convertTypeIdTech = convertToObject(technology);
+      let convertTypeIdTech = convertToObjectWithArray(technology);
       let result = await this._employeeRepo.store(<EmployeeDocument>{
         name,
         dateOfBirth,
@@ -93,7 +96,7 @@ export class EmployeeService {
       certificate,
     } = employee;
     try {
-      let convertTypeIdTech = convertToObject(technology);
+      let convertTypeIdTech = convertToObjectWithArray(technology);
       let result = await this._employeeRepo.update(convertId, <
         EmployeeDocument
       >{

@@ -29,5 +29,6 @@ import { employeeModule } from '../employee/employee.module';
     StatusProjectModule,
     employeeModule,
   ],
+  exports: [ProjectRepository],
 })
 export class projectModule {}

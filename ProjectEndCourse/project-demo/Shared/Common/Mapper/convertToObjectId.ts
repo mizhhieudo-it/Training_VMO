@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
-export function convertToObject(arr: string[]): mongoose.Types.ObjectId[] {
+export function convertToObjectWithArray(
+  arr: string[],
+): mongoose.Types.ObjectId[] {
   let result: mongoose.Types.ObjectId[] = [];
   if (arr.length > 0) {
     arr.forEach((x) => {
@@ -10,4 +12,8 @@ export function convertToObject(arr: string[]): mongoose.Types.ObjectId[] {
     throw new Error(`Arrray cannot be empty`);
   }
   return result;
+}
+export function convertToObject(idString: string): mongoose.Types.ObjectId {
+  let element = new mongoose.Types.ObjectId(idString);
+  return element;
 }

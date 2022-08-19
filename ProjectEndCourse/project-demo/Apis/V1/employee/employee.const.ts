@@ -1,27 +1,28 @@
-import { swaggerSchemaExample } from "Shared/utils/swagger_schema";
+import { swaggerSchemaExample } from 'Shared/utils/swagger_schema';
 
 export const EMPLOYEE_CONST = {
-    MODEL_NAME: 'EMPLOYEE',
-    MODEL_PROVIDER: 'EMPLOYEE_MODEL',
+  MODEL_NAME: 'EMPLOYEE',
+  MODEL_PROVIDER: 'EMPLOYEE_MODEL',
 };
 
 export const PROJECT_SWAGGER_RESPONSE = {
-    CREATE_PROJECT: swaggerSchemaExample(
-        {
-            data: {
-                name: 'employee1',
-                dateOfBirth: '2022-07-20T20:25:46.121Z',
-                address: 'Ha Noi , Co nhue , Bac Tu Liem',
-                citizenCode: '123456789999',
-                technology: ['62e8fd3b10a8e6faf8952e6e'],
-                experience: 6,
-                foreignLanguage: ['english'],
-                certificate: ['ielts 6.5'],
-                createdAt: '2022-07-20T20:25:46.121Z',
-                updatedAt: '2022-07-20T20:25:46.121Z',
-            },
-            statusCode: 201,
-        },
-        'Api example for create product',
-    ),
+  CREATE_PROJECT: swaggerSchemaExample(
+    {
+      data: {
+        name: 'Department',
+        description: 'for project NodeJS,Pythons,C#',
+        dateOfBirth: '8-5-2022',
+        manager: '62f9f2495f2eff1457583ac2',
+        menber: [
+          '62f9f409de04b2babee16479',
+          '62ff4539fdb38f48f9a41d19',
+          '62ff457c34bacc4d416e7116',
+          '62ff458834bacc4d416e7118',
+        ],
+        project: '62f9f69e9e94fe03b020d96d',
+      },
+      statusCode: 201,
+    },
+    'Api example for create product',
+  ),
 };

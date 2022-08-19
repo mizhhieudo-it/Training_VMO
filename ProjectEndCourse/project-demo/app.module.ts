@@ -12,6 +12,7 @@ import { employeeModule } from 'Apis/V1/employee/employee.module';
 import { customerModule } from 'Apis/V1/customer/customer.module';
 import { ConfigModule } from '@nestjs/config';
 import { projectModule } from 'Apis/V1/project/project.module';
+import { departmentModule } from 'Apis/V1/department/department.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { projectModule } from 'Apis/V1/project/project.module';
     employeeModule,
     customerModule,
     projectModule,
+    departmentModule,
   ],
   controllers: [],
   providers: [

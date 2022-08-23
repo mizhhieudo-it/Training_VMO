@@ -13,10 +13,7 @@ import { UpdateUserDto } from './dto/UpdateUser.dto';
 import { CloudinaryService } from 'Shared/Common/upload-files/Cloudinary/cloudinary.service';
 @Injectable()
 export class UserService {
-  constructor(
-    private _userRepo: UserRepository,
-    private cloudinary: CloudinaryService,
-  ) {}
+  constructor(private _userRepo: UserRepository) {}
   async getById(userId: string) {
     try {
       let result = await this._userRepo.findByCodition({ userId });

@@ -15,6 +15,12 @@ export class Project {
   @Prop({ type: String, length: 255 })
   description: string;
 
+  @Prop({
+    type: MongooseSchema.Types.ObjectId,
+    ref: STATUS_PROJECT_CONST.MODEL_NAME,
+  })
+  typeProject: Types.ObjectId;
+
   @Prop([
     {
       type: MongooseSchema.Types.ObjectId,

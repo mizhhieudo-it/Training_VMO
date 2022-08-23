@@ -37,8 +37,8 @@ export class statusProjectController {
 
   @Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
-  @Delete('/:status-projectId')
-  async DeleteAsync(@Param('projectId') userId: string) {
+  @Delete('/:id')
+  async DeleteAsync(@Param('id') userId: string) {
     try {
       let result = await this._statusProjectService.RemoveAsync(userId);
       return result;
@@ -49,9 +49,9 @@ export class statusProjectController {
 
   @Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
-  @Patch('/:status-projectId')
+  @Patch('/:id')
   async UpdateAsync(
-    @Param('status-projectId') projectId: string,
+    @Param('id') projectId: string,
     @Body() project: CreateStatusProjectDto,
   ) {
     try {
@@ -78,9 +78,9 @@ export class statusProjectController {
   }
 
   @Public()
-  @Get('/:status-projectId')
+  @Get('/:id')
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
-  async GetByIdAsync(@Param('projectId') projectId: string) {
+  async GetByIdAsync(@Param('id') projectId: string) {
     try {
       let result = await this._statusProjectService.GetById(projectId);
       return result;

@@ -24,5 +24,5 @@ export class UpdateDepartmentDto {
 
   @IsString()
   @ApiProperty({ example: '62ec90f98c8f1735e5049e08' })
-  project: string;
+  project: string[];
 }

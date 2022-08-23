@@ -4,7 +4,6 @@ export const ERROR = {
     MESSAGE:
       'An error has arisen from the system. Please try again later or contact us for a fix.',
   },
-
   // user
   USER_NOT_FOUND: {
     CODE: 'us00001',
@@ -25,5 +24,12 @@ export const ERROR = {
   EMAIL_NOT_ACTIVE: {
     CODE: 'us00005',
     MESSAGE: 'account not activated',
+  },
+
+  // delete moongose
+  DELETE_REFERENCE_EXIST: {
+    CODE: 'MG0001',
+    MESSAGE:
+      'Delete collection is not allowed because collection is referencing another collection',
   },
 };

@@ -90,7 +90,7 @@ export class ProjectService {
   }
   async DeleteAsync(id: string) {
     try {
-      let result = await this._projectRepo.remove(
+      let result = await this._projectRepo.deleteProjectAsync(
         new mongoose.Types.ObjectId(id),
       );
       return Promise.resolve(result);

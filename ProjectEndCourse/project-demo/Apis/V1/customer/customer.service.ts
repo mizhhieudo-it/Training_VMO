@@ -1,6 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { ApiConsumes } from '@nestjs/swagger';
 import mongoose from 'mongoose';
 import { ResponSchemaConst } from 'Shared/Common/respon-mess.const';
+
 import { ResponSchema } from 'Shared/utils/dataRespon_schema';
 import { UpdateProjectDto } from '../projectTypes/dto/updateProjectTypes.dto';
 import { ProjectTypesDocument } from '../projectTypes/projectTypes.schema';
@@ -13,7 +15,9 @@ import { updateCustomerDto } from './dtos/updateCustomer.dto';
 export class customerService {
   constructor(private readonly _customerRepository: CustomerRepository) {}
 
-  async CreateAsync(customer: createCustomerDto) {
+  async CreateAsync(
+    customer: createCustomerDto,
+  ): Promise<{ content: any; data: any }> {
     const { name, descriptions } = customer;
     try {
       let result = await this._customerRepository.store(<CustomerDocument>{

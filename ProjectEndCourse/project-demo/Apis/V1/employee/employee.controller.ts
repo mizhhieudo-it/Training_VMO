@@ -58,8 +58,8 @@ export class employeeController {
   }
   @Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
-  @Get('/:idEmployee')
-  async FindByIdAsync(@Param('idEmployee') id: string) {
+  @Get('/:id')
+  async FindByIdAsync(@Param('id') id: string) {
     try {
       let result = await this._employeeService.GetByIdAsync(id);
       return result;
@@ -69,8 +69,8 @@ export class employeeController {
   }
   @Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
-  @Delete('/:idEmployee')
-  async RemoveAsync(@Param('idEmployee') id: string) {
+  @Delete('/:id')
+  async RemoveAsync(@Param('id') id: string) {
     try {
       let result = await this._employeeService.DeleteAsync(id);
       return result;
@@ -81,9 +81,9 @@ export class employeeController {
 
   @Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
-  @Patch('/:idEmployee')
+  @Patch('/:id')
   async UpdateAsync(
-    @Param('idEmployee') id: string,
+    @Param('id') id: string,
     @Body() employee: UpdateEmployeeDto,
   ) {
     try {

@@ -15,7 +15,6 @@ import { UserService } from './user.service';
         schema: UserSchema,
       },
     ]),
-    CloudinaryModule,
   ],
   providers: [UserRepository, UserService],
   controllers: [UserController],

@@ -26,8 +26,10 @@ export class Department {
   ])
   menber: Types.ObjectId[];
 
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: PROJECT_CONST.MODEL_NAME })
-  project: Types.ObjectId;
+  @Prop([
+    { type: MongooseSchema.Types.ObjectId, ref: PROJECT_CONST.MODEL_NAME },
+  ])
+  project: Types.ObjectId[];
 }
 
 export const DepartmentSchema = SchemaFactory.createForClass(Department);

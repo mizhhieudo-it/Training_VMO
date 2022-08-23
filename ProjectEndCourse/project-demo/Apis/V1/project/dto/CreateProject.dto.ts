@@ -18,6 +18,10 @@ export class CreateProjectDto {
   @IsString()
   description: string;
 
+  @ApiProperty({ example: '"62f9cc8e43a3573bc4db3794"' })
+  @IsString()
+  typeProject: string;
+
   @ApiProperty({ example: '["62f9cc8e43a3573bc4db3794"]' })
   @IsString()
   status: string[];

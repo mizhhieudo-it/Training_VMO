@@ -13,6 +13,8 @@ import { customerModule } from 'Apis/V1/customer/customer.module';
 import { ConfigModule } from '@nestjs/config';
 import { projectModule } from 'Apis/V1/project/project.module';
 import { departmentModule } from 'Apis/V1/department/department.module';
+import { CloudinaryModule } from 'Shared/Common/upload-files/Cloudinary/cloudinary.module';
+import { configFilesInterceptor } from 'Shared/Middlewares/Interception/ConfigFilesUpload.interceptor';
 
 @Module({
   imports: [
@@ -37,6 +39,7 @@ import { departmentModule } from 'Apis/V1/department/department.module';
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
     },
+    configFilesInterceptor,
   ],
 })
 export class AppModule {}

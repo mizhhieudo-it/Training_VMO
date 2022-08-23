@@ -1,3 +1,4 @@
+import { technology } from './../technology/technology.schema';
 import { Prop, SchemaFactory, Schema } from '@nestjs/mongoose';
 import { Exclude } from 'class-transformer';
 import { Document, Types, Schema as MongooseSchema } from 'mongoose';

@@ -7,10 +7,14 @@ import {
   Param,
   Patch,
   Post,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { Public } from 'Shared/Auth/Decorator/checkOpenRoute.decorator';
 import { SWAGGER_RESPONSE } from 'Shared/Common/swagger-respon/swaggerCheck';
+
+import { LoggingInterceptor } from 'Shared/Middlewares/Interception/logging.interceptor';
 import {
   CUSTOMER_CONST,
   CUSTOMER_CONST_SWAGGER_RESPONSE,
@@ -48,8 +52,8 @@ export class customerController {
   }
   @Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
-  @Get('/:idEmployee')
-  async FindByIdAsync(@Param('idEmployee') id: string) {
+  @Get('/:id')
+  async FindByIdAsync(@Param('id') id: string) {
     try {
       let result = await this._customerService.GetById(id);
       return result;
@@ -59,8 +63,8 @@ export class customerController {
   }
   @Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
-  @Delete('/:idEmployee')
-  async RemoveAsync(@Param('idEmployee') id: string) {
+  @Delete('/:id')
+  async RemoveAsync(@Param('id') id: string) {
     try {
       let result = await this._customerService.RemoveAsync(id);
       return result;
@@ -71,9 +75,9 @@ export class customerController {
 
   @Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
-  @Patch('/:idEmployee')
+  @Patch('/:id')
   async UpdateAsync(
-    @Param('idEmployee') id: string,
+    @Param('id') id: string,
     @Body() customer: updateCustomerDto,
   ) {
     try {

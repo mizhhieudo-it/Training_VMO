@@ -2,7 +2,7 @@
 // phân quyền theo permission 
 // logout => delete token 
 // xác thực 2 lớp - use token => done   
-// upload files  
+// upload files  ==> done 
 // docker config
-// fix password required for login with third-party 
-// 17- 8 : update respon in service business 
+// fix password required for login with third-party ||  
+// 17- 8 : update respon in service business // fix all respon => done 

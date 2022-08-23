@@ -4,6 +4,8 @@ import {
   convertToObject,
   convertToObjectWithArray,
 } from 'Shared/Common/Mapper/convertToObjectId';
+import { ResponSchemaConst } from 'Shared/Common/respon-mess.const';
+import { ResponSchema } from 'Shared/utils/dataRespon_schema';
 import { CustomerRepository } from '../customer/customer.repository';
 import { employeeRepository } from '../employee/employee.repository';
 import { StatusProjectRepository } from '../statusProject/stautsProject.repository';
@@ -34,7 +36,9 @@ export class ProjectService {
         ...dataCustomer,
         ...dataEmployee,
       ];
-      return Promise.resolve(viewData);
+      return Promise.resolve(
+        ResponSchema(ResponSchemaConst.Schema_Get, viewData),
+      );
     } catch (error) {
       return Promise.reject(error);
     }
@@ -65,7 +69,9 @@ export class ProjectService {
         technology: convertTypeIdTech,
         startDate,
       });
-      return Promise.resolve(result);
+      return Promise.resolve(
+        ResponSchema(ResponSchemaConst.Schema_Create, result),
+      );
     } catch (error) {
       return Promise.reject(error);
     }
@@ -73,7 +79,9 @@ export class ProjectService {
   async GetAllAsync() {
     try {
       let result = await this._projectRepo.getAllListProjects();
-      return Promise.resolve(result);
+      return Promise.resolve(
+        ResponSchema(ResponSchemaConst.Schema_Get, result),
+      );
     } catch (error) {
       return Promise.reject(error);
     }
@@ -83,7 +91,9 @@ export class ProjectService {
       let result = await this._projectRepo.findByIdProject(
         new mongoose.Types.ObjectId(id),
       );
-      return Promise.resolve(result);
+      return Promise.resolve(
+        ResponSchema(ResponSchemaConst.Schema_Get, result),
+      );
     } catch (error) {
       return Promise.reject(error);
     }
@@ -93,7 +103,9 @@ export class ProjectService {
       let result = await this._projectRepo.deleteProjectAsync(
         new mongoose.Types.ObjectId(id),
       );
-      return Promise.resolve(result);
+      return Promise.resolve(
+        ResponSchema(ResponSchemaConst.Schema_Delete, result),
+      );
     } catch (error) {
       return Promise.reject(error);
     }
@@ -127,7 +139,9 @@ export class ProjectService {
           startDate,
         },
       );
-      return Promise.resolve(result);
+      return Promise.resolve(
+        ResponSchema(ResponSchemaConst.Schema_Update, result),
+      );
     } catch (error) {
       return Promise.reject(error);
     }

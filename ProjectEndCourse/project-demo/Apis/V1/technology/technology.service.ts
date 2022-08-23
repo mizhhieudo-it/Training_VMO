@@ -5,6 +5,8 @@ import { CreateTechDto } from './dtos/createTechnology.dto';
 
 import { TechRepository } from './technology.repository';
 import { technologyDocument } from './technology.schema';
+import { ResponSchema } from 'Shared/utils/dataRespon_schema';
+import { ResponSchemaConst } from 'Shared/Common/respon-mess.const';
 
 @Injectable()
 export class technologyService {
@@ -16,7 +18,9 @@ export class technologyService {
         name,
         status,
       });
-      return Promise.resolve(result);
+      return Promise.resolve(
+        ResponSchema(ResponSchemaConst.Schema_Create, result),
+      );
     } catch (error) {
       return Promise.reject(error);
     }
@@ -26,7 +30,9 @@ export class technologyService {
       let result = await this._repoTech.getById(
         new mongoose.Types.ObjectId(id),
       );
-      return Promise.resolve(result);
+      return Promise.resolve(
+        ResponSchema(ResponSchemaConst.Schema_Get, result),
+      );
     } catch (error) {
       return Promise.reject(error);
     }
@@ -38,7 +44,9 @@ export class technologyService {
       let result = await this._repoTech.update(convertId, <technologyDocument>{
         status,
       });
-      return Promise.resolve(result);
+      return Promise.resolve(
+        ResponSchema(ResponSchemaConst.Schema_Update, result),
+      );
     } catch (error) {
       return Promise.reject(error);
     }
@@ -47,7 +55,9 @@ export class technologyService {
     let convertId = new mongoose.Types.ObjectId(id);
     try {
       let result = await this._repoTech.remove(convertId);
-      return Promise.resolve(result);
+      return Promise.resolve(
+        ResponSchema(ResponSchemaConst.Schema_Delete, result),
+      );
     } catch (error) {
       return Promise.reject(error);
     }
@@ -56,7 +66,9 @@ export class technologyService {
   async GetAllAsync() {
     try {
       let result = await this._repoTech.getAll();
-      return Promise.resolve(result);
+      return Promise.resolve(
+        ResponSchema(ResponSchemaConst.Schema_Get, result),
+      );
     } catch (error) {
       return Promise.reject(error);
     }

@@ -42,7 +42,7 @@ export class DepartmentService {
     try {
       let convertTypeIdManager = convertToObject(manager);
       let convertTypeIdMenber = convertToObjectWithArray([...menber]);
-      let convertTypeIdProject = convertToObject(project);
+      let convertTypeIdProject = convertToObjectWithArray([...project]);
       let result = await this._departmentRepo.store(<DepartmentDocument>{
         name,
         description,
@@ -104,7 +104,9 @@ export class DepartmentService {
       let convertTypeIdMenber = menber
         ? convertToObjectWithArray([...menber])
         : menber;
-      let convertTypeIdProject = project ? convertToObject(project) : project;
+      let convertTypeIdProject = project
+        ? convertToObjectWithArray([...project])
+        : project;
 
       let result = await this._departmentRepo.update(convertId, <
         DepartmentDocument

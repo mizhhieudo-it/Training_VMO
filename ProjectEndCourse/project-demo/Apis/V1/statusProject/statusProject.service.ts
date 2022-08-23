@@ -5,6 +5,8 @@ import mongoose from 'mongoose';
 import { UpdateUserDto } from './dto/UpdateProject.dto';
 import { StatusProjectRepository } from './stautsProject.repository';
 import { statusProjectDocument } from './stautsProject.schema';
+import { ResponSchema } from 'Shared/utils/dataRespon_schema';
+import { ResponSchemaConst } from 'Shared/Common/respon-mess.const';
 
 @Injectable()
 export class StautsProjectService {
@@ -17,7 +19,9 @@ export class StautsProjectService {
         name,
         status,
       });
-      return Promise.resolve(result);
+      return Promise.resolve(
+        ResponSchema(ResponSchemaConst.Schema_Create, result),
+      );
     } catch (error) {
       return Promise.reject(error);
     }
@@ -27,7 +31,9 @@ export class StautsProjectService {
       let result = await this._projectRepository.getById(
         new mongoose.Types.ObjectId(id),
       );
-      return Promise.resolve(result);
+      return Promise.resolve(
+        ResponSchema(ResponSchemaConst.Schema_Get, result),
+      );
     } catch (error) {
       return Promise.reject(error);
     }
@@ -39,7 +45,9 @@ export class StautsProjectService {
       let result = await this._projectRepository.update(convertId, <
         statusProjectDocument
       >{ status });
-      return Promise.resolve(result);
+      return Promise.resolve(
+        ResponSchema(ResponSchemaConst.Schema_Update, result),
+      );
     } catch (error) {
       return Promise.reject(error);
     }
@@ -48,7 +56,9 @@ export class StautsProjectService {
     let convertId = new mongoose.Types.ObjectId(id);
     try {
       let result = await this._projectRepository.remove(convertId);
-      return Promise.resolve(result);
+      return Promise.resolve(
+        ResponSchema(ResponSchemaConst.Schema_Delete, result),
+      );
     } catch (error) {
       return Promise.reject(error);
     }
@@ -57,7 +67,9 @@ export class StautsProjectService {
   async GetAllAsync() {
     try {
       let result = await this._projectRepository.getAll();
-      return Promise.resolve(result);
+      return Promise.resolve(
+        ResponSchema(ResponSchemaConst.Schema_Get, result),
+      );
     } catch (error) {
       return Promise.reject(error);
     }

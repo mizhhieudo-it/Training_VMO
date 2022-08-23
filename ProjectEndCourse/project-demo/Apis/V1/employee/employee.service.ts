@@ -9,6 +9,8 @@ import {
   convertToObjectWithArray,
 } from 'Shared/Common/Mapper/convertToObjectId';
 import { UpdateEmployeeDto } from './dtos/UpdateEmployee.dto';
+import { ResponSchema } from 'Shared/utils/dataRespon_schema';
+import { ResponSchemaConst } from 'Shared/Common/respon-mess.const';
 
 @Injectable()
 export class EmployeeService {
@@ -20,7 +22,7 @@ export class EmployeeService {
   async ViewCreate() {
     try {
       let data = await this._techRepo.getAll();
-      return Promise.resolve(data);
+      return Promise.resolve(ResponSchema(ResponSchemaConst.Schema_Get, data));
     } catch (error) {
       return Promise.reject(error);
     }
@@ -49,7 +51,9 @@ export class EmployeeService {
         certificate,
         technology: convertTypeIdTech,
       });
-      return Promise.resolve(result);
+      return Promise.resolve(
+        ResponSchema(ResponSchemaConst.Schema_Create, result),
+      );
     } catch (error) {
       return Promise.reject(error);
     }
@@ -57,7 +61,9 @@ export class EmployeeService {
   async GetAllAsync() {
     try {
       let result = await this._employeeRepo.getListEmployeesAsync();
-      return Promise.resolve(result);
+      return Promise.resolve(
+        ResponSchema(ResponSchemaConst.Schema_Get, result),
+      );
     } catch (error) {
       return Promise.reject(error);
     }
@@ -67,7 +73,9 @@ export class EmployeeService {
       let result = await this._employeeRepo.getIdEmployeesAsync(
         new mongoose.Types.ObjectId(id),
       );
-      return Promise.resolve(result);
+      return Promise.resolve(
+        ResponSchema(ResponSchemaConst.Schema_Get, result),
+      );
     } catch (error) {
       return Promise.reject(error);
     }
@@ -77,12 +85,13 @@ export class EmployeeService {
       let result = await this._employeeRepo.remove(
         new mongoose.Types.ObjectId(id),
       );
-      return Promise.resolve(result);
+      return Promise.resolve(
+        ResponSchema(ResponSchemaConst.Schema_Delete, result),
+      );
     } catch (error) {
       return Promise.reject(error);
     }
   }
-  // Issue : check convertTypeIdTech
   async UpdateAsync(id: string, employee: UpdateEmployeeDto) {
     let convertId = new mongoose.Types.ObjectId(id);
     const {
@@ -109,7 +118,9 @@ export class EmployeeService {
         certificate,
         technology: convertTypeIdTech,
       });
-      return Promise.resolve(result);
+      return Promise.resolve(
+        ResponSchema(ResponSchemaConst.Schema_Update, result),
+      );
     } catch (error) {
       return Promise.reject(error);
     }

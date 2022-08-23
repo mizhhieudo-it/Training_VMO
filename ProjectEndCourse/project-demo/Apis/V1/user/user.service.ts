@@ -11,6 +11,8 @@ import { UserDocument, User } from './user.schema';
 import mongoose, { Schema } from 'mongoose';
 import { UpdateUserDto } from './dto/UpdateUser.dto';
 import { CloudinaryService } from 'Shared/Common/upload-files/Cloudinary/cloudinary.service';
+import { ResponSchema } from 'Shared/utils/dataRespon_schema';
+import { ResponSchemaConst } from 'Shared/Common/respon-mess.const';
 @Injectable()
 export class UserService {
   constructor(private _userRepo: UserRepository) {}
@@ -20,7 +22,9 @@ export class UserService {
       if (!result) {
         throw new NotFoundException(ERROR.USER_NOT_FOUND.MESSAGE);
       } else {
-        return Promise.resolve(result);
+        return Promise.resolve(
+          ResponSchema(ResponSchemaConst.Schema_Get, result),
+        );
       }
     } catch (error) {
       return Promise.reject(error);
@@ -32,7 +36,9 @@ export class UserService {
       if (!result) {
         throw new NotFoundException(ERROR.USER_NOT_FOUND.MESSAGE);
       } else {
-        return Promise.resolve(result);
+        return Promise.resolve(
+          ResponSchema(ResponSchemaConst.Schema_Get, result),
+        );
       }
     } catch (error) {
       return Promise.reject(error);
@@ -59,7 +65,9 @@ export class UserService {
         issuedDate: '',
         daysInTrial: '',
       });
-      return Promise.resolve(user);
+      return Promise.resolve(
+        ResponSchema(ResponSchemaConst.Schema_Create, user),
+      );
     } catch (error) {
       return Promise.reject(error);
     }
@@ -67,7 +75,9 @@ export class UserService {
   async GetAllAsync() {
     try {
       const result = await this._userRepo.getAll();
-      return Promise.resolve(result);
+      return Promise.resolve(
+        ResponSchema(ResponSchemaConst.Schema_Get, result),
+      );
     } catch (error) {
       return Promise.reject(error);
     }
@@ -87,7 +97,9 @@ export class UserService {
     if (refreshToken) updateData['refreshToken'] = refreshToken;
     try {
       let result = await this._userRepo.update(isUserExits._id, updateData);
-      return Promise.resolve(result);
+      return Promise.resolve(
+        ResponSchema(ResponSchemaConst.Schema_Update, result),
+      );
     } catch (error) {
       return Promise.reject(error);
     }
@@ -99,7 +111,9 @@ export class UserService {
     }
     try {
       let user = await this._userRepo.remove(isUserExits._id);
-      return Promise.resolve(user);
+      return Promise.resolve(
+        ResponSchema(ResponSchemaConst.Schema_Delete, user),
+      );
     } catch (error) {
       return Promise.reject(error);
     }

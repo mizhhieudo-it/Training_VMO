@@ -11,6 +11,4 @@ export class createCustomerDto {
   @IsString()
   @IsNotEmpty()
   descriptions: String;
-
-  file: any;
 }

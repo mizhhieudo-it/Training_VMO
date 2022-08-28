@@ -5,7 +5,7 @@ export interface IRepository<T extends Document> {
   update(id: mongoose.Types.ObjectId, item: T): Promise<T>;
   remove(id: mongoose.Types.ObjectId): Promise<T>;
   getAll(): Promise<T[]>;
-  get(paginateParma: IListParams): Promise<T[]>;
+  //get(paginateParma: IListParams): Promise<T[]>;
   getById(id: mongoose.Types.ObjectId): Promise<T>;
   findByCodition(condition: any): Promise<T | T[]>;
 }

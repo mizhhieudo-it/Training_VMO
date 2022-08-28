@@ -37,7 +37,7 @@ export class UserService {
         throw new NotFoundException(ERROR.USER_NOT_FOUND.MESSAGE);
       } else {
         return Promise.resolve(
-          ResponSchema(ResponSchemaConst.Schema_Get, result),
+          result
         );
       }
     } catch (error) {

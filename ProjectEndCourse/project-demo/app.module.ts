@@ -23,7 +23,6 @@ import { configFilesInterceptor } from 'Shared/Middlewares/Interception/ConfigFi
       isGlobal: true,
     }),
     technologyModule,
-    testModule,
     UserModule,
     AuthModule,
     ProjectTypesModule,

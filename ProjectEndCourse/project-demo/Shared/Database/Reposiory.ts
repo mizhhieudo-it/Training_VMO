@@ -5,20 +5,20 @@ import { Result_Error } from './repository.const';
 import { IListParams } from './Pagination/IPaginate';
 export class Repository<T extends Document> implements IRepository<T> {
   constructor(private _repository: Model<T>) {}
-  get(paginateParma: IListParams): Promise<T[]> {
-    let { conditions, projections, paginate } = paginateParma;
-    let { pageSize, sort, sortBy, content, page } = paginate;
-    pageSize = pageSize ? pageSize : 50;
-    sort = sort ? sort : 'asc';
-    sortBy = sortBy ? sortBy : '';
-    content = content ? content : '';
-    conditions = conditions ? conditions : '';
-    page = page ? page : 1;
-    //
-    let skipDocument: number = (Number(page) - 1) * Number(pageSize);
+  // get(paginateParma: IListParams): Promise<T[]> {
+  //   let { conditions, projections, paginate } = paginateParma;
+  //   let { pageSize, sort, sortBy, content, page } = paginate;
+  //   pageSize = pageSize ? pageSize : 50;
+  //   sort = sort ? sort : 'asc';
+  //   sortBy = sortBy ? sortBy : '';
+  //   content = content ? content : '';
+  //   conditions = conditions ? conditions : '';
+  //   page = page ? page : 1;
+  //   //
+  //   let skipDocument: number = (Number(page) - 1) * Number(pageSize);
 
-    this._repository.find(conditions).skip(skipDocument).limit(pageSize);
-  }
+  //   this._repository.find(conditions).skip(skipDocument).limit(pageSize);
+  // }
 
   async store(item: T): Promise<T> {
     try {

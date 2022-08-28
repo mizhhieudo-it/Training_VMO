@@ -1,4 +1,5 @@
-import { swaggerSchemaExample } from 'Shared/utils/swagger_schema';
+import { swaggerSchemaExample } from "Shared/utils/swagger_schema";
+
 
 export const USER_CONST = {
   MODEL_NAME: 'user',

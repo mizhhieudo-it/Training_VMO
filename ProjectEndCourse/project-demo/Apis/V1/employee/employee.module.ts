@@ -8,6 +8,7 @@ import { employeeRepository } from './employee.repository';
 import { Employee, EmployeeSchema } from './employee.schema';
 import { EmployeeService } from './employee.service';
 import { ERROR } from 'Shared/Common/err-code.const';
+import { projectModule } from '../project/project.module';
 
 @Module({
   controllers: [employeeController],

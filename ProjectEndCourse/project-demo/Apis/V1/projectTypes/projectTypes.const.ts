@@ -6,7 +6,7 @@ export const PROJECT_TYPE_CONST = {
 };
 
 export const PROJECT_TYPE_SWAGGER_RESPONSE = {
-    CREATE_PROJECT: swaggerSchemaExample(
+    CREATE_PROJECT_TYPE: swaggerSchemaExample(
         {
             data: {
                 name: 'product',

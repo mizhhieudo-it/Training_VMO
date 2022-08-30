@@ -9,16 +9,17 @@ export const DEPARTMENT_SWAGGER_RESPONSE = {
   CREATE_DEPARTMENT: swaggerSchemaExample(
     {
       data: {
-        name: 'employee1',
-        dateOfBirth: '2022-07-20T20:25:46.121Z',
-        address: 'Ha Noi , Co nhue , Bac Tu Liem',
-        citizenCode: '123456789999',
-        technology: ['62e8fd3b10a8e6faf8952e6e'],
-        experience: 6,
-        foreignLanguage: ['english'],
-        certificate: ['ielts 6.5'],
-        createdAt: '2022-07-20T20:25:46.121Z',
-        updatedAt: '2022-07-20T20:25:46.121Z',
+        "name": "Department",
+        "description": "for project NodeJS,Pythons,C#",
+        "dateOfBirth": "8-5-2022",
+        "manager": "630d8b83c14d43b364d2d87a",
+        "menber": [
+          "630d8b96c14d43b364d2d87c",
+          "630d8ba5c14d43b364d2d87e"
+        ],
+        "project": [
+          "630d902e997692513bce5acf"
+        ]
       },
       statusCode: 201,
     },

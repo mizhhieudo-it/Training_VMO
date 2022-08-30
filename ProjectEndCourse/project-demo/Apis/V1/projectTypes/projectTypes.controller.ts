@@ -11,7 +11,7 @@ import {
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { Public } from 'Shared/Auth/Decorator/checkOpenRoute.decorator';
 import { SWAGGER_RESPONSE } from 'Shared/Common/swagger-respon/swaggerCheck';
-import { CreateProjectDto } from './dto/createProjectTypes.dto';
+import { CreateProjectTypeDto } from './dto/createProjectTypes.dto';
 import { UpdateProjectDto } from './dto/updateProjectTypes.dto';
 import {
   PROJECT_TYPE_CONST,
@@ -24,9 +24,9 @@ import { projectTypesService } from './projectTypes.service';
 export class projectTypesController {
   constructor(private readonly _projectService: projectTypesService) {}
   @Public()
-  @ApiOkResponse(PROJECT_TYPE_SWAGGER_RESPONSE.CREATE_PROJECT)
+  @ApiOkResponse(PROJECT_TYPE_SWAGGER_RESPONSE.CREATE_PROJECT_TYPE)
   @Post()
-  async CreateAsync(@Body() project: CreateProjectDto) {
+  async CreateAsync(@Body() project: CreateProjectTypeDto) {
     try {
       let result = await this._projectService.CreateAsync(project);
       return result;

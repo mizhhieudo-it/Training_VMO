@@ -1,3 +1,5 @@
+import { IListParams } from './../../../Shared/Database/Pagination/IPaginate';
+
 import { Injectable, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { ApiConsumes } from '@nestjs/swagger';
 import mongoose from 'mongoose';
@@ -68,6 +70,34 @@ export class customerService {
   async GetAllAsync() {
     try {
       let result = await this._customerRepository.getAll();
+      let respon = ResponSchema(ResponSchemaConst.Schema_Get, result);
+      return Promise.resolve(respon);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+  async GetAsync(params) {
+    try {
+      let {search,page,pageSize} = params;
+      let searchParams : IListParams = search ? {
+        conditions: {
+           "name": { $regex: '.*' + search + '.*' ,$options:'i'} 
+      },
+        projections: "",
+        paginate: {
+          pageSize,
+          page
+        }
+      } : {
+        conditions: {},
+       projections: "",
+       paginate: {
+         pageSize,
+         page
+       }
+      }
+
+      let result = await this._customerRepository.get(searchParams);
       let respon = ResponSchema(ResponSchemaConst.Schema_Get, result);
       return Promise.resolve(respon);
     } catch (error) {

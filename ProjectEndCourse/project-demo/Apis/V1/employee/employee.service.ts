@@ -1,3 +1,4 @@
+import { ProjectRepository } from './../project/project.repository';
 import { Injectable } from '@nestjs/common';
 import { TechRepository } from '../technology/technology.repository';
 import { CreateEmployeeDto } from './dtos/CreateEmployee.dto';
@@ -11,6 +12,7 @@ import {
 import { UpdateEmployeeDto } from './dtos/UpdateEmployee.dto';
 import { ResponSchema } from 'Shared/utils/dataRespon_schema';
 import { ResponSchemaConst } from 'Shared/Common/respon-mess.const';
+import { IListParams } from 'Shared/Database/Pagination/IPaginate';
 
 @Injectable()
 export class EmployeeService {
@@ -121,6 +123,34 @@ export class EmployeeService {
       return Promise.resolve(
         ResponSchema(ResponSchemaConst.Schema_Update, result),
       );
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+  async GetAsync(params) {
+    try {
+      let {search,page,pageSize} = params;
+      let searchParams : IListParams = search ? {
+        conditions: {
+           "name": { $regex: '.*' + search + '.*' ,$options:'i'} 
+      },
+        projections: "",
+        paginate: {
+          pageSize,
+          page
+        }
+      } : {
+        conditions: {},
+       projections: "",
+       paginate: {
+         pageSize,
+         page
+       }
+      }
+
+      let result = await this._employeeRepo.get(searchParams);
+      let respon = ResponSchema(ResponSchemaConst.Schema_Get, result);
+      return Promise.resolve(respon);
     } catch (error) {
       return Promise.reject(error);
     }

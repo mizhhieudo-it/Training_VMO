@@ -33,7 +33,7 @@ export class employeeController {
     }
   }
 
-  // @Public()
+  @Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Get()
   async GetAllAsync() {

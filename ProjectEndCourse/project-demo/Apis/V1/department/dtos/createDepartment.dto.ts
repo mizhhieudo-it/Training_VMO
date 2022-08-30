@@ -25,6 +25,6 @@ export class CreateDepartmentDto {
   menber: string[];
 
   @IsString()
-  @ApiProperty({ example: '62ec90f98c8f1735e5049e08' })
+  @ApiProperty({ example: "['62ec90f98c8f1735e5049e08']" })
   project: string[];
 }

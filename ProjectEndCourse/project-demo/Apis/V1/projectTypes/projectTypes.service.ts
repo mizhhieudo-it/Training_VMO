@@ -1,17 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { CreateProjectDto } from './dto/createProjectTypes.dto';
+//import { CreateProjectDto } from './dto/createProjectTypes.dto';
 import mongoose from 'mongoose';
 import { UpdateProjectDto } from './dto/updateProjectTypes.dto';
 import { ProjectTypesRepository } from './projectTypes.repository';
 import { ProjectTypesDocument } from './projectTypes.schema';
 import { ResponSchema } from 'Shared/utils/dataRespon_schema';
 import { ResponSchemaConst } from 'Shared/Common/respon-mess.const';
+import { CreateProjectTypeDto } from './dto/createProjectTypes.dto';
 
 @Injectable()
 export class projectTypesService {
   constructor(private readonly _projectRepository: ProjectTypesRepository) {}
 
-  async CreateAsync(project: CreateProjectDto) {
+  async CreateAsync(project: CreateProjectTypeDto) {
     const { name, status } = project;
     try {
       let result = await this._projectRepository.store(<ProjectTypesDocument>{

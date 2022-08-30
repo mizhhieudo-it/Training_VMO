@@ -2,23 +2,41 @@ import { Schema, Document, Model } from 'mongoose';
 import { IRepository } from './Interface/IRepository';
 import mongoose from 'mongoose';
 import { Result_Error } from './repository.const';
-import { IListParams } from './Pagination/IPaginate';
+import { IListParams, resultPaging } from './Pagination/IPaginate';
 export class Repository<T extends Document> implements IRepository<T> {
   constructor(private _repository: Model<T>) {}
-  // get(paginateParma: IListParams): Promise<T[]> {
-  //   let { conditions, projections, paginate } = paginateParma;
-  //   let { pageSize, sort, sortBy, content, page } = paginate;
-  //   pageSize = pageSize ? pageSize : 50;
-  //   sort = sort ? sort : 'asc';
-  //   sortBy = sortBy ? sortBy : '';
-  //   content = content ? content : '';
-  //   conditions = conditions ? conditions : '';
-  //   page = page ? page : 1;
-  //   //
-  //   let skipDocument: number = (Number(page) - 1) * Number(pageSize);
+  async get(paginateParam?: IListParams): Promise<resultPaging>{
+    let { conditions, projections, paginate } = paginateParam;
+    let { pageSize, sort, sortBy, content, page } = paginate;
+    pageSize = pageSize ? pageSize : 50;
+    sort = sort ? sort : 'asc';
+    sortBy = sortBy ? sortBy : '';
+    content = content ? content : '';
+    conditions = conditions ? conditions : null;
+    page = page ? page : 1;
 
-  //   this._repository.find(conditions).skip(skipDocument).limit(pageSize);
-  // }
+    let skipDocument: number = (Number(page) - 1) * Number(pageSize);
+    try {
+      let data = await this._repository.find(conditions).skip(skipDocument).limit(pageSize);
+      let numberOfDocuments = await this._repository.find(conditions).count();
+      let lastPage = Math.ceil(numberOfDocuments/pageSize) ; 
+      let nextPage=page+1 >lastPage ? null :page+1;
+      let prevPage= page - 1 < 1 ? page :page-1;
+
+      let result = {
+        data : [...data],
+        numberOfDocuments : numberOfDocuments,
+        lastPage : lastPage,
+        nextPage : nextPage,
+        prevPage : prevPage,
+        currentPage : page
+      }
+
+      return Promise.resolve(result);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
 
   async store(item: T): Promise<T> {
     try {

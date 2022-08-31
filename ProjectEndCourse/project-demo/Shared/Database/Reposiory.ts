@@ -5,7 +5,8 @@ import { Result_Error } from './repository.const';
 import { IListParams, resultPaging } from './Pagination/IPaginate';
 export class Repository<T extends Document> implements IRepository<T> {
   constructor(private _repository: Model<T>) {}
-  // mongo padginate
+  // way1 :  mongo padginate
+  // way2 : run by rice 
   async get(paginateParam?: IListParams): Promise<resultPaging> {
     try {
       let { conditions, projections, paginate } = paginateParam;
@@ -19,12 +20,9 @@ export class Repository<T extends Document> implements IRepository<T> {
       conditions = conditions ? conditions : null;
       page = page ? page : 1;
       let numberOfDocuments = await this._repository.find(conditions).count();
-      if (page < -1) {
-        page = 1;
-      }
-      if (page > numberOfDocuments) {
-        page = numberOfDocuments;
-      }
+      page < 1 ? 1 : page;
+      page > numberOfDocuments ? numberOfDocuments : page;
+      pageSize < 1 ? 50 : pageSize;
       let lastPage = Math.ceil(numberOfDocuments / pageSize);
       let nextPage = page + 1 > lastPage ? lastPage : page + 1;
       let prevPage = page - 1 < 1 ? 1 : page - 1;
@@ -33,7 +31,7 @@ export class Repository<T extends Document> implements IRepository<T> {
         .find(conditions)
         .skip(skipDocument)
         .limit(pageSize);
-      //
+
       let result = {
         data: [...data],
         numberOfDocuments: numberOfDocuments,

@@ -60,7 +60,7 @@ export class ProjectService {
       let convertTypeIdEmployee = convertToObjectWithArray([...employee]);
       let convertTypeIdCustomer = convertToObjectWithArray([...customer]);
 
-      let result = await this._projectRepo.store(<ProjectDocument>{
+      let result = await this._projectRepo.storeProject(<ProjectDocument>{
         name,
         description,
         status: convertTypeIdStatus,

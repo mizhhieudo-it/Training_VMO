@@ -11,7 +11,7 @@ export const CUSTOMER_PARAMETERS = {
     name : 'search',
     type : String,
     required : false,
-    description : 'Search params',
+    description : 'Search params for field name customer',
   }, 
   PAGE_PARAMS : {
     name : 'page',

@@ -44,4 +44,8 @@ export class CreateEmployeeDto {
   @ApiProperty({ example: '["ielts 6.5"]' })
   @IsArray()
   certificate: string[];
+
+  // @ApiProperty({ example: '["62ec90f98c8f1735e5049e08"]' })
+  // @IsArray()
+  // projectId : string[];
 }

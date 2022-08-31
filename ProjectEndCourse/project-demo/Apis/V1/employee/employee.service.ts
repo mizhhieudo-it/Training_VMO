@@ -129,25 +129,24 @@ export class EmployeeService {
   }
   async GetAsync(params) {
     try {
-      let {search,page,pageSize} = params;
-      let searchParams : IListParams = search ? {
-        conditions: {
-           "name": { $regex: '.*' + search + '.*' ,$options:'i'} 
-      },
+      let {search,page,pageSize,technology,project} = params;
+      let listOfCondition = [];
+      search ? listOfCondition.push({ "name":  { $regex: '.*' + search + '.*' ,$options:'i'}}) : null ;
+      project ? listOfCondition.push({"project": project }) : null ;
+      technology ? listOfCondition.push({"technology": technology }) : null ;
+      let condition = {};
+      if(listOfCondition.length > 0){
+        condition = { $and : listOfCondition}
+      }
+     // console.log(condition);
+      let searchParams : IListParams ={
+        conditions:condition,
         projections: "",
         paginate: {
           pageSize,
           page
         }
-      } : {
-        conditions: {},
-       projections: "",
-       paginate: {
-         pageSize,
-         page
-       }
-      }
-
+      } 
       let result = await this._employeeRepo.get(searchParams);
       let respon = ResponSchema(ResponSchemaConst.Schema_Get, result);
       return Promise.resolve(respon);

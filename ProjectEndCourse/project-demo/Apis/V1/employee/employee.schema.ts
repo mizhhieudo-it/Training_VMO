@@ -31,6 +31,9 @@ export class Employee {
 
   @Prop({ type: [String], length: 255, default: '' })
   certificate: string[];
+
+  @Prop({ type: [String], length: 255, default: '' ,  })
+  project: string[];
 }
 
 export const EmployeeSchema = SchemaFactory.createForClass(Employee);

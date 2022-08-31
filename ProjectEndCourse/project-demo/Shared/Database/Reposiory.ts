@@ -5,32 +5,43 @@ import { Result_Error } from './repository.const';
 import { IListParams, resultPaging } from './Pagination/IPaginate';
 export class Repository<T extends Document> implements IRepository<T> {
   constructor(private _repository: Model<T>) {}
-  async get(paginateParam?: IListParams): Promise<resultPaging>{
-    let { conditions, projections, paginate } = paginateParam;
-    let { pageSize, sort, sortBy, content, page } = paginate;
-    pageSize = pageSize ? pageSize : 50;
-    sort = sort ? sort : 'asc';
-    sortBy = sortBy ? sortBy : '';
-    content = content ? content : '';
-    conditions = conditions ? conditions : null;
-    page = page ? page : 1;
-
-    let skipDocument: number = (Number(page) - 1) * Number(pageSize);
+  // mongo padginate
+  async get(paginateParam?: IListParams): Promise<resultPaging> {
     try {
-      let data = await this._repository.find(conditions).skip(skipDocument).limit(pageSize);
+      let { conditions, projections, paginate } = paginateParam;
+      let { sort, sortBy, content } = paginate;
+      let pageSize = Number(paginate.pageSize);
+      let page = Number(paginate.page);
+      pageSize = pageSize ? <number>pageSize : 50;
+      sort = sort ? sort : 'asc';
+      sortBy = sortBy ? sortBy : '';
+      content = content ? content : '';
+      conditions = conditions ? conditions : null;
+      page = page ? page : 1;
       let numberOfDocuments = await this._repository.find(conditions).count();
-      let lastPage = Math.ceil(numberOfDocuments/pageSize) ; 
-      let nextPage=page+1 >lastPage ? null :page+1;
-      let prevPage= page - 1 < 1 ? page :page-1;
-
-      let result = {
-        data : [...data],
-        numberOfDocuments : numberOfDocuments,
-        lastPage : lastPage,
-        nextPage : nextPage,
-        prevPage : prevPage,
-        currentPage : page
+      if (page < -1) {
+        page = 1;
       }
+      if (page > numberOfDocuments) {
+        page = numberOfDocuments;
+      }
+      let lastPage = Math.ceil(numberOfDocuments / pageSize);
+      let nextPage = page + 1 > lastPage ? lastPage : page + 1;
+      let prevPage = page - 1 < 1 ? 1 : page - 1;
+      let skipDocument: number = (Number(page) - 1) * Number(pageSize);
+      let data = await this._repository
+        .find(conditions)
+        .skip(skipDocument)
+        .limit(pageSize);
+      //
+      let result = {
+        data: [...data],
+        numberOfDocuments: numberOfDocuments,
+        lastPage: lastPage,
+        nextPage: nextPage,
+        prevPage: prevPage,
+        currentPage: page,
+      };
 
       return Promise.resolve(result);
     } catch (error) {

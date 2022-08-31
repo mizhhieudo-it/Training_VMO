@@ -18,10 +18,11 @@ export class employeeRepository extends Repository<EmployeeDocument> {
   }
   async getListEmployeesAsync(): Promise<EmployeeDocument[]> {
     try {
+      // bỏ promsise 
       let result = await this._repoEmployee
         .find({})
         .populate('technology', 'name');
-      return Promise.resolve(result);
+      return result;
     } catch (error) {
       return Promise.reject(error);
     }

@@ -1,3 +1,4 @@
+import { CUSTOMER_CONST } from './../customer/customer.const';
 import {
   BadRequestException,
   Body,
@@ -7,13 +8,18 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Public } from 'Shared/Auth/Decorator/checkOpenRoute.decorator';
 import { SWAGGER_RESPONSE } from 'Shared/Common/swagger-respon/swaggerCheck';
 import { CreateProjectDto } from './dto/CreateProject.dto';
 import { UpdateProjectDto } from './dto/UpdateProject.dto';
-import { PROJECT_CONST, PROJECT_SWAGGER_RESPONSE } from './project.const';
+import {
+  PROJECT_CONST,
+  PROJECT_SWAGGER_RESPONSE,
+  PROJECT_CONST_PARAMETERS,
+} from './project.const';
 import { ProjectService } from './project.service';
 
 @Controller(PROJECT_CONST.MODEL_NAME)
@@ -26,6 +32,50 @@ export class ProjectController {
   async CreateAsync(@Body() project: CreateProjectDto) {
     try {
       let result = await this._projectService.CreateAsync(project);
+      return result;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
+  }
+
+  @Public()
+  @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
+  @Get('get')
+  @ApiQuery(PROJECT_CONST_PARAMETERS.PAGE_PARAMS)
+  @ApiQuery(PROJECT_CONST_PARAMETERS.PAGE_SIZE_PARAMS)
+  @ApiQuery(PROJECT_CONST_PARAMETERS.SEARCH_PARAMS)
+  @ApiQuery(PROJECT_CONST_PARAMETERS.SORT_BY__PARAMS)
+  @ApiQuery(PROJECT_CONST_PARAMETERS.ORDER_BY__PARAMS)
+  @ApiQuery(PROJECT_CONST_PARAMETERS.STATUS_FILTER_PARAMS)
+  @ApiQuery(PROJECT_CONST_PARAMETERS.TYPE_PROJECT_FILTER_PARAMS)
+  @ApiQuery(PROJECT_CONST_PARAMETERS.TECH_FILTER_PARAMS)
+  @ApiQuery(PROJECT_CONST_PARAMETERS.PROJECT_TIME_CREATED_AT_FILTER_PARAMS)
+  @ApiQuery(PROJECT_CONST_PARAMETERS.CUSTOMER_FILTER_PARAMS)
+  async GetAsync(
+    @Query('search') search: string,
+    @Query('page') page: Number,
+    @Query('pageSize') pageSize: Number,
+    @Query('sortBy') sortBy: string,
+    @Query('orderBy') orderBy: string,
+    @Query('status') statusProject: string,
+    @Query('typeProject') typeProject: string,
+    @Query('technology') technology: string,
+    @Query('customer') customer: string,
+    @Query('startDate') startDate: string,
+  ) {
+    try {
+      let result = await this._projectService.GetAsync({
+        search,
+        page,
+        pageSize,
+        sortBy,
+        orderBy,
+        statusProject,
+        typeProject,
+        technology,
+        customer,
+        startDate,
+      });
       return result;
     } catch (error) {
       throw new BadRequestException(error.message);

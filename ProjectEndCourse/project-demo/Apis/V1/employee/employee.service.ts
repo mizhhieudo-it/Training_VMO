@@ -29,7 +29,7 @@ export class EmployeeService {
       return Promise.reject(error);
     }
   }
-  // Issue : check convertTypeIdTech
+
   async CreateAsync(employee: CreateEmployeeDto) {
     const {
       name,

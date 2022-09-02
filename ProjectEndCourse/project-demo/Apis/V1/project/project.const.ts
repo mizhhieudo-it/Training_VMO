@@ -68,7 +68,7 @@ export const PROJECT_PARAMETERS = {
     description: 'filter customer in project',
   },
   START_DATE_FILTER: {
-    name: 'start date',
+    name: 'startDate',
     type: Date,
     required: false,
     description: 'filter date in project',
@@ -77,17 +77,17 @@ export const PROJECT_PARAMETERS = {
     name: 'sortBy',
     type: String,
     required: false,
-    description: 'sort by field name',
+    description: 'sort by field ',
   },
   ORDER_BY: {
     name: 'orderBy',
     type: String,
     required: false,
-    description: 'order by field name',
+    description: 'order by asc/desc',
   },
 };
 
-export const EMPLOYEE_CONST_PARAMETERS = {
+export const PROJECT_CONST_PARAMETERS = {
   SEARCH_PARAMS: swaggerParamsExample(PROJECT_PARAMETERS.SEARCH_PARAMS),
   PAGE_PARAMS: swaggerParamsExample(PROJECT_PARAMETERS.PAGE_PARAMS),
   PAGE_SIZE_PARAMS: swaggerParamsExample(PROJECT_PARAMETERS.PAGE_SIZE),
@@ -98,6 +98,9 @@ export const EMPLOYEE_CONST_PARAMETERS = {
   STATUS_FILTER_PARAMS: swaggerParamsExample(PROJECT_PARAMETERS.STATUS_FILTER),
   CUSTOMER_FILTER_PARAMS: swaggerParamsExample(
     PROJECT_PARAMETERS.CUSTOMER_FILTER,
+  ),
+  PROJECT_TIME_CREATED_AT_FILTER_PARAMS: swaggerParamsExample(
+    PROJECT_PARAMETERS.START_DATE_FILTER,
   ),
   ORDER_BY__PARAMS: swaggerParamsExample(PROJECT_PARAMETERS.ORDER_BY),
   SORT_BY__PARAMS: swaggerParamsExample(PROJECT_PARAMETERS.SORT_BY),

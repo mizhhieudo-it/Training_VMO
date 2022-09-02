@@ -16,7 +16,7 @@ export class Repository<T extends Document> implements IRepository<T> {
       let page = Number(paginate.page);
       pageSize = pageSize ? <number>pageSize : 50;
       orderBy = orderBy ? orderBy.trim().toUpperCase() : orderBy;
-      let sortType = orderBy === 'ASC' ? SortQueries.ASC : SortQueries.DESC;
+      let sortType = orderBy === 'DESC' ? SortQueries.DESC : SortQueries.ASC;
       sortBy = sortBy ? sortBy : '';
       content = content ? content : '';
       conditions = conditions ? conditions : null;

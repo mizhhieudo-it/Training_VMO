@@ -5,6 +5,7 @@ import {
   convertToObjectWithArray,
 } from 'Shared/Common/Mapper/convertToObjectId';
 import { ResponSchemaConst } from 'Shared/Common/respon-mess.const';
+import { IListParams } from 'Shared/Database/Pagination/IPaginate';
 import { ResponSchema } from 'Shared/utils/dataRespon_schema';
 import { CustomerRepository } from '../customer/customer.repository';
 import { employeeRepository } from '../employee/employee.repository';
@@ -43,7 +44,56 @@ export class ProjectService {
       return Promise.reject(error);
     }
   }
-  // Issue : check convertTypeIdTech
+
+  async GetAsync(params) {
+    try {
+      let {
+        search,
+        page,
+        pageSize,
+        sortBy,
+        orderBy,
+        statusProject,
+        typeProject,
+        technology,
+        customer,
+        startDate,
+      } = params;
+      let listOfCondition = [];
+      // search for name project
+      search
+        ? listOfCondition.push({
+            name: { $regex: '.*' + search + '.*', $options: 'i' },
+          })
+        : null;
+      // condition filter
+      statusProject ? listOfCondition.push({ status: statusProject }) : null;
+      typeProject ? listOfCondition.push({ typeProject }) : null;
+      technology ? listOfCondition.push({ technology }) : null;
+      customer ? listOfCondition.push({ customer }) : null;
+      startDate ? listOfCondition.push({ startDate }) : null;
+      let condition = {};
+      if (listOfCondition.length > 0) {
+        condition = { $and: listOfCondition };
+      }
+      let searchParams: IListParams = {
+        conditions: condition,
+        projections: '',
+        paginate: {
+          pageSize,
+          page,
+          sortBy,
+          orderBy,
+        },
+      };
+      let result = await this._projectRepo.get(searchParams);
+      let respon = ResponSchema(ResponSchemaConst.Schema_Get, result);
+      return respon;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
   async CreateAsync(project: CreateProjectDto) {
     const {
       name,

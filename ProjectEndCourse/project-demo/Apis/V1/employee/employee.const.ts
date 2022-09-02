@@ -41,13 +41,13 @@ export const EMPLOYEE_PARAMETERS = {
     name: 'sortBy',
     type: String,
     required: false,
-    description: 'sort by field name',
+    description: 'sort by field',
   },
   ORDER_BY: {
     name: 'orderBy',
     type: String,
     required: false,
-    description: 'order by field name',
+    description: 'order by field asc/desc',
   },
 };
 

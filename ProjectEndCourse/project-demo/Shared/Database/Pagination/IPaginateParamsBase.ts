@@ -9,12 +9,12 @@ export interface IPaginateParamsBase {
    */
   pageSize?: number;
   /**
-   * @field sort
+   * @field orderBy
    * @type string
-   * @description sort param ASC | DESC
+   * @description orderBy param ASC | DESC
    * @example ASC
    */
-  sort?: string;
+  orderBy?: string;
 
   /**
    * @field sortBy

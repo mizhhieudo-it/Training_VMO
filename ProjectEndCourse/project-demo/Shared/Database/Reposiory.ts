@@ -3,18 +3,20 @@ import { IRepository } from './Interface/IRepository';
 import mongoose from 'mongoose';
 import { Result_Error } from './repository.const';
 import { IListParams, resultPaging } from './Pagination/IPaginate';
+import { SortQueries } from './Pagination/Paginate.const';
 export class Repository<T extends Document> implements IRepository<T> {
   constructor(private _repository: Model<T>) {}
   // way1 :  mongo padginate
-  // way2 : run by rice 
+  // way2 : run by rice
   async get(paginateParam?: IListParams): Promise<resultPaging> {
     try {
       let { conditions, projections, paginate } = paginateParam;
-      let { sort, sortBy, content } = paginate;
+      let { orderBy, sortBy, content } = paginate;
       let pageSize = Number(paginate.pageSize);
       let page = Number(paginate.page);
       pageSize = pageSize ? <number>pageSize : 50;
-      sort = sort ? sort : 'asc';
+      orderBy = orderBy ? orderBy.trim().toUpperCase() : orderBy;
+      let sortType = orderBy === 'ASC' ? SortQueries.ASC : SortQueries.DESC;
       sortBy = sortBy ? sortBy : '';
       content = content ? content : '';
       conditions = conditions ? conditions : null;
@@ -30,7 +32,9 @@ export class Repository<T extends Document> implements IRepository<T> {
       let data = await this._repository
         .find(conditions)
         .skip(skipDocument)
-        .limit(pageSize);
+        .limit(pageSize)
+        .sort({ name: sortType })
+        .exec();
 
       let result = {
         data: [...data],

@@ -7,47 +7,60 @@ export const EMPLOYEE_CONST = {
 };
 
 export const EMPLOYEE_PARAMETERS = {
-  SEARCH_PARAMS : {
-    name : 'search',
-    type : String,
-    required : false,
-    description : 'Search params for field name employee',
-  }, 
-  PAGE_PARAMS : {
-    name : 'page',
-    type : Number,
-    required : false,
-    description : 'page params',
+  SEARCH_PARAMS: {
+    name: 'search',
+    type: String,
+    required: false,
+    description: 'Search params for field name employee',
   },
-  PAGE_SIZE :{
-    name : 'pageSize',
-    type : Number,
-    required : false,
-    description : 'pageSize params',
-  }
-  , 
-  TECH_FILTER:{
-    name : 'technology',
-    type : String,
-    required : false,
-    description : 'technology filter',
+  PAGE_PARAMS: {
+    name: 'page',
+    type: Number,
+    required: false,
+    description: 'page params',
   },
-  PROJECT_FILTER:{
-    name : 'project',
-    type : String,
-    required : false,
-    description : 'project filter',
-  }
-
-
-}
+  PAGE_SIZE: {
+    name: 'pageSize',
+    type: Number,
+    required: false,
+    description: 'pageSize params',
+  },
+  TECH_FILTER: {
+    name: 'technology',
+    type: String,
+    required: false,
+    description: 'technology filter',
+  },
+  PROJECT_FILTER: {
+    name: 'project',
+    type: String,
+    required: false,
+    description: 'project filter',
+  },
+  SORT_BY: {
+    name: 'sortBy',
+    type: String,
+    required: false,
+    description: 'sort by field name',
+  },
+  ORDER_BY: {
+    name: 'orderBy',
+    type: String,
+    required: false,
+    description: 'order by field name',
+  },
+};
 
 export const EMPLOYEE_CONST_PARAMETERS = {
   SEARCH_PARAMS: swaggerParamsExample(EMPLOYEE_PARAMETERS.SEARCH_PARAMS),
   PAGE_PARAMS: swaggerParamsExample(EMPLOYEE_PARAMETERS.PAGE_PARAMS),
   PAGE_SIZE_PARAMS: swaggerParamsExample(EMPLOYEE_PARAMETERS.PAGE_SIZE),
   TECH_FILTER_PARAMS: swaggerParamsExample(EMPLOYEE_PARAMETERS.TECH_FILTER),
-  PROJECT_FILTER_PARAMS: swaggerParamsExample(EMPLOYEE_PARAMETERS.PROJECT_FILTER),
+  PROJECT_FILTER_PARAMS: swaggerParamsExample(
+    EMPLOYEE_PARAMETERS.PROJECT_FILTER,
+  ),
+  ORDER_BY__PARAMS: swaggerParamsExample(EMPLOYEE_PARAMETERS.ORDER_BY),
+  SORT_BY__PARAMS: swaggerParamsExample(EMPLOYEE_PARAMETERS.SORT_BY),
 };
 
 export const PROJECT_SWAGGER_RESPONSE = {

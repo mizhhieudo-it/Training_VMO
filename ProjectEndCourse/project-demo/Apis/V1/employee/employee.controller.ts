@@ -11,7 +11,11 @@ import {
 } from '@nestjs/common';
 import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Public } from 'Shared/Auth/Decorator/checkOpenRoute.decorator';
-import { EMPLOYEE_CONST, EMPLOYEE_CONST_PARAMETERS, PROJECT_SWAGGER_RESPONSE } from './employee.const';
+import {
+  EMPLOYEE_CONST,
+  EMPLOYEE_CONST_PARAMETERS,
+  PROJECT_SWAGGER_RESPONSE,
+} from './employee.const';
 import { EmployeeService } from './employee.service';
 import { EmployeeDocument } from './employee.schema';
 import { CreateEmployeeDto } from './dtos/CreateEmployee.dto';
@@ -54,15 +58,27 @@ export class employeeController {
   @ApiQuery(EMPLOYEE_CONST_PARAMETERS.SEARCH_PARAMS)
   @ApiQuery(EMPLOYEE_CONST_PARAMETERS.PROJECT_FILTER_PARAMS)
   @ApiQuery(EMPLOYEE_CONST_PARAMETERS.TECH_FILTER_PARAMS)
+  @ApiQuery(EMPLOYEE_CONST_PARAMETERS.SORT_BY__PARAMS)
+  @ApiQuery(EMPLOYEE_CONST_PARAMETERS.ORDER_BY__PARAMS)
   async GetAsync(
-  @Query('technology') technology: string,
-  @Query('project') project: string,
-  @Query('search') search: string,
-  @Query('page') page: Number,
-  @Query('pageSize') pageSize: Number,
+    @Query('technology') technologyFilter: string,
+    @Query('project') projectFilter: string,
+    @Query('search') search: string,
+    @Query('page') page: Number,
+    @Query('pageSize') pageSize: Number,
+    @Query('sortBy') sortBy: string,
+    @Query('orderBy') orderBy: string,
   ) {
     try {
-      let result = await this._employeeService.GetAsync({search,page,pageSize,technology,project});
+      let result = await this._employeeService.GetAsync({
+        search,
+        page,
+        pageSize,
+        technologyFilter,
+        projectFilter,
+        sortBy,
+        orderBy,
+      });
       return result;
     } catch (error) {
       throw new BadRequestException(error.message);

@@ -1,3 +1,4 @@
+import { swaggerParamsExample } from 'Shared/utils/swagger_params';
 import { swaggerSchemaExample } from 'Shared/utils/swagger_schema';
 
 export const PROJECT_CONST = {
@@ -21,4 +22,83 @@ export const PROJECT_SWAGGER_RESPONSE = {
     },
     'Api example for create product',
   ),
+};
+
+export const PROJECT_PARAMETERS = {
+  SEARCH_PARAMS: {
+    name: 'search',
+    type: String,
+    required: false,
+    description: 'Search params for field name project ',
+  },
+  PAGE_PARAMS: {
+    name: 'page',
+    type: Number,
+    required: false,
+    description: 'page params',
+  },
+  PAGE_SIZE: {
+    name: 'pageSize',
+    type: Number,
+    required: false,
+    description: 'pageSize params',
+  },
+  STATUS_FILTER: {
+    name: 'status',
+    type: String,
+    required: false,
+    description: 'filter by status',
+  },
+  TYPE_PROJECT_FILTER: {
+    name: 'typeProject',
+    type: String,
+    required: false,
+    description: 'filter by type project ',
+  },
+  TECH_FILTER: {
+    name: 'technology',
+    type: String,
+    required: false,
+    description: 'filter ny technology',
+  },
+  CUSTOMER_FILTER: {
+    name: 'customer',
+    type: String,
+    required: false,
+    description: 'filter customer in project',
+  },
+  START_DATE_FILTER: {
+    name: 'start date',
+    type: Date,
+    required: false,
+    description: 'filter date in project',
+  },
+  SORT_BY: {
+    name: 'sortBy',
+    type: String,
+    required: false,
+    description: 'sort by field name',
+  },
+  ORDER_BY: {
+    name: 'orderBy',
+    type: String,
+    required: false,
+    description: 'order by field name',
+  },
+};
+
+export const EMPLOYEE_CONST_PARAMETERS = {
+  SEARCH_PARAMS: swaggerParamsExample(PROJECT_PARAMETERS.SEARCH_PARAMS),
+  PAGE_PARAMS: swaggerParamsExample(PROJECT_PARAMETERS.PAGE_PARAMS),
+  PAGE_SIZE_PARAMS: swaggerParamsExample(PROJECT_PARAMETERS.PAGE_SIZE),
+  TECH_FILTER_PARAMS: swaggerParamsExample(PROJECT_PARAMETERS.TECH_FILTER),
+  TYPE_PROJECT_FILTER_PARAMS: swaggerParamsExample(
+    PROJECT_PARAMETERS.TYPE_PROJECT_FILTER,
+  ),
+  STATUS_FILTER_PARAMS: swaggerParamsExample(PROJECT_PARAMETERS.STATUS_FILTER),
+  CUSTOMER_FILTER_PARAMS: swaggerParamsExample(
+    PROJECT_PARAMETERS.CUSTOMER_FILTER,
+  ),
+  ORDER_BY__PARAMS: swaggerParamsExample(PROJECT_PARAMETERS.ORDER_BY),
+  SORT_BY__PARAMS: swaggerParamsExample(PROJECT_PARAMETERS.SORT_BY),
 };

@@ -1,3 +1,4 @@
+import { AWSMoudle } from './../../../Shared/Common/upload-files/AWS/upload-files-aws.module';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CloudinaryModule } from 'Shared/Common/upload-files/Cloudinary/cloudinary.module';
@@ -15,6 +16,7 @@ import { UserService } from './user.service';
         schema: UserSchema,
       },
     ]),
+    AWSMoudle,
   ],
   providers: [UserRepository, UserService],
   controllers: [UserController],

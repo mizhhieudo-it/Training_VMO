@@ -61,6 +61,20 @@ export class UserController {
   }
 
   // Option 1 : Upload file save in local
+  // @ApiOkResponse(USER_SWAGGER_RESPONSE.CREATE_USER)
+  // @Post()
+  // @Public()
+  // @ApiFile('avatar', uploadFileUser)
+  // public createUser(
+  //   @Request() request,
+  //   @Body() createUserDto: CreateUserDto,
+  //   @UploadedFile(ParseFile) avatar?: Express.Multer.File,
+  // ) {
+  //   let { path } = avatar;
+  //   createUserDto.avatar = path.toString().trim();
+  //   return this._userService.CreateAsync(createUserDto);
+  // }
+
   @ApiOkResponse(USER_SWAGGER_RESPONSE.CREATE_USER)
   @Post()
   @Public()
@@ -70,9 +84,7 @@ export class UserController {
     @Body() createUserDto: CreateUserDto,
     @UploadedFile(ParseFile) avatar?: Express.Multer.File,
   ) {
-    let { path } = avatar;
-    createUserDto.avatar = path.toString().trim();
-    return this._userService.CreateAsync(createUserDto);
+    return this._userService.CreateAsync(createUserDto, avatar);
   }
 
   @Patch('/:userId')

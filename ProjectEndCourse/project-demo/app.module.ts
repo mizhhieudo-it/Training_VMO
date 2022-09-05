@@ -1,3 +1,4 @@
+import { AWSMoudle } from './Shared/Common/upload-files/AWS/upload-files-aws.module';
 import { JwtAuthGuard } from './Shared/Auth/guards/jwt.guards';
 import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
@@ -24,7 +25,7 @@ import { MulterModule } from '@nestjs/platform-express';
       isGlobal: true,
     }),
     MulterModule.register({
-      dest: './upload',
+      storage: './upload',
     }),
     technologyModule,
     UserModule,
@@ -35,6 +36,7 @@ import { MulterModule } from '@nestjs/platform-express';
     customerModule,
     projectModule,
     departmentModule,
+    AWSMoudle,
   ],
   controllers: [],
   providers: [

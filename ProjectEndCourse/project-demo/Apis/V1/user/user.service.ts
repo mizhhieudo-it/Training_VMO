@@ -1,3 +1,4 @@
+import { AWSUploadFileService } from './../../../Shared/Common/upload-files/AWS/upload-files-aws.service';
 import {
   BadRequestException,
   Injectable,
@@ -15,7 +16,10 @@ import { ResponSchema } from 'Shared/utils/dataRespon_schema';
 import { ResponSchemaConst } from 'Shared/Common/respon-mess.const';
 @Injectable()
 export class UserService {
-  constructor(private _userRepo: UserRepository) {}
+  constructor(
+    private _userRepo: UserRepository,
+    private _awsUploadFiles: AWSUploadFileService,
+  ) {}
   async getById(userId: string) {
     try {
       let result = await this._userRepo.findByCodition({ userId });
@@ -42,8 +46,9 @@ export class UserService {
       return Promise.reject(error);
     }
   }
-  async CreateAsync(createUserDto: CreateUserDto) {
+  async CreateAsync(createUserDto: CreateUserDto, fileUpload?: any) {
     const { userId, email, password, name, avatar } = createUserDto;
+    const { originalname, buffer } = fileUpload;
     try {
       let isIdUnique = await this._userRepo.findByCodition({ userId });
       let isEmailUnique = await this._userRepo.findByCodition({ email });
@@ -53,13 +58,19 @@ export class UserService {
       if (isEmailUnique) {
         throw new NotFoundException(ERROR.EMAIL_EXISTED.MESSAGE);
       }
+      let handlerFileUpload = await this._awsUploadFiles.uploadPublicFile(
+        buffer,
+        originalname,
+      );
+      let { Location, Key } = handlerFileUpload;
+
       let encodePassword = bcrypt.hashSync(password, 10);
       let user = await this._userRepo.store(<UserDocument>{
         userId,
         email,
         password: encodePassword,
         name,
-        avatar,
+        avatar: Location,
         issuedBy: '',
         issuedDate: '',
         daysInTrial: '',

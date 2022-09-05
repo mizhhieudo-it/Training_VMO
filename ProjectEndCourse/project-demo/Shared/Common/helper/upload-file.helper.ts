@@ -17,6 +17,7 @@ export const editFileName = (req: any, file: any, callback: any) => {
   const name = 'upload';
   const fileExtName = extname(file.originalname);
   const randomName = uuidv4() + Date.now();
+  const fileName = (randomName + fileExtName).toString().trim();
   // callback(null, `${name}_${randomName}${fileExtName}`);
-  callback(null, `${randomName}_${file.originalname}`);
+  callback(null, ` ${fileName}`);
 };

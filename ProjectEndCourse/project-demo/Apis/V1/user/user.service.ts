@@ -36,16 +36,14 @@ export class UserService {
       if (!result) {
         throw new NotFoundException(ERROR.USER_NOT_FOUND.MESSAGE);
       } else {
-        return Promise.resolve(
-          result
-        );
+        return Promise.resolve(result);
       }
     } catch (error) {
       return Promise.reject(error);
     }
   }
   async CreateAsync(createUserDto: CreateUserDto) {
-    const { userId, email, password, name } = createUserDto;
+    const { userId, email, password, name, avatar } = createUserDto;
     try {
       let isIdUnique = await this._userRepo.findByCodition({ userId });
       let isEmailUnique = await this._userRepo.findByCodition({ email });
@@ -61,6 +59,7 @@ export class UserService {
         email,
         password: encodePassword,
         name,
+        avatar,
         issuedBy: '',
         issuedDate: '',
         daysInTrial: '',

@@ -11,7 +11,13 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBody, ApiConsumes, ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiConsumes,
+  ApiOkResponse,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Public } from 'Shared/Auth/Decorator/checkOpenRoute.decorator';
 import { SWAGGER_RESPONSE } from 'Shared/Common/swagger-respon/swaggerCheck';
 import { PaginationParams } from 'Shared/Database/Pagination/Paginate.const';
@@ -60,12 +66,16 @@ export class customerController {
   @ApiQuery(CUSTOMER_CONST_PARAMETERS.PAGE_SIZE_PARAMS)
   @ApiQuery(CUSTOMER_CONST_PARAMETERS.SEARCH_PARAMS)
   async GetAsync(
-   @Query('search') search: string,
-   @Query('page') page: Number,
-   @Query('pageSize') pageSize: Number,
+    @Query('search') search: string,
+    @Query('page') page: Number,
+    @Query('pageSize') pageSize: Number,
   ) {
     try {
-      let result = await this._customerService.GetAsync({search,page,pageSize});
+      let result = await this._customerService.GetAsync({
+        search,
+        page,
+        pageSize,
+      });
       return result;
     } catch (error) {
       throw new BadRequestException(error.message);

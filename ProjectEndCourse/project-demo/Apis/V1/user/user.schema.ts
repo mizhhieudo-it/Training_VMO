@@ -19,6 +19,7 @@ export class User {
   @Exclude()
   password: string;
 
+  @Prop({ type: String, length: 255 })
   avatar: string;
 
   @Prop({ type: String, length: 255, default: '' })
@@ -49,6 +50,8 @@ export class User {
 
   @Prop({ type: String })
   public idGoogle: string;
+
+  //public avatar: file;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

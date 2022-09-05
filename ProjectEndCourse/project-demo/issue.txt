@@ -3,11 +3,11 @@
 // logout => delete token 
 // xác thực 2 lớp - use token => done   
 // upload files  ==> done 
-// docker config
-// fix password required for login with third-party ||  
+// docker config ( docker compose file) ==> done 
+// login with third-party ==> done 
 // 17- 8 : update respon in service business // fix all respon => done 
 //==============================================
-// upload file with local , s3 amazon 
-// OPT message SMS 
-// electisearch (full text search )
+// upload file with local , s3 amazon => done local 
+// OPT message SMS  => 
+// electisearch (full text search ) => pending 
 // login with github . case : conflict mail github <=> google 

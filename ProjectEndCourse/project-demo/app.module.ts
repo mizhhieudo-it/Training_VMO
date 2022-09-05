@@ -15,12 +15,16 @@ import { projectModule } from 'Apis/V1/project/project.module';
 import { departmentModule } from 'Apis/V1/department/department.module';
 import { CloudinaryModule } from 'Shared/Common/upload-files/Cloudinary/cloudinary.module';
 import { configFilesInterceptor } from 'Shared/Middlewares/Interception/ConfigFilesUpload.interceptor';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://localhost:27017/Project-Demo'),
     ConfigModule.forRoot({
       isGlobal: true,
+    }),
+    MulterModule.register({
+      dest: './upload',
     }),
     technologyModule,
     UserModule,

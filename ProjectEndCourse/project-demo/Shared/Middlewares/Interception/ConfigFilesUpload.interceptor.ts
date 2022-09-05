@@ -17,10 +17,6 @@ import {
 export class configFilesInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const req = context.switchToHttp().getRequest();
-
-    // FileInterceptor('file');
-    // console.log(1111, req.file);
-    // //
     return next.handle();
   }
 }

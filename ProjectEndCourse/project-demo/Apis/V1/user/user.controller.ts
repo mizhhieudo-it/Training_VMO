@@ -34,6 +34,10 @@ import {
 } from 'Shared/Common/helper/upload-file.helper';
 import { diskStorage } from 'multer';
 import { request } from 'http';
+import { ApiFile } from 'Shared/Common/upload-files/Local/api-file.decorator';
+import { fileMimetypeFilter } from 'Shared/Common/upload-files/Local/api-file.filter';
+import { ParseFile } from 'Shared/Common/upload-files/Local/api-file.pipe';
+import { uploadFileUser } from './user.otp';
 
 @Controller(USER_CONST.MODEL_NAME)
 @ApiTags(USER_CONST.MODEL_NAME)
@@ -56,15 +60,18 @@ export class UserController {
     return this._userService.getById(userId);
   }
 
+  // Option 1 : Upload file save in local
   @ApiOkResponse(USER_SWAGGER_RESPONSE.CREATE_USER)
   @Post()
   @Public()
-  @UseInterceptors(configFilesInterceptor)
+  @ApiFile('avatar', uploadFileUser)
   public createUser(
     @Request() request,
     @Body() createUserDto: CreateUserDto,
-    @UploadedFile() file?: Express.Multer.File,
+    @UploadedFile(ParseFile) avatar?: Express.Multer.File,
   ) {
+    let { path } = avatar;
+    createUserDto.avatar = path.toString().trim();
     return this._userService.CreateAsync(createUserDto);
   }
 

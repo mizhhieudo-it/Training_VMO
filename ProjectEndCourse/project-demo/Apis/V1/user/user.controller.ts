@@ -79,9 +79,9 @@ export class UserController {
 
   @ApiOkResponse(USER_SWAGGER_RESPONSE.CREATE_USER)
   @Post()
-  // @Public()
-  @UseGuards(RolesGuard)
-  @Roles(Role.Admin)
+  @Public()
+  //@UseGuards(RolesGuard)
+  //@Roles(Role.Admin)
   @ApiFile('avatar', uploadFileUser)
   public createUser(
     @Request() request,

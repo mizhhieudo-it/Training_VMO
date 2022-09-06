@@ -30,13 +30,15 @@ export class GoogleService {
           username: userExsit.email,
         });
       } else {
-        // check account connect google auth => is register mail
+        // find by gmail
         let userAuth = await this._userRepo.findByCodition({ email });
+        // account already exists => tài khoản đã có trong hệ thống nhưng không thuộc google mail mà là local
         if (userAuth) {
           throw new ForbiddenException(
             "User already exists, but Google account was not connected to user's account",
           );
         } else {
+          // check account connect google auth => is register mail
           let acccount = {
             userId: uuidv4(),
             email: email,

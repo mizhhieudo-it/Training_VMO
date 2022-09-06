@@ -1,3 +1,5 @@
+import { Role } from './../../../Shared/Auth/Roles/role.enum';
+import { RolesGuard } from './../../../Shared/Auth/guards/checkRole.guards';
 import {
   BadRequestException,
   Body,
@@ -7,6 +9,7 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { Public } from 'Shared/Auth/Decorator/checkOpenRoute.decorator';
@@ -18,12 +21,15 @@ import {
   STATUS_PROJECT_CONST,
 } from './statusProject.const';
 import { StautsProjectService } from './statusProject.service';
+import { Roles } from 'Shared/Auth/Decorator/roles.decorator';
 
 @Controller(STATUS_PROJECT_CONST.MODEL_NAME)
 @ApiTags(STATUS_PROJECT_CONST.MODEL_NAME)
 export class statusProjectController {
   constructor(private readonly _statusProjectService: StautsProjectService) {}
-  @Public()
+  //@Public()
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
   @ApiOkResponse(PROJECT_SWAGGER_RESPONSE.CREATE_STATUS_PROJECT)
   @Post()
   async CreateAsync(@Body() project: CreateStatusProjectDto) {
@@ -35,7 +41,9 @@ export class statusProjectController {
     }
   }
 
-  @Public()
+  //@Public()
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Delete('/:id')
   async DeleteAsync(@Param('id') userId: string) {
@@ -47,7 +55,9 @@ export class statusProjectController {
     }
   }
 
-  @Public()
+  //@Public()
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Patch('/:id')
   async UpdateAsync(
@@ -66,7 +76,9 @@ export class statusProjectController {
   }
 
   @Get()
-  @Public()
+  //@Public()
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   async GetAllAsync() {
     try {
@@ -77,7 +89,9 @@ export class statusProjectController {
     }
   }
 
-  @Public()
+  //@Public()
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
   @Get('/:id')
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   async GetByIdAsync(@Param('id') projectId: string) {

@@ -1,3 +1,5 @@
+import { Role } from './../../../Shared/Auth/Roles/role.enum';
+import { RolesGuard } from './../../../Shared/Auth/guards/checkRole.guards';
 import {
   BadRequestException,
   Body,
@@ -7,6 +9,7 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { Public } from 'Shared/Auth/Decorator/checkOpenRoute.decorator';
@@ -18,14 +21,17 @@ import {
   PROJECT_TYPE_SWAGGER_RESPONSE,
 } from './projectTypes.const';
 import { projectTypesService } from './projectTypes.service';
+import { Roles } from 'Shared/Auth/Decorator/roles.decorator';
 
 @Controller(PROJECT_TYPE_CONST.MODEL_NAME)
 @ApiTags(PROJECT_TYPE_CONST.MODEL_NAME)
 export class projectTypesController {
   constructor(private readonly _projectService: projectTypesService) {}
-  @Public()
+  //@Public()
   @ApiOkResponse(PROJECT_TYPE_SWAGGER_RESPONSE.CREATE_PROJECT_TYPE)
   @Post()
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
   async CreateAsync(@Body() project: CreateProjectTypeDto) {
     try {
       let result = await this._projectService.CreateAsync(project);
@@ -35,9 +41,11 @@ export class projectTypesController {
     }
   }
 
-  @Public()
+  //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Delete('/:id')
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
   async DeleteAsync(@Param('id') userId: string) {
     try {
       let result = await this._projectService.RemoveAsync(userId);
@@ -47,9 +55,11 @@ export class projectTypesController {
     }
   }
 
-  @Public()
+  //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Patch('/:id')
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
   async UpdateAsync(
     @Param('id') projectId: string,
     @Body() project: UpdateProjectDto,
@@ -63,7 +73,9 @@ export class projectTypesController {
   }
 
   @Get()
-  @Public()
+  //@Public()
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   async GetAllAsync() {
     try {
@@ -74,7 +86,9 @@ export class projectTypesController {
     }
   }
 
-  @Public()
+  //@Public()
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
   @Get('/:id')
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   async GetByIdAsync(@Param('id') projectId: string) {

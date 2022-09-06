@@ -1,3 +1,5 @@
+import { Role } from './../../../Shared/Auth/Roles/role.enum';
+import { RolesGuard } from './../../../Shared/Auth/guards/checkRole.guards';
 import {
   BadRequestException,
   Body,
@@ -7,6 +9,7 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { Public } from 'Shared/Auth/Decorator/checkOpenRoute.decorator';
@@ -18,12 +21,15 @@ import {
 import { DepartmentService } from './department.service';
 import { CreateDepartmentDto } from './dtos/createDepartment.dto';
 import { UpdateDepartmentDto } from './dtos/updateDepartment.dto';
+import { Roles } from 'Shared/Auth/Decorator/roles.decorator';
 
 @Controller(DEPARTMENT_CONST.MODEL_NAME)
 @ApiTags(DEPARTMENT_CONST.MODEL_NAME)
+@UseGuards(RolesGuard)
+@Roles(Role.Admin)
 export class DepartmentController {
   constructor(private _departmentService: DepartmentService) {}
-  @Public()
+  //@Public()
   @ApiOkResponse(DEPARTMENT_SWAGGER_RESPONSE.CREATE_DEPARTMENT)
   @Post()
   async CreateAsync(@Body() department: CreateDepartmentDto) {
@@ -34,7 +40,7 @@ export class DepartmentController {
       throw new BadRequestException(error.message);
     }
   }
-  @Public()
+  //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Get('view-data')
   async ViewDataAsync() {
@@ -46,7 +52,7 @@ export class DepartmentController {
     }
   }
 
-  @Public()
+  //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Get()
   async GetAllAsync() {
@@ -57,7 +63,7 @@ export class DepartmentController {
       throw new BadRequestException(error.message);
     }
   }
-  @Public()
+  // @Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Get('/:id')
   async FindByIdAsync(@Param('id') id: string) {
@@ -68,7 +74,7 @@ export class DepartmentController {
       throw new BadRequestException(error.message);
     }
   }
-  @Public()
+  //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Delete('/:id')
   async RemoveAsync(@Param('id') id: string) {
@@ -80,7 +86,7 @@ export class DepartmentController {
     }
   }
 
-  @Public()
+  //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Patch('/:id')
   async UpdateAsync(

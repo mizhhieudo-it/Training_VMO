@@ -8,12 +8,12 @@ import { UserModule } from 'Apis/V1/user/user.module';
 import { AuthModule } from 'Shared/Auth/auth.module';
 import { ProjectTypesModule } from 'Apis/V1/projectTypes/projectTypes.module';
 import { StatusProjectModule } from 'Apis/V1/statusProject/stautsProject.module';
-import { technologyModule } from 'Apis/V1/technology/technology.module';
-import { employeeModule } from 'Apis/V1/employee/employee.module';
-import { customerModule } from 'Apis/V1/customer/customer.module';
+import { TechnologyModule } from 'Apis/V1/technology/technology.module';
+import { EmployeeModule } from 'Apis/V1/employee/employee.module';
+import { CustomerModule } from 'Apis/V1/customer/customer.module';
 import { ConfigModule } from '@nestjs/config';
-import { projectModule } from 'Apis/V1/project/project.module';
-import { departmentModule } from 'Apis/V1/department/department.module';
+import { ProjectModule } from 'Apis/V1/project/project.module';
+import { DepartmentModule } from 'Apis/V1/department/department.module';
 import { CloudinaryModule } from 'Shared/Common/upload-files/Cloudinary/cloudinary.module';
 import { configFilesInterceptor } from 'Shared/Middlewares/Interception/ConfigFilesUpload.interceptor';
 import { MulterModule } from '@nestjs/platform-express';
@@ -27,15 +27,15 @@ import { MulterModule } from '@nestjs/platform-express';
     MulterModule.register({
       storage: './upload',
     }),
-    technologyModule,
+    TechnologyModule,
     UserModule,
     AuthModule,
     ProjectTypesModule,
     StatusProjectModule,
-    employeeModule,
-    customerModule,
-    projectModule,
-    departmentModule,
+    EmployeeModule,
+    CustomerModule,
+    ProjectModule,
+    DepartmentModule,
     AWSMoudle,
   ],
   controllers: [],
@@ -44,7 +44,7 @@ import { MulterModule } from '@nestjs/platform-express';
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
     },
-    configFilesInterceptor,
+    // configFilesInterceptor,
   ],
 })
 export class AppModule {}

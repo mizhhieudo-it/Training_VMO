@@ -20,4 +20,4 @@ import { customerService } from './customer.service';
   controllers: [customerController],
   exports: [CustomerRepository],
 })
-export class customerModule {}
+export class CustomerModule {}

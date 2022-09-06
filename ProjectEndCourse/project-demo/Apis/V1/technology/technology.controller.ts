@@ -1,3 +1,5 @@
+import { Role } from './../../../Shared/Auth/Roles/role.enum';
+import { RolesGuard } from './../../../Shared/Auth/guards/checkRole.guards';
 import { UpdateTechDto } from './dtos/updateTechnology.dto';
 import { CreateTechDto } from './dtos/createTechnology.dto';
 import {
@@ -9,20 +11,24 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { Public } from 'Shared/Auth/Decorator/checkOpenRoute.decorator';
 import { SWAGGER_RESPONSE } from 'Shared/Common/swagger-respon/swaggerCheck';
 import { TECH_CONST, TECH_SWAGGER_RESPONSE } from './technology.const';
 import { technologyService } from './technology.service';
+import { Roles } from 'Shared/Auth/Decorator/roles.decorator';
 
 @Controller(TECH_CONST.MODEL_NAME)
 @ApiTags(TECH_CONST.MODEL_NAME)
 export class TechController {
   constructor(private readonly _techService: technologyService) {}
-  @Public()
+  //@Public()
   @ApiOkResponse(TECH_SWAGGER_RESPONSE.CREATE_TECH)
   @Post()
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
   async CreateAsync(@Body() project: CreateTechDto) {
     try {
       let result = await this._techService.createAsync(project);
@@ -32,7 +38,9 @@ export class TechController {
     }
   }
 
-  @Public()
+  //@Public()
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Delete('/:id')
   async DeleteAsync(@Param('id') userId: string) {
@@ -44,7 +52,9 @@ export class TechController {
     }
   }
 
-  @Public()
+  //@Public()
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Patch('/:id')
   async UpdateAsync(
@@ -60,7 +70,9 @@ export class TechController {
   }
 
   @Get()
-  @Public()
+  //@Public()
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   async GetAllAsync() {
     try {
@@ -71,7 +83,9 @@ export class TechController {
     }
   }
 
-  @Public()
+  //@Public()
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
   @Get('/:id')
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   async GetByIdAsync(@Param('id') projectId: string) {

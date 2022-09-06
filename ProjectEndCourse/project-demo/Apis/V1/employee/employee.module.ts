@@ -1,14 +1,14 @@
 import { technology } from './../technology/technology.schema';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { technologyModule } from '../technology/technology.module';
+import { TechnologyModule } from '../technology/technology.module';
 import { EMPLOYEE_CONST } from './employee.const';
 import { employeeController } from './employee.controller';
 import { employeeRepository } from './employee.repository';
 import { Employee, EmployeeSchema } from './employee.schema';
 import { EmployeeService } from './employee.service';
 import { ERROR } from 'Shared/Common/err-code.const';
-import { projectModule } from '../project/project.module';
+import { ProjectModule } from '../project/project.module';
 
 @Module({
   controllers: [employeeController],
@@ -23,8 +23,8 @@ import { projectModule } from '../project/project.module';
         },
       },
     ]),
-    technologyModule,
+    TechnologyModule,
   ],
   exports: [employeeRepository],
 })
-export class employeeModule {}
+export class EmployeeModule {}

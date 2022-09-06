@@ -1,7 +1,7 @@
 import { Module, Controller } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { employeeModule } from '../employee/employee.module';
-import { projectModule } from '../project/project.module';
+import { EmployeeModule } from '../employee/employee.module';
+import { ProjectModule } from '../project/project.module';
 import { DEPARTMENT_CONST } from './department.const';
 import { DepartmentController } from './department.controller';
 import { departmentRepository } from './department.repository';
@@ -16,10 +16,10 @@ import { DepartmentService } from './department.service';
         schema: DepartmentSchema,
       },
     ]),
-    employeeModule,
-    projectModule,
+    EmployeeModule,
+    ProjectModule,
   ],
   controllers: [DepartmentController],
   providers: [departmentRepository, DepartmentService],
 })
-export class departmentModule {}
+export class DepartmentModule {}

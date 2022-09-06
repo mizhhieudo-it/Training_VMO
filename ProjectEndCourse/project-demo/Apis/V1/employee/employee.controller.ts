@@ -1,3 +1,5 @@
+import { Role } from './../../../Shared/Auth/Roles/role.enum';
+import { RolesGuard } from './../../../Shared/Auth/guards/checkRole.guards';
 import {
   BadRequestException,
   Body,
@@ -8,6 +10,7 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Public } from 'Shared/Auth/Decorator/checkOpenRoute.decorator';
@@ -21,12 +24,15 @@ import { EmployeeDocument } from './employee.schema';
 import { CreateEmployeeDto } from './dtos/CreateEmployee.dto';
 import { SWAGGER_RESPONSE } from 'Shared/Common/swagger-respon/swaggerCheck';
 import { UpdateEmployeeDto } from './dtos/UpdateEmployee.dto';
+import { Roles } from 'Shared/Auth/Decorator/roles.decorator';
 
 @Controller(EMPLOYEE_CONST.MODEL_NAME)
 @ApiTags(EMPLOYEE_CONST.MODEL_NAME)
+@UseGuards(RolesGuard)
+@Roles(Role.Admin)
 export class employeeController {
   constructor(private _employeeService: EmployeeService) {}
-  @Public()
+  // @Public()
   @ApiOkResponse(PROJECT_SWAGGER_RESPONSE.CREATE_PROJECT)
   @Post()
   async CreateAsync(@Body() employee: CreateEmployeeDto) {
@@ -38,7 +44,7 @@ export class employeeController {
     }
   }
 
-  @Public()
+  // @Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Get()
   async GetAllAsync() {
@@ -50,7 +56,7 @@ export class employeeController {
     }
   }
 
-  @Public()
+  //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Get('get')
   @ApiQuery(EMPLOYEE_CONST_PARAMETERS.PAGE_PARAMS)
@@ -85,7 +91,7 @@ export class employeeController {
     }
   }
 
-  @Public()
+  //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Get('ViewCreate')
   async ViewCreateAsync() {
@@ -96,7 +102,7 @@ export class employeeController {
       throw new BadRequestException(error.message);
     }
   }
-  @Public()
+  // @Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Get('/:id')
   async FindByIdAsync(@Param('id') id: string) {
@@ -119,7 +125,7 @@ export class employeeController {
     }
   }
 
-  @Public()
+  //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Patch('/:id')
   async UpdateAsync(

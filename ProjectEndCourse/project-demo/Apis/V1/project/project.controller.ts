@@ -1,3 +1,5 @@
+import { Role } from './../../../Shared/Auth/Roles/role.enum';
+import { RolesGuard } from './../../../Shared/Auth/guards/checkRole.guards';
 import { CUSTOMER_CONST } from './../customer/customer.const';
 import {
   BadRequestException,
@@ -9,6 +11,7 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Public } from 'Shared/Auth/Decorator/checkOpenRoute.decorator';
@@ -21,12 +24,15 @@ import {
   PROJECT_CONST_PARAMETERS,
 } from './project.const';
 import { ProjectService } from './project.service';
+import { Roles } from 'Shared/Auth/Decorator/roles.decorator';
 
 @Controller(PROJECT_CONST.MODEL_NAME)
 @ApiTags(PROJECT_CONST.MODEL_NAME)
+@UseGuards(RolesGuard)
+@Roles(Role.Admin)
 export class ProjectController {
   constructor(private readonly _projectService: ProjectService) {}
-  @Public()
+  //@Public()
   @ApiOkResponse(PROJECT_SWAGGER_RESPONSE.CREATE_PROJECT)
   @Post()
   async CreateAsync(@Body() project: CreateProjectDto) {
@@ -38,7 +44,7 @@ export class ProjectController {
     }
   }
 
-  @Public()
+  //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Get('get')
   @ApiQuery(PROJECT_CONST_PARAMETERS.PAGE_PARAMS)
@@ -82,7 +88,7 @@ export class ProjectController {
     }
   }
 
-  @Public()
+  //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Delete('/:id')
   async DeleteAsync(@Param('id') userId: string) {
@@ -94,7 +100,7 @@ export class ProjectController {
     }
   }
 
-  @Public()
+  //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Patch('/:id')
   async UpdateAsync(
@@ -110,7 +116,7 @@ export class ProjectController {
   }
 
   @Get()
-  @Public()
+  //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   async GetAllAsync() {
     try {
@@ -121,7 +127,7 @@ export class ProjectController {
     }
   }
 
-  @Public()
+  // @Public()
   @Get('/:id')
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   async GetByIdAsync(@Param('id') projectId: string) {

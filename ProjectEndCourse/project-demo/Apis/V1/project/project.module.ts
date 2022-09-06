@@ -8,10 +8,10 @@ import { PROJECT_CONST } from './project.const';
 import { ProjectController } from './project.controller';
 import { ProjectRepository } from './project.repository';
 import { ProjectService } from './project.service';
-import { customerModule } from '../customer/customer.module';
-import { technologyModule } from '../technology/technology.module';
+import { CustomerModule } from '../customer/customer.module';
+import { TechnologyModule } from '../technology/technology.module';
 import { StatusProjectModule } from '../statusProject/stautsProject.module';
-import { employeeModule } from '../employee/employee.module';
+import { EmployeeModule } from '../employee/employee.module';
 // import { ProjectTypesDocument } from './projectTypes.schema';
 // import { PROJECT_TYPE_CONST } from './projectTypes.const';
 @Module({
@@ -24,11 +24,11 @@ import { employeeModule } from '../employee/employee.module';
         schema: projectSchema,
       },
     ]),
-    customerModule,
-    technologyModule,
+    CustomerModule,
+    TechnologyModule,
     StatusProjectModule,
-    employeeModule,
+    EmployeeModule,
   ],
   exports: [ProjectRepository],
 })
-export class projectModule {}
+export class ProjectModule {}

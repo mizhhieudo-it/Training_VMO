@@ -1,3 +1,5 @@
+import { Role } from './../../../Shared/Auth/Roles/role.enum';
+import { RolesGuard } from './../../../Shared/Auth/guards/checkRole.guards';
 import {
   BadRequestException,
   Body,
@@ -9,6 +11,7 @@ import {
   Post,
   Query,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import {
@@ -31,9 +34,12 @@ import {
 import { customerService } from './customer.service';
 import { createCustomerDto } from './dtos/createCustomer.dto';
 import { updateCustomerDto } from './dtos/updateCustomer.dto';
+import { Roles } from 'Shared/Auth/Decorator/roles.decorator';
 
 @Controller(CUSTOMER_CONST.MODEL_NAME)
 @ApiTags(CUSTOMER_CONST.MODEL_NAME)
+@UseGuards(RolesGuard)
+@Roles(Role.Admin)
 export class customerController {
   constructor(private _customerService: customerService) {}
   @Public()
@@ -48,7 +54,7 @@ export class customerController {
     }
   }
 
-  @Public()
+  //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Get()
   async GetAllAsync() {
@@ -59,7 +65,7 @@ export class customerController {
       throw new BadRequestException(error.message);
     }
   }
-  @Public()
+  //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Get('get')
   @ApiQuery(CUSTOMER_CONST_PARAMETERS.PAGE_PARAMS)
@@ -82,7 +88,7 @@ export class customerController {
     }
   }
 
-  @Public()
+  //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Get('/:id')
   async FindByIdAsync(@Param('id') id: string) {
@@ -93,7 +99,7 @@ export class customerController {
       throw new BadRequestException(error.message);
     }
   }
-  @Public()
+  //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Delete('/:id')
   async RemoveAsync(@Param('id') id: string) {
@@ -105,7 +111,7 @@ export class customerController {
     }
   }
 
-  @Public()
+  //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Patch('/:id')
   async UpdateAsync(

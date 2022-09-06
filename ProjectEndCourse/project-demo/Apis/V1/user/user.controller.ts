@@ -46,15 +46,17 @@ export class UserController {
 
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Get()
-  // @UseGuards(RolesGuard)
-  // @Roles(Role.User)
-  @Public() // true
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
+  // @Public() // true
   async getListUser(@Req() request: Request) {
     return this._userService.GetAllAsync();
   }
 
-  @Public()
+  //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
   @Get('/:userId')
   public getUserById(@Param('userId') userId: string) {
     return this._userService.getById(userId);
@@ -77,7 +79,9 @@ export class UserController {
 
   @ApiOkResponse(USER_SWAGGER_RESPONSE.CREATE_USER)
   @Post()
-  @Public()
+  // @Public()
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
   @ApiFile('avatar', uploadFileUser)
   public createUser(
     @Request() request,
@@ -87,6 +91,8 @@ export class UserController {
     return this._userService.CreateAsync(createUserDto, avatar);
   }
 
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
   @Patch('/:userId')
   public updateUser(
     @Param('userId') userId: string,
@@ -95,7 +101,9 @@ export class UserController {
     return this._userService.UpdateAsync(userId, updateUserDto);
   }
 
-  @Public()
+  //@Public()
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
   @Delete('/:userId')
   public deleteUser(@Param('userId') userId: string) {
     return this._userService.DeleteAsync(userId);

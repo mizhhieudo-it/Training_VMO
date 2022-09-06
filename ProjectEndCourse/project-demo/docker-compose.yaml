@@ -10,7 +10,7 @@ services:
   minio:
     image: minio/minio
     volumes:
-      - ${pwd}/UploadFilesMinios:/data
+      - ./UploadFilesMinios:/data
     ports:
       - '9000:9000'
       - '6800:9001'

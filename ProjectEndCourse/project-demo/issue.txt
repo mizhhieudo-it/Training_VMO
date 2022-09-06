@@ -1,13 +1,16 @@
 // login with google,git-Oauth 2 (done)
-// phân quyền theo permission 
-// logout => delete token 
+// phân quyền theo permission =>  
+// logout => delete token =>  
 // xác thực 2 lớp - use token => done   
 // upload files  ==> done 
 // docker config ( docker compose file) ==> done 
 // login with third-party ==> done 
 // 17- 8 : update respon in service business // fix all respon => done 
 //==============================================
-// upload file with local , s3 amazon => done local 
+// upload file with local , s3 amazon => done local,aws  => done  
 // OPT message SMS  => 
 // electisearch (full text search ) => pending 
 // login with github . case : conflict mail github <=> google 
+//===================Clear Project===================
+=> test project : 
+=> 

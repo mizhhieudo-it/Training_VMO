@@ -11,12 +11,17 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Public } from 'Shared/Auth/Decorator/checkOpenRoute.decorator';
 import { SWAGGER_RESPONSE } from 'Shared/Common/swagger-respon/swaggerCheck';
-import { TECH_CONST, TECH_SWAGGER_RESPONSE } from './technology.const';
+import {
+  TECH_CONST,
+  TECH_CONST_PARAMETERS,
+  TECH_SWAGGER_RESPONSE,
+} from './technology.const';
 import { technologyService } from './technology.service';
 import { Roles } from 'Shared/Auth/Decorator/roles.decorator';
 
@@ -77,6 +82,36 @@ export class TechController {
   async GetAllAsync() {
     try {
       let result = await this._techService.GetAllAsync();
+      return result;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
+  }
+
+  @ApiQuery(TECH_CONST_PARAMETERS.PAGE_PARAMS)
+  @ApiQuery(TECH_CONST_PARAMETERS.PAGE_SIZE_PARAMS)
+  @ApiQuery(TECH_CONST_PARAMETERS.SEARCH_PARAMS)
+  @ApiQuery(TECH_CONST_PARAMETERS.SORT_BY__PARAMS)
+  @ApiQuery(TECH_CONST_PARAMETERS.ORDER_BY__PARAMS)
+  @Get('get')
+  @Public()
+  //@UseGuards(RolesGuard)
+  //@Roles(Role.Admin)
+  async GetAsync(
+    @Query('search') search: string,
+    @Query('page') page: Number,
+    @Query('pageSize') pageSize: Number,
+    @Query('sortBy') sortBy: string,
+    @Query('orderBy') orderBy: string,
+  ) {
+    try {
+      let result = this._techService.GetAsync({
+        search,
+        page,
+        pageSize,
+        sortBy,
+        orderBy,
+      });
       return result;
     } catch (error) {
       throw new BadRequestException(error.message);

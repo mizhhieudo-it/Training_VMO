@@ -1,3 +1,4 @@
+import { IListParams } from 'Shared/Database/Pagination/IPaginate';
 import { UpdateTechDto } from './dtos/updateTechnology.dto';
 import { Injectable } from '@nestjs/common';
 import mongoose from 'mongoose';
@@ -58,6 +59,38 @@ export class technologyService {
       return Promise.resolve(
         ResponSchema(ResponSchemaConst.Schema_Delete, result),
       );
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  async GetAsync(params) {
+    try {
+      let { search, page, pageSize, sortBy, orderBy } = params;
+      let listOfCondition = [];
+      search
+        ? listOfCondition.push({
+            name: { $regex: '.*' + search + '.*', $options: 'i' },
+          })
+        : null;
+      let condition = {};
+      if (listOfCondition.length > 0) {
+        condition = { $and: listOfCondition };
+      }
+      // console.log(condition);
+      let searchParams: IListParams = {
+        conditions: condition,
+        projections: '',
+        paginate: {
+          pageSize,
+          page,
+          sortBy,
+          orderBy,
+        },
+      };
+      let result = await this._repoTech.get(searchParams);
+      let respon = ResponSchema(ResponSchemaConst.Schema_Get, result);
+      return Promise.resolve(respon);
     } catch (error) {
       return Promise.reject(error);
     }

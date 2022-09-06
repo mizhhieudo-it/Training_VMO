@@ -12,5 +12,7 @@
 // electisearch (full text search ) => pending 
 // login with github . case : conflict mail github <=> google 
 //===================Clear Project===================
-=> test project : 
-=> 
+=> clearn project  => done 
+=> paginate all model => 
+=> fix status model =>
+=> add some function get viewdata =>  

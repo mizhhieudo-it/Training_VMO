@@ -95,6 +95,7 @@ export class UserController {
     return this._userService.UpdateAsync(userId, updateUserDto);
   }
 
+  @Public()
   @Delete('/:userId')
   public deleteUser(@Param('userId') userId: string) {
     return this._userService.DeleteAsync(userId);

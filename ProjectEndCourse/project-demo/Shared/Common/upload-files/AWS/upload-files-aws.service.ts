@@ -11,10 +11,7 @@ import { AWSProvider } from './upload-files-aws.provider';
 @Injectable()
 export class AWSUploadFileService {
   private s3: S3;
-  constructor(
-    private readonly configService: ConfigService,
-    @Inject(AWSUploadFile) private getConfigService,
-  ) {
+  constructor(@Inject(AWSUploadFile) private readonly getConfigService) {
     this.s3 = new S3({
       accessKeyId: this.getConfigService.awsAccessKeyId,
       secretAccessKey: this.getConfigService.awsSecretAccessKey,
@@ -38,15 +35,21 @@ export class AWSUploadFileService {
       return Promise.reject(error);
     }
   }
-  //   async deletePublicFile(fileId: number) {
-  //     const file = await this.publicFilesRepository.findOne({ id: fileId });
-  //     const s3 = new S3();
-  //     await s3
-  //       .deleteObject({
-  //         Bucket: this.configService.get('AWS_PUBLIC_BUCKET_NAME'),
-  //         Key: file.key,
-  //       })
-  //       .promise();
-  //     await this.publicFilesRepository.delete(fileId);
-  //   }
+  async deletePublicFile(keyFiles: string) {
+    await this.s3
+      .deleteObject({
+        Bucket: this.getConfigService.bucketsName,
+        Key: keyFiles,
+      })
+      .promise();
+  }
+
+  getIdPublicFile(urlFile: string) {
+    const pathReplace =
+      this.getConfigService.awsHost +
+      '/' +
+      this.getConfigService.bucketsName +
+      '/';
+    return urlFile.replace(pathReplace, '');
+  }
 }

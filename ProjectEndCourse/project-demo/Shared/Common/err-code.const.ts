@@ -32,4 +32,10 @@ export const ERROR = {
     MESSAGE:
       'Delete collection is not allowed because collection is referencing another collection',
   },
+
+  // delete aws file
+  AWS_FILE_NOT_FOUND: {
+    CODE: 'AWS0001',
+    MESSAGE: 'File AWS not found',
+  },
 };

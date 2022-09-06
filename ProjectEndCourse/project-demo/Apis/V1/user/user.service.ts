@@ -1,6 +1,7 @@
 import { AWSUploadFileService } from './../../../Shared/Common/upload-files/AWS/upload-files-aws.service';
 import {
   BadRequestException,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -14,6 +15,7 @@ import { UpdateUserDto } from './dto/UpdateUser.dto';
 import { CloudinaryService } from 'Shared/Common/upload-files/Cloudinary/cloudinary.service';
 import { ResponSchema } from 'Shared/utils/dataRespon_schema';
 import { ResponSchemaConst } from 'Shared/Common/respon-mess.const';
+import { AWSUploadFile } from 'Shared/Common/upload-files/AWS/upload-files-aws.const';
 @Injectable()
 export class UserService {
   constructor(
@@ -49,6 +51,7 @@ export class UserService {
   async CreateAsync(createUserDto: CreateUserDto, fileUpload?: any) {
     const { userId, email, password, name, avatar } = createUserDto;
     const { originalname, buffer } = fileUpload;
+    let fileName: string = <string>originalname;
     try {
       let isIdUnique = await this._userRepo.findByCodition({ userId });
       let isEmailUnique = await this._userRepo.findByCodition({ email });
@@ -60,7 +63,7 @@ export class UserService {
       }
       let handlerFileUpload = await this._awsUploadFiles.uploadPublicFile(
         buffer,
-        originalname,
+        fileName.replace(/\s/g, ''),
       );
       let { Location, Key } = handlerFileUpload;
 
@@ -120,6 +123,10 @@ export class UserService {
       throw new BadRequestException(ERROR.USER_NOT_FOUND.MESSAGE);
     }
     try {
+      if (isUserExits.avatar) {
+        let keyFiles = this._awsUploadFiles.getIdPublicFile(isUserExits.avatar);
+        await this._awsUploadFiles.deletePublicFile(keyFiles);
+      }
       let user = await this._userRepo.remove(isUserExits._id);
       return Promise.resolve(
         ResponSchema(ResponSchemaConst.Schema_Delete, user),

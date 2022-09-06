@@ -113,6 +113,8 @@ export class customerController {
     @Body() customer: updateCustomerDto,
   ) {
     try {
+      console.log(customer);
+
       let result = await this._customerService.UpdateAsync(id, customer);
       return result;
     } catch (error) {

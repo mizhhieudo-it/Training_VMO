@@ -1,9 +1,9 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsString } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsString } from 'class-validator';
 
-export class updateCustomerDto{
-    @ApiProperty({ example: 'Công ty giải phát mạng' })
-    @IsString()
-    @IsNotEmpty()
-    descriptions: String;
+export class updateCustomerDto {
+  @ApiProperty({ example: 'Công ty giải phát mạng' })
+  @IsString()
+  @IsNotEmpty()
+  descriptions: string;
 }

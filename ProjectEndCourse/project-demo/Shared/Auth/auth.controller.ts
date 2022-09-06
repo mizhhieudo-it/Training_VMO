@@ -103,7 +103,7 @@ export class AuthController {
       let result = await this._twoFactorAuthenticationService.activeAccount(
         token,
       );
-      return result;
+      return `<h3>Status : ${result.status} - Message : ${result.message}</h3>`;
     } catch (error) {
       throw new BadRequestException(error);
     }

@@ -56,8 +56,8 @@ export class TwoFactorAuthenticationService {
           isEmailConfirmed: true,
         });
         return Promise.resolve({
-          status: 'active',
-          message: 'account active successfully',
+          status: 'Actived',
+          message: 'Account active successfully !!',
         });
       } catch (error) {
         return Promise.reject(error.message);

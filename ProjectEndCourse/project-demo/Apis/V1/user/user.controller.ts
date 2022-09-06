@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   ClassSerializerInterceptor,
   Controller,
@@ -7,18 +8,23 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Req,
   Request,
   UploadedFile,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'Shared/Auth/guards/jwt.guards';
 import { SWAGGER_RESPONSE } from 'Shared/Common/swagger-respon/swaggerCheck';
 import { CreateUserDto } from './dto/CreateUser.dto';
 import { UpdateUserDto } from './dto/UpdateUser.dto';
-import { USER_CONST, USER_SWAGGER_RESPONSE } from './user.const';
+import {
+  USER_CONST,
+  USER_SWAGGER_RESPONSE,
+  USERS_CONST_PARAMETERS,
+} from './user.const';
 import { UserService } from './user.service';
 import { log } from 'console';
 import { Roles } from 'Shared/Auth/Decorator/roles.decorator';
@@ -107,5 +113,33 @@ export class UserController {
   @Delete('/:userId')
   public deleteUser(@Param('userId') userId: string) {
     return this._userService.DeleteAsync(userId);
+  }
+
+  @Public()
+  @ApiQuery(USERS_CONST_PARAMETERS.PAGE_PARAMS)
+  @ApiQuery(USERS_CONST_PARAMETERS.PAGE_SIZE_PARAMS)
+  @ApiQuery(USERS_CONST_PARAMETERS.SEARCH_PARAMS)
+  @ApiQuery(USERS_CONST_PARAMETERS.SORT_BY__PARAMS)
+  @ApiQuery(USERS_CONST_PARAMETERS.ORDER_BY__PARAMS)
+  @Get('get')
+  async GetAsync(
+    @Query('search') search: string,
+    @Query('page') page: Number,
+    @Query('pageSize') pageSize: Number,
+    @Query('sortBy') sortBy: string,
+    @Query('orderBy') orderBy: string,
+  ) {
+    try {
+      let result = this._userService.GetAsync({
+        search,
+        page,
+        pageSize,
+        sortBy,
+        orderBy,
+      });
+      return result;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 }

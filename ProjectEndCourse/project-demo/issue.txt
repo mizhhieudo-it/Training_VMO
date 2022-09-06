@@ -13,6 +13,12 @@
 // login with github . case : conflict mail github <=> google 
 //===================Clear Project===================
 => clearn project  => done 
-=> paginate all model => 
+=> paginate all model =>  {
+    tech => done 
+    user => 
+    project_type => 
+    status_project => 
+    department => 
+}
 => fix status model =>
 => add some function get viewdata =>  

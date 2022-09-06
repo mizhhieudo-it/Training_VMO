@@ -1,3 +1,4 @@
+import { IListParams } from 'Shared/Database/Pagination/IPaginate';
 import { AWSUploadFileService } from './../../../Shared/Common/upload-files/AWS/upload-files-aws.service';
 import {
   BadRequestException,
@@ -131,6 +132,37 @@ export class UserService {
       return Promise.resolve(
         ResponSchema(ResponSchemaConst.Schema_Delete, user),
       );
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+  async GetAsync(params) {
+    try {
+      let { search, page, pageSize, sortBy, orderBy } = params;
+      let listOfCondition = [];
+      search
+        ? listOfCondition.push({
+            name: { $regex: '.*' + search + '.*', $options: 'i' },
+          })
+        : null;
+      let condition = {};
+      if (listOfCondition.length > 0) {
+        condition = { $and: listOfCondition };
+      }
+      // console.log(condition);
+      let searchParams: IListParams = {
+        conditions: condition,
+        projections: '',
+        paginate: {
+          pageSize,
+          page,
+          sortBy,
+          orderBy,
+        },
+      };
+      let result = await this._userRepo.get(searchParams);
+      let respon = ResponSchema(ResponSchemaConst.Schema_Get, result);
+      return Promise.resolve(respon);
     } catch (error) {
       return Promise.reject(error);
     }

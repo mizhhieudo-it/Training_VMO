@@ -13,7 +13,12 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Public } from 'Shared/Auth/Decorator/checkOpenRoute.decorator';
 import { SWAGGER_RESPONSE } from 'Shared/Common/swagger-respon/swaggerCheck';
 import { CreateProjectTypeDto } from './dto/createProjectTypes.dto';
@@ -27,6 +32,7 @@ import { Roles } from 'Shared/Auth/Decorator/roles.decorator';
 
 @Controller(PROJECT_TYPE_CONST.MODEL_NAME)
 @ApiTags(PROJECT_TYPE_CONST.MODEL_NAME)
+@ApiBearerAuth('defaultBearerAuth')
 export class projectTypesController {
   constructor(private readonly _projectService: projectTypesService) {}
   //@Public()

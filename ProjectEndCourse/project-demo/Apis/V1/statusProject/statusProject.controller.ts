@@ -12,7 +12,12 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Public } from 'Shared/Auth/Decorator/checkOpenRoute.decorator';
 import { SWAGGER_RESPONSE } from 'Shared/Common/swagger-respon/swaggerCheck';
 import { CreateStatusProjectDto } from './dto/CreateStatusProject.dto';
@@ -27,6 +32,7 @@ import { Roles } from 'Shared/Auth/Decorator/roles.decorator';
 
 @Controller(STATUS_PROJECT_CONST.MODEL_NAME)
 @ApiTags(STATUS_PROJECT_CONST.MODEL_NAME)
+@ApiBearerAuth('defaultBearerAuth')
 export class statusProjectController {
   constructor(private readonly _statusProjectService: StautsProjectService) {}
   //@Public()

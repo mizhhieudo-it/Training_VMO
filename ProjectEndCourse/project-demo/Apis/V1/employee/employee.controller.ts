@@ -12,7 +12,12 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Public } from 'Shared/Auth/Decorator/checkOpenRoute.decorator';
 import {
   EMPLOYEE_CONST,
@@ -30,6 +35,7 @@ import { Roles } from 'Shared/Auth/Decorator/roles.decorator';
 @ApiTags(EMPLOYEE_CONST.MODEL_NAME)
 @UseGuards(RolesGuard)
 @Roles(Role.Admin)
+@ApiBearerAuth('defaultBearerAuth')
 export class employeeController {
   constructor(private _employeeService: EmployeeService) {}
   // @Public()

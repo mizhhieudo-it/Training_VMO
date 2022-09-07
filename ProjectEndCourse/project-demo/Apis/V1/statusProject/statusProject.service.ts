@@ -67,7 +67,7 @@ export class StautsProjectService {
 
   async GetAllAsync() {
     try {
-      let result = await this._projectRepository.getAll();
+      let result = await this._projectRepository.getAllTechAsync();
       return Promise.resolve(
         ResponSchema(ResponSchemaConst.Schema_Get, result),
       );
@@ -85,7 +85,9 @@ export class StautsProjectService {
             name: { $regex: '.*' + search + '.*', $options: 'i' },
           })
         : null;
+      listOfCondition.push({ status: false });
       let condition = {};
+      listOfCondition.push({ status: true });
       if (listOfCondition.length > 0) {
         condition = { $and: listOfCondition };
       }

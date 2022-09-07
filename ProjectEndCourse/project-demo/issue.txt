@@ -18,7 +18,8 @@
     user => done 
     project_type => done 
     status_project => DONE 
-    department => 
+    department => done 
 }
-=> fix status model =>
+=> fix status model => 
 => add some function get viewdata =>  
+=> permisssion user => 

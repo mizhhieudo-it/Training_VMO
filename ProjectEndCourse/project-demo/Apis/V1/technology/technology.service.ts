@@ -73,6 +73,7 @@ export class technologyService {
             name: { $regex: '.*' + search + '.*', $options: 'i' },
           })
         : null;
+      listOfCondition.push({ status: true });
       let condition = {};
       if (listOfCondition.length > 0) {
         condition = { $and: listOfCondition };
@@ -98,7 +99,7 @@ export class technologyService {
 
   async GetAllAsync() {
     try {
-      let result = await this._repoTech.getAll();
+      let result = await this._repoTech.getAllTechAsync();
       return Promise.resolve(
         ResponSchema(ResponSchemaConst.Schema_Get, result),
       );

@@ -15,6 +15,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiConsumes,
   ApiOkResponse,
@@ -40,6 +41,7 @@ import { Roles } from 'Shared/Auth/Decorator/roles.decorator';
 @ApiTags(CUSTOMER_CONST.MODEL_NAME)
 @UseGuards(RolesGuard)
 @Roles(Role.Admin)
+@ApiBearerAuth('defaultBearerAuth')
 export class customerController {
   constructor(private _customerService: customerService) {}
   @Public()

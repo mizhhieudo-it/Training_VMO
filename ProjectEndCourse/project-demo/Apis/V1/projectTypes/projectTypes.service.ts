@@ -67,7 +67,7 @@ export class projectTypesService {
 
   async GetAllAsync() {
     try {
-      let result = await this._projectRepository.getAll();
+      let result = await this._projectRepository.getAllProjectTypeAsync();
       return Promise.resolve(
         ResponSchema(ResponSchemaConst.Schema_Get, result),
       );
@@ -85,6 +85,7 @@ export class projectTypesService {
             name: { $regex: '.*' + search + '.*', $options: 'i' },
           })
         : null;
+      listOfCondition.push({ status: true });
       let condition = {};
       if (listOfCondition.length > 0) {
         condition = { $and: listOfCondition };

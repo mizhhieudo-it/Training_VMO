@@ -15,7 +15,12 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { JwtAuthGuard } from 'Shared/Auth/guards/jwt.guards';
 import { SWAGGER_RESPONSE } from 'Shared/Common/swagger-respon/swaggerCheck';
 import { CreateUserDto } from './dto/CreateUser.dto';
@@ -47,6 +52,7 @@ import { uploadFileUser } from './user.otp';
 
 @Controller(USER_CONST.MODEL_NAME)
 @ApiTags(USER_CONST.MODEL_NAME)
+@ApiBearerAuth('defaultBearerAuth')
 export class UserController {
   constructor(private _userService: UserService) {}
 

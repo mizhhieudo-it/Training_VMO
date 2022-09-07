@@ -14,7 +14,12 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Public } from 'Shared/Auth/Decorator/checkOpenRoute.decorator';
 import { SWAGGER_RESPONSE } from 'Shared/Common/swagger-respon/swaggerCheck';
 import {
@@ -27,6 +32,7 @@ import { Roles } from 'Shared/Auth/Decorator/roles.decorator';
 
 @Controller(TECH_CONST.MODEL_NAME)
 @ApiTags(TECH_CONST.MODEL_NAME)
+@ApiBearerAuth('defaultBearerAuth')
 export class TechController {
   constructor(private readonly _techService: technologyService) {}
   //@Public()

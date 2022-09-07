@@ -2,7 +2,7 @@ import { swaggerParamsExample } from 'Shared/utils/swagger_params';
 import { swaggerSchemaExample } from 'Shared/utils/swagger_schema';
 
 export const USER_CONST = {
-  MODEL_NAME: 'user',
+  MODEL_NAME: 'USER',
   MODEL_PROVIDER: 'USER_MODEL',
 };
 

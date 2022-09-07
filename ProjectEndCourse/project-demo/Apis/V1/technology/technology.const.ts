@@ -11,7 +11,7 @@ export const TECH_PARAMETERS = {
     name: 'search',
     type: String,
     required: false,
-    description: 'Search params for field name employee',
+    description: 'Search params for field name',
   },
   PAGE_PARAMS: {
     name: 'page',

@@ -82,6 +82,33 @@ export class UserController {
   //   createUserDto.avatar = path.toString().trim();
   //   return this._userService.CreateAsync(createUserDto);
   // }
+  @Public()
+  @ApiQuery(USERS_CONST_PARAMETERS.PAGE_PARAMS)
+  @ApiQuery(USERS_CONST_PARAMETERS.PAGE_SIZE_PARAMS)
+  @ApiQuery(USERS_CONST_PARAMETERS.SEARCH_PARAMS)
+  @ApiQuery(USERS_CONST_PARAMETERS.SORT_BY__PARAMS)
+  @ApiQuery(USERS_CONST_PARAMETERS.ORDER_BY__PARAMS)
+  @Get('get')
+  async GetAsync(
+    @Query('search') search: string,
+    @Query('page') page: Number,
+    @Query('pageSize') pageSize: Number,
+    @Query('sortBy') sortBy: string,
+    @Query('orderBy') orderBy: string,
+  ) {
+    try {
+      let result = this._userService.GetAsync({
+        search,
+        page,
+        pageSize,
+        sortBy,
+        orderBy,
+      });
+      return result;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
+  }
 
   @ApiOkResponse(USER_SWAGGER_RESPONSE.CREATE_USER)
   @Post()
@@ -113,33 +140,5 @@ export class UserController {
   @Delete('/:userId')
   public deleteUser(@Param('userId') userId: string) {
     return this._userService.DeleteAsync(userId);
-  }
-
-  @Public()
-  @ApiQuery(USERS_CONST_PARAMETERS.PAGE_PARAMS)
-  @ApiQuery(USERS_CONST_PARAMETERS.PAGE_SIZE_PARAMS)
-  @ApiQuery(USERS_CONST_PARAMETERS.SEARCH_PARAMS)
-  @ApiQuery(USERS_CONST_PARAMETERS.SORT_BY__PARAMS)
-  @ApiQuery(USERS_CONST_PARAMETERS.ORDER_BY__PARAMS)
-  @Get('get')
-  async GetAsync(
-    @Query('search') search: string,
-    @Query('page') page: Number,
-    @Query('pageSize') pageSize: Number,
-    @Query('sortBy') sortBy: string,
-    @Query('orderBy') orderBy: string,
-  ) {
-    try {
-      let result = this._userService.GetAsync({
-        search,
-        page,
-        pageSize,
-        sortBy,
-        orderBy,
-      });
-      return result;
-    } catch (error) {
-      throw new BadRequestException(error.message);
-    }
   }
 }

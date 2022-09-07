@@ -15,9 +15,9 @@
 => clearn project  => done 
 => paginate all model =>  {
     tech => done 
-    user => 
-    project_type => 
-    status_project => 
+    user => done 
+    project_type => done 
+    status_project => DONE 
     department => 
 }
 => fix status model =>

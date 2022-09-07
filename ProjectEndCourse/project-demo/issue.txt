@@ -20,6 +20,6 @@
     status_project => DONE 
     department => done 
 }
-=> fix status model => 
-=> add some function get viewdata =>  
-=> permisssion user => 
+=> fix status model => done 
+=> add some function get viewdata => employee => done , project => done  , department => done  
+=> test case 

@@ -99,10 +99,10 @@ export class employeeController {
 
   //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
-  @Get('ViewCreate')
+  @Get('view')
   async ViewCreateAsync() {
     try {
-      let result = await this._employeeService.ViewCreate();
+      let result = await this._employeeService.View();
       return result;
     } catch (error) {
       throw new BadRequestException(error.message);

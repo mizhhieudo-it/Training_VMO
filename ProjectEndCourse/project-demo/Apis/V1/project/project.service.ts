@@ -25,18 +25,18 @@ export class ProjectService {
     private readonly _customRepo: CustomerRepository,
     private readonly _employeeRepo: employeeRepository,
   ) {}
-  async ViewCreate() {
+  async View() {
     try {
       let dataTech = await this._techRepo.getAll();
       let dataEmployee = await this._employeeRepo.getAll();
       let dataCustomer = await this._customRepo.getAll();
       let dataStatus = await this._statusProjectRepo.getAll();
-      let viewData = [
-        ...dataTech,
-        ...dataStatus,
-        ...dataCustomer,
-        ...dataEmployee,
-      ];
+      let viewData = {
+        tech: [...dataTech],
+        status: [...dataStatus],
+        customer: [...dataCustomer],
+        employee: [...dataEmployee],
+      };
       return Promise.resolve(
         ResponSchema(ResponSchemaConst.Schema_Get, viewData),
       );

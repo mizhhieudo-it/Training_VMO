@@ -50,6 +50,15 @@ export class ProjectController {
     }
   }
 
+  @Get('view')
+  async Get() {
+    try {
+      return await this._projectService.View();
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
+  }
+
   //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Get('get')

@@ -81,10 +81,10 @@ export class DepartmentController {
   @UseGuards(RolesGuard)
   @Roles(Role.Admin)
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
-  @Get('view-data')
+  @Get('view')
   async ViewDataAsync() {
     try {
-      let result = await this._departmentService.ViewData();
+      let result = await this._departmentService.View();
       return result;
     } catch (error) {
       throw new BadRequestException(error.message);

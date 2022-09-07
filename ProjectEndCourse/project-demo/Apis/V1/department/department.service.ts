@@ -23,13 +23,13 @@ export class DepartmentService {
     private readonly _departmentRepo: departmentRepository,
   ) {}
 
-  async ViewData() {
+  async View() {
     try {
       let listEmployee = await this._employeeRepo.getAll();
       let listProject = await this._projectRepo.getAll();
       let data = {
-        employee: listEmployee,
-        project: listProject,
+        employee: [...listEmployee],
+        project: [...listProject],
       };
       let result = ResponSchema(ResponSchemaConst.Schema_Get, data);
       return Promise.resolve(result);

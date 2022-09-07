@@ -21,7 +21,7 @@ export class EmployeeService {
     private readonly _techRepo: TechRepository,
   ) {}
 
-  async ViewCreate() {
+  async View() {
     try {
       let data = await this._techRepo.getAll();
       return Promise.resolve(ResponSchema(ResponSchemaConst.Schema_Get, data));

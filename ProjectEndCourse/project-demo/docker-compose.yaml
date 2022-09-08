@@ -6,6 +6,8 @@ services:
       - 27017:27017
     volumes:
       - dbProjectEndCourse:/data/db
+    networks:
+      - project_demo_network
 
   minio:
     image: minio/minio
@@ -14,9 +16,33 @@ services:
     ports:
       - '9000:9000'
       - '6800:9001'
+    networks:
+      - project_demo_network
     environment:
       MINIO_ROOT_USER: admin
       MINIO_ROOT_PASSWORD: password
     command: server /data --console-address ":9001"
+
+  node:
+    image: node:16-alpine3.15
+
+    ports:
+      - '3001:3000'
+
+    volumes:
+      - ./:/usr/CodeProject
+    tty: true
+    networks:
+      - project_demo_network
+    environment:
+      AWS_REGION: vn-central-1
+      AWS_ACCESS_KEY_ID: 0UchPbJaMgyDmGjF
+      AWS_SECRET_ACCESS_KEY: T64GREjSi6wfbXJJvvFhmkMwtpEocece
+      AWS_PUBLIC_BUCKET_NAME: demoprojectendcourse
+      AWS_HOST: http://127.0.0.1:9000
+
+networks:
+  project_demo_network:
+    driver: bridge
 volumes:
   dbProjectEndCourse:

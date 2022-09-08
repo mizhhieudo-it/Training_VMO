@@ -20,7 +20,9 @@ import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017/Project-Demo'),
+    MongooseModule.forRoot(
+      'mongodb://project-demo_mongodb_1:27017/Project-Demo',
+    ),
     ConfigModule.forRoot({
       isGlobal: true,
     }),

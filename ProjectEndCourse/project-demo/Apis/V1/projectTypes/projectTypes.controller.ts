@@ -102,7 +102,7 @@ export class projectTypesController {
   @ApiQuery(TECH_CONST_PARAMETERS.SORT_BY__PARAMS)
   @ApiQuery(TECH_CONST_PARAMETERS.ORDER_BY__PARAMS)
   @Get('get')
-  @Public()
+  @Roles(Role.Admin, Role.User)
   async GetAsync(
     @Query('search') search: string,
     @Query('page') page: Number,

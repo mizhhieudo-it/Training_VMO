@@ -33,14 +33,14 @@ import { Roles } from 'Shared/Auth/Decorator/roles.decorator';
 
 @Controller(PROJECT_CONST.MODEL_NAME)
 @ApiTags(PROJECT_CONST.MODEL_NAME)
-@UseGuards(RolesGuard)
-@Roles(Role.Admin)
 @ApiBearerAuth('defaultBearerAuth')
 export class ProjectController {
   constructor(private readonly _projectService: ProjectService) {}
   //@Public()
   @ApiOkResponse(PROJECT_SWAGGER_RESPONSE.CREATE_PROJECT)
   @Post()
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin, Role.User)
   async CreateAsync(@Body() project: CreateProjectDto) {
     try {
       let result = await this._projectService.CreateAsync(project);
@@ -50,6 +50,8 @@ export class ProjectController {
     }
   }
 
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin, Role.User)
   @Get('view')
   async Get() {
     try {
@@ -62,6 +64,8 @@ export class ProjectController {
   //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Get('get')
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin, Role.User)
   @ApiQuery(PROJECT_CONST_PARAMETERS.PAGE_PARAMS)
   @ApiQuery(PROJECT_CONST_PARAMETERS.PAGE_SIZE_PARAMS)
   @ApiQuery(PROJECT_CONST_PARAMETERS.SEARCH_PARAMS)
@@ -106,6 +110,8 @@ export class ProjectController {
   //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Delete('/:id')
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin, Role.User)
   async DeleteAsync(@Param('id') userId: string) {
     try {
       let result = await this._projectService.DeleteAsync(userId);
@@ -118,6 +124,8 @@ export class ProjectController {
   //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Patch('/:id')
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin, Role.User)
   async UpdateAsync(
     @Param('id') projectId: string,
     @Body() project: UpdateProjectDto,
@@ -132,6 +140,8 @@ export class ProjectController {
 
   @Get()
   //@Public()
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin, Role.User)
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   async GetAllAsync() {
     try {
@@ -145,6 +155,8 @@ export class ProjectController {
   // @Public()
   @Get('/:id')
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin, Role.User)
   async GetByIdAsync(@Param('id') projectId: string) {
     try {
       let result = await this._projectService.GetByIdAsync(projectId);

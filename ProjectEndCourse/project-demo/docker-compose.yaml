@@ -23,23 +23,32 @@ services:
       MINIO_ROOT_PASSWORD: password
     command: server /data --console-address ":9001"
 
-  node:
-    image: node:16-alpine3.15
-
+  redis:
+    image: redis:latest
     ports:
-      - '3001:3000'
-
+      - '6379:6379'
+    restart: always
     volumes:
-      - ./:/usr/CodeProject
-    tty: true
-    networks:
-      - project_demo_network
-    environment:
-      AWS_REGION: vn-central-1
-      AWS_ACCESS_KEY_ID: 0UchPbJaMgyDmGjF
-      AWS_SECRET_ACCESS_KEY: T64GREjSi6wfbXJJvvFhmkMwtpEocece
-      AWS_PUBLIC_BUCKET_NAME: demoprojectendcourse
-      AWS_HOST: http://127.0.0.1:9000
+      # - ./redis.conf:/usr/local/etc/redis/redis.conf
+      - ./data:/data
+
+  # node:
+  #   image: node:16-alpine3.15
+
+  #   ports:
+  #     - '3001:3000'
+
+  #   volumes:
+  #     - ./:/usr/CodeProject
+  #   tty: true
+  #   networks:
+  #     - project_demo_network
+  #   environment:
+  #     AWS_REGION: vn-central-1
+  #     AWS_ACCESS_KEY_ID: 0UchPbJaMgyDmGjF
+  #     AWS_SECRET_ACCESS_KEY: T64GREjSi6wfbXJJvvFhmkMwtpEocece
+  #     AWS_PUBLIC_BUCKET_NAME: demoprojectendcourse
+  #     AWS_HOST: http://127.0.0.1:9000
 
 networks:
   project_demo_network:

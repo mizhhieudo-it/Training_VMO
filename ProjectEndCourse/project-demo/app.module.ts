@@ -11,21 +11,20 @@ import { StatusProjectModule } from 'Apis/V1/statusProject/stautsProject.module'
 import { TechnologyModule } from 'Apis/V1/technology/technology.module';
 import { EmployeeModule } from 'Apis/V1/employee/employee.module';
 import { CustomerModule } from 'Apis/V1/customer/customer.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ProjectModule } from 'Apis/V1/project/project.module';
 import { DepartmentModule } from 'Apis/V1/department/department.module';
 import { CloudinaryModule } from 'Shared/Common/upload-files/Cloudinary/cloudinary.module';
 import { configFilesInterceptor } from 'Shared/Middlewares/Interception/ConfigFilesUpload.interceptor';
 import { MulterModule } from '@nestjs/platform-express';
+import { BullModule } from '@nestjs/bull';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      'mongodb://project-demo_mongodb_1:27017/Project-Demo',
-    ),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    MongooseModule.forRoot(process.env.MONGO_URL),
     MulterModule.register({
       storage: './upload',
     }),
@@ -39,6 +38,16 @@ import { MulterModule } from '@nestjs/platform-express';
     ProjectModule,
     DepartmentModule,
     AWSMoudle,
+    BullModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        redis: {
+          host: configService.get('HOST_REDIS'),
+          port: configService.get('PORT_REDIS'),
+        },
+      }),
+      inject: [ConfigService],
+    }),
   ],
   controllers: [],
   providers: [

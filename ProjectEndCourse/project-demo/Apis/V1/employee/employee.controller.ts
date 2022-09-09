@@ -33,14 +33,14 @@ import { Roles } from 'Shared/Auth/Decorator/roles.decorator';
 
 @Controller(EMPLOYEE_CONST.MODEL_NAME)
 @ApiTags(EMPLOYEE_CONST.MODEL_NAME)
-@UseGuards(RolesGuard)
-@Roles(Role.Admin)
 @ApiBearerAuth('defaultBearerAuth')
 export class employeeController {
   constructor(private _employeeService: EmployeeService) {}
   // @Public()
   @ApiOkResponse(PROJECT_SWAGGER_RESPONSE.CREATE_PROJECT)
   @Post()
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
   async CreateAsync(@Body() employee: CreateEmployeeDto) {
     try {
       let result = await this._employeeService.CreateAsync(employee);
@@ -51,6 +51,8 @@ export class employeeController {
   }
 
   // @Public()
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin, Role.User)
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Get()
   async GetAllAsync() {
@@ -65,6 +67,8 @@ export class employeeController {
   //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Get('get')
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin, Role.User)
   @ApiQuery(EMPLOYEE_CONST_PARAMETERS.PAGE_PARAMS)
   @ApiQuery(EMPLOYEE_CONST_PARAMETERS.PAGE_SIZE_PARAMS)
   @ApiQuery(EMPLOYEE_CONST_PARAMETERS.SEARCH_PARAMS)
@@ -98,6 +102,8 @@ export class employeeController {
   }
 
   //@Public()
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Get('view')
   async ViewCreateAsync() {
@@ -111,6 +117,8 @@ export class employeeController {
   // @Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Get('/:id')
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
   async FindByIdAsync(@Param('id') id: string) {
     try {
       let result = await this._employeeService.GetByIdAsync(id);
@@ -122,6 +130,8 @@ export class employeeController {
   //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Delete('/:id')
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
   async RemoveAsync(@Param('id') id: string) {
     try {
       let result = await this._employeeService.DeleteAsync(id);
@@ -134,6 +144,8 @@ export class employeeController {
   //@Public()
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   @Patch('/:id')
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
   async UpdateAsync(
     @Param('id') id: string,
     @Body() employee: UpdateEmployeeDto,

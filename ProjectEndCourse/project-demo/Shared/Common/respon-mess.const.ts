@@ -20,4 +20,8 @@ export const ResponSchemaConst = {
     StatusCode: 201,
     MESSAGE: 'Handler CREATE successfully',
   },
+  Files_Create: {
+    StatusCode: 201,
+    MESSAGE: 'Handler Upload Files successfully',
+  },
 };

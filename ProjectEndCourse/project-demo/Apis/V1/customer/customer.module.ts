@@ -1,3 +1,5 @@
+import { CustomerProcessor } from './customer.processor';
+import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
@@ -8,7 +10,7 @@ import { CustomerSchema } from './customer.scheme';
 import { customerService } from './customer.service';
 
 @Module({
-  providers: [CustomerRepository, customerService],
+  providers: [CustomerRepository, customerService, CustomerProcessor],
   imports: [
     MongooseModule.forFeature([
       {
@@ -16,6 +18,9 @@ import { customerService } from './customer.service';
         schema: CustomerSchema,
       },
     ]),
+    BullModule.registerQueue({
+      name: 'upload-file-customers',
+    }),
   ],
   controllers: [customerController],
   exports: [CustomerRepository],

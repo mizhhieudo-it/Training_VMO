@@ -86,7 +86,7 @@ export class statusProjectController {
   @Get()
   //@Public()
   @UseGuards(RolesGuard)
-  @Roles(Role.Admin)
+  @Roles(Role.Admin, Role.User)
   @ApiOkResponse(SWAGGER_RESPONSE.HEALTH_CHECK)
   async GetAllAsync() {
     try {
@@ -103,7 +103,7 @@ export class statusProjectController {
   @ApiQuery(TECH_TYPE_CONST_PARAMETERS.SORT_BY__PARAMS)
   @ApiQuery(TECH_TYPE_CONST_PARAMETERS.ORDER_BY__PARAMS)
   @Get('get')
-  @Public()
+  @Roles(Role.Admin, Role.User)
   async GetAsync(
     @Query('search') search: string,
     @Query('page') page: Number,

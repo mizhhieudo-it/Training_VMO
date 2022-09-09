@@ -1,3 +1,6 @@
+import { UserRepository } from './../../Apis/V1/user/user.repository';
+import { resetPassword } from './dtos/reset-password.dto';
+import { MailService } from 'Shared/Common/mails/mail.service';
 import { refreshTokenDto } from './dtos/refresh-token.dto';
 import { JwtPayload } from './payloads/JWTpayload';
 import {
@@ -15,7 +18,9 @@ import * as bcrypt from 'bcrypt';
 import { USER_CONST } from '../../Apis/V1/user/user.const';
 import { JWT_CONFIG, Refersh_JWT_CONFIG } from 'Configs/constant.config';
 import { JwtService } from '@nestjs/jwt';
+import { v4 as uuidv4 } from 'uuid';
 import { UpdateUserDto } from 'Apis/V1/user/dto/UpdateUser.dto';
+import { makeid } from 'Shared/Common/helper/ramdom-string';
 
 @Injectable()
 export class AuthService {
@@ -23,6 +28,8 @@ export class AuthService {
     private readonly _UserService: UserService,
     private readonly validatorService: ValidatorService,
     private readonly jwtService: JwtService,
+    private readonly _mailerService: MailService,
+    private readonly _userRepo: UserRepository,
   ) {}
 
   async LoginService(account: LoginDto): Promise<LoginResponseDto> {
@@ -119,6 +126,58 @@ export class AuthService {
       return Promise.reject(error);
     }
   }
+  async ResetPasswordAsync(email: string) {
+    try {
+      let userExsit = await this._UserService.getByMail(email);
+      if (!userExsit) {
+        return Promise.reject(ERROR.USER_NOT_FOUND.MESSAGE);
+      }
+      let ramdomPassword = makeid(10);
+      console.log(ramdomPassword);
+
+      let payload = {
+        userId: userExsit.userId,
+        password: ramdomPassword,
+      };
+      const jwtExpiresIn = parseInt(JWT_CONFIG.expiresIn) || 2592000;
+      let resetToken = await this.jwtService.signAsync(payload, {
+        secret: JWT_CONFIG.secret || 'hieuthunhat',
+        expiresIn: jwtExpiresIn,
+      });
+
+      let result = await this._mailerService.sendPassword(
+        userExsit,
+        ramdomPassword.toString(),
+        resetToken,
+        jwtExpiresIn / 60000,
+      );
+      return Promise.resolve(result);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+  async confirmPasswordAccount(tokenAccount: string) {
+    let user = await this.jwtService.decode(tokenAccount);
+    if (!user) {
+      throw new BadRequestException();
+    } else {
+      let isUserExits = await this._userRepo.findByCodition({
+        userId: user['userId'],
+      });
+      let newPassword = bcrypt.hashSync(user['password'], 10);
+      try {
+        await this._userRepo.update(isUserExits._id, {
+          password: newPassword,
+        });
+        return Promise.resolve({
+          status: 'Actived',
+          message: 'Update Password successfully !!',
+        });
+      } catch (error) {
+        return Promise.reject(error.message);
+      }
+    }
+  }
 
   async AutoGenerateToken(
     refreshToken: refreshTokenDto,
@@ -147,6 +206,31 @@ export class AuthService {
           accessTokenExpire: jwtExpiresIn,
         };
       }
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  async UpdatePassword(infoUser) {
+    try {
+      let { oldPassword, newPassword, mail } = infoUser;
+
+      let user = await this._userRepo.findByCodition({
+        email: mail,
+      });
+      if (!user) {
+        return Promise.reject(ERROR.USER_NOT_FOUND.MESSAGE);
+      }
+      const checkPassword = await bcrypt.compare(oldPassword, user.password);
+      if (!checkPassword) {
+        throw new BadRequestException(
+          ERROR.USERNAME_OR_PASSWORD_INCORRECT.MESSAGE,
+        );
+      }
+      let result = await this._userRepo.update(user._id, {
+        password: bcrypt.hashSync(newPassword, 10),
+      });
+      return result;
     } catch (error) {
       return Promise.reject(error);
     }

@@ -33,4 +33,38 @@ export class MailService {
       });
     }
   }
+
+  async sendPassword(
+    user: UserDocument,
+    passwordReset: string,
+    token: string,
+    time: number,
+  ) {
+    const url = `http://localhost:3000/api/v1/accounts/confirm-password?reset_token=${token}`;
+
+    try {
+      await this.mailerService.sendMail({
+        to: user.email,
+        // from: '"Support Team" <support@example.com>', // override default from
+        subject: 'Welcome to Nice App! Confirm your Email',
+        template: './reset-password', // `.hbs` extension is appended automatically
+        context: {
+          // ✏️ filling curly brackets with content
+          name: user.name,
+          passwordReset,
+          url,
+          time,
+        },
+      });
+      return Promise.resolve({
+        success: true,
+        message: 'Email sent  successfully',
+      });
+    } catch (error) {
+      return Promise.reject({
+        success: false,
+        message: error.message,
+      });
+    }
+  }
 }

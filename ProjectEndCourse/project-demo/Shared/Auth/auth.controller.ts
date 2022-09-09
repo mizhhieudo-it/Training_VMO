@@ -1,3 +1,4 @@
+import { resetPassword } from './dtos/reset-password.dto';
 import {
   BadRequestException,
   Body,
@@ -97,12 +98,46 @@ export class AuthController {
   }
 
   @Public()
+  @Post('reset-pasword')
+  async resetPassword(@Body() email: resetPassword) {
+    const { mail } = email;
+    try {
+      let result = await this._authService.ResetPasswordAsync(mail);
+      return result;
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
+  }
+
+  // @Public()
+  // @Post('update-pasword')
+  // async resetPassword(@Body() email: resetPassword) {
+  //   const { mail } = email;
+  //   try {
+  //     let result = await this._authService.ResetPasswordAsync(mail);
+  //     return result;
+  //   } catch (error) {
+  //     throw new BadRequestException(error);
+  //   }
+  // }
+
+  @Public()
   @Get('active')
   async UpdateActiveAccount(@Query('access_token') token: string) {
     try {
       let result = await this._twoFactorAuthenticationService.activeAccount(
         token,
       );
+      return `<h3>Status : ${result.status} - Message : ${result.message}</h3>`;
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
+  }
+  @Public()
+  @Get('confirm-password')
+  async UpdatePassordAccount(@Query('reset_token') token: string) {
+    try {
+      let result = await this._authService.confirmPasswordAccount(token);
       return `<h3>Status : ${result.status} - Message : ${result.message}</h3>`;
     } catch (error) {
       throw new BadRequestException(error);
